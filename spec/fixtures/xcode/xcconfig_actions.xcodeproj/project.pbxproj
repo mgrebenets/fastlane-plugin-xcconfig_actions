@@ -1,0 +1,422 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXFileReference section */
+		1AD3FF922224DD4D00012556 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		1AEBA6EA2224DF8600A955A3 /* advanced.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = advanced.xcconfig; sourceTree = "<group>"; };
+		1AEBA6EB2224DF8600A955A3 /* overrides_2.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = overrides_2.xcconfig; sourceTree = "<group>"; };
+		1AEBA6EC2224DF8600A955A3 /* overrides_include_order_2.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = overrides_include_order_2.xcconfig; sourceTree = "<group>"; };
+		1AEBA6ED2224DF8600A955A3 /* include_overrides_after_reference.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = include_overrides_after_reference.xcconfig; sourceTree = "<group>"; };
+		1AEBA6EE2224DF8600A955A3 /* include_overrides_before_reference.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = include_overrides_before_reference.xcconfig; sourceTree = "<group>"; };
+		1AEBA6EF2224DF8600A955A3 /* parent.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = parent.xcconfig; sourceTree = "<group>"; };
+		1AEBA6F02224DF8600A955A3 /* inheritance.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = inheritance.xcconfig; sourceTree = "<group>"; };
+		1AEBA6F42224DF8600A955A3 /* level3.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = level3.xcconfig; sourceTree = "<group>"; };
+		1AEBA6F52224DF8600A955A3 /* level2.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = level2.xcconfig; sourceTree = "<group>"; };
+		1AEBA6F62224DF8600A955A3 /* level1.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = level1.xcconfig; sourceTree = "<group>"; };
+		1AEBA6F72224DF8600A955A3 /* inherited.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = inherited.xcconfig; sourceTree = "<group>"; };
+		1AEBA6F82224DF8600A955A3 /* overrides_1.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = overrides_1.xcconfig; sourceTree = "<group>"; };
+		1AEBA6F92224DF8600A955A3 /* overrides_include_order_1.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = overrides_include_order_1.xcconfig; sourceTree = "<group>"; };
+		1AEBA6FA2224DF8600A955A3 /* basic.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = basic.xcconfig; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		1AEBA6E92224DF8600A955A3 /* configs */ = {
+			isa = PBXGroup;
+			children = (
+				1AEBA6EA2224DF8600A955A3 /* advanced.xcconfig */,
+				1AEBA6EB2224DF8600A955A3 /* overrides_2.xcconfig */,
+				1AEBA6EC2224DF8600A955A3 /* overrides_include_order_2.xcconfig */,
+				1AEBA6ED2224DF8600A955A3 /* include_overrides_after_reference.xcconfig */,
+				1AEBA6EE2224DF8600A955A3 /* include_overrides_before_reference.xcconfig */,
+				1AEBA6EF2224DF8600A955A3 /* parent.xcconfig */,
+				1AEBA6F02224DF8600A955A3 /* inheritance.xcconfig */,
+				1AEBA6F12224DF8600A955A3 /* level1 */,
+				1AEBA6F72224DF8600A955A3 /* inherited.xcconfig */,
+				1AEBA6F82224DF8600A955A3 /* overrides_1.xcconfig */,
+				1AEBA6F92224DF8600A955A3 /* overrides_include_order_1.xcconfig */,
+				1AEBA6FA2224DF8600A955A3 /* basic.xcconfig */,
+			);
+			name = configs;
+			path = ../configs;
+			sourceTree = "<group>";
+		};
+		1AEBA6F12224DF8600A955A3 /* level1 */ = {
+			isa = PBXGroup;
+			children = (
+				1AEBA6F22224DF8600A955A3 /* level2 */,
+				1AEBA6F62224DF8600A955A3 /* level1.xcconfig */,
+			);
+			path = level1;
+			sourceTree = "<group>";
+		};
+		1AEBA6F22224DF8600A955A3 /* level2 */ = {
+			isa = PBXGroup;
+			children = (
+				1AEBA6F32224DF8600A955A3 /* level3 */,
+				1AEBA6F52224DF8600A955A3 /* level2.xcconfig */,
+			);
+			path = level2;
+			sourceTree = "<group>";
+		};
+		1AEBA6F32224DF8600A955A3 /* level3 */ = {
+			isa = PBXGroup;
+			children = (
+				1AEBA6F42224DF8600A955A3 /* level3.xcconfig */,
+			);
+			path = level3;
+			sourceTree = "<group>";
+		};
+		1AFAC1032223BA6200EBA6E6 = {
+			isa = PBXGroup;
+			children = (
+				1AEBA6E92224DF8600A955A3 /* configs */,
+				1AD3FF922224DD4D00012556 /* Makefile */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		1AFAC10A2223BAA900EBA6E6 /* basic */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 1AFAC10B2223BAA900EBA6E6 /* Build configuration list for PBXLegacyTarget "basic" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "";
+			dependencies = (
+			);
+			name = basic;
+			passBuildSettingsInEnvironment = 1;
+			productName = overrides_before;
+		};
+		1AFAC1212224B9A300EBA6E6 /* inheritance */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 1AFAC1222224B9A300EBA6E6 /* Build configuration list for PBXLegacyTarget "inheritance" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "";
+			dependencies = (
+			);
+			name = inheritance;
+			passBuildSettingsInEnvironment = 1;
+			productName = overrides_before;
+		};
+		1AFAC1242224D04800EBA6E6 /* advanced */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 1AFAC1252224D04800EBA6E6 /* Build configuration list for PBXLegacyTarget "advanced" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "";
+			dependencies = (
+			);
+			name = advanced;
+			passBuildSettingsInEnvironment = 1;
+			productName = overrides_before;
+		};
+		1AFAC1282224D50D00EBA6E6 /* include_overrides_after_reference */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 1AFAC1292224D50D00EBA6E6 /* Build configuration list for PBXLegacyTarget "include_overrides_after_reference" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "";
+			dependencies = (
+			);
+			name = include_overrides_after_reference;
+			passBuildSettingsInEnvironment = 1;
+			productName = overrides_before;
+		};
+		1AFAC12B2224D52100EBA6E6 /* include_overrides_before_reference */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 1AFAC12C2224D52100EBA6E6 /* Build configuration list for PBXLegacyTarget "include_overrides_before_reference" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "";
+			dependencies = (
+			);
+			name = include_overrides_before_reference;
+			passBuildSettingsInEnvironment = 1;
+			productName = overrides_before;
+		};
+		1AFAC12E2224D53900EBA6E6 /* overrides_include_order_1 */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 1AFAC12F2224D53900EBA6E6 /* Build configuration list for PBXLegacyTarget "overrides_include_order_1" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "";
+			dependencies = (
+			);
+			name = overrides_include_order_1;
+			passBuildSettingsInEnvironment = 1;
+			productName = overrides_before;
+		};
+		1AFAC1312224D55700EBA6E6 /* overrides_include_order_2 */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 1AFAC1322224D55700EBA6E6 /* Build configuration list for PBXLegacyTarget "overrides_include_order_2" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "";
+			dependencies = (
+			);
+			name = overrides_include_order_2;
+			passBuildSettingsInEnvironment = 1;
+			productName = overrides_before;
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		1AFAC1042223BA6200EBA6E6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1010;
+				TargetAttributes = {
+					1AFAC10A2223BAA900EBA6E6 = {
+						CreatedOnToolsVersion = 10.1;
+					};
+				};
+			};
+			buildConfigurationList = 1AFAC1072223BA6200EBA6E6 /* Build configuration list for PBXProject "xcconfig_actions" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 1AFAC1032223BA6200EBA6E6;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1AFAC1242224D04800EBA6E6 /* advanced */,
+				1AFAC10A2223BAA900EBA6E6 /* basic */,
+				1AFAC1282224D50D00EBA6E6 /* include_overrides_after_reference */,
+				1AFAC12B2224D52100EBA6E6 /* include_overrides_before_reference */,
+				1AFAC1212224B9A300EBA6E6 /* inheritance */,
+				1AFAC12E2224D53900EBA6E6 /* overrides_include_order_1 */,
+				1AFAC1312224D55700EBA6E6 /* overrides_include_order_2 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		1AD3FF782224DD3F00012556 /* InheritanceOn */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AEBA6EF2224DF8600A955A3 /* parent.xcconfig */;
+			buildSettings = {
+			};
+			name = InheritanceOn;
+		};
+		1AD3FF792224DD3F00012556 /* InheritanceOn */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AEBA6EA2224DF8600A955A3 /* advanced.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = InheritanceOn;
+		};
+		1AD3FF7A2224DD3F00012556 /* InheritanceOn */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AEBA6FA2224DF8600A955A3 /* basic.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = InheritanceOn;
+		};
+		1AD3FF7B2224DD3F00012556 /* InheritanceOn */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AEBA6ED2224DF8600A955A3 /* include_overrides_after_reference.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = InheritanceOn;
+		};
+		1AD3FF7C2224DD3F00012556 /* InheritanceOn */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AEBA6EE2224DF8600A955A3 /* include_overrides_before_reference.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = InheritanceOn;
+		};
+		1AD3FF7D2224DD3F00012556 /* InheritanceOn */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AEBA6F02224DF8600A955A3 /* inheritance.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = InheritanceOn;
+		};
+		1AD3FF7E2224DD3F00012556 /* InheritanceOn */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AEBA6F92224DF8600A955A3 /* overrides_include_order_1.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = InheritanceOn;
+		};
+		1AD3FF7F2224DD3F00012556 /* InheritanceOn */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AEBA6EC2224DF8600A955A3 /* overrides_include_order_2.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = InheritanceOn;
+		};
+		1AFAC1082223BA6200EBA6E6 /* InheritanceOff */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = InheritanceOff;
+		};
+		1AFAC10C2223BAA900EBA6E6 /* InheritanceOff */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AEBA6FA2224DF8600A955A3 /* basic.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = InheritanceOff;
+		};
+		1AFAC1232224B9A300EBA6E6 /* InheritanceOff */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AEBA6F02224DF8600A955A3 /* inheritance.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = InheritanceOff;
+		};
+		1AFAC1262224D04800EBA6E6 /* InheritanceOff */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AEBA6EA2224DF8600A955A3 /* advanced.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = InheritanceOff;
+		};
+		1AFAC12A2224D50D00EBA6E6 /* InheritanceOff */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AEBA6ED2224DF8600A955A3 /* include_overrides_after_reference.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = InheritanceOff;
+		};
+		1AFAC12D2224D52100EBA6E6 /* InheritanceOff */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AEBA6EE2224DF8600A955A3 /* include_overrides_before_reference.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = InheritanceOff;
+		};
+		1AFAC1302224D53900EBA6E6 /* InheritanceOff */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AEBA6F92224DF8600A955A3 /* overrides_include_order_1.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = InheritanceOff;
+		};
+		1AFAC1332224D55700EBA6E6 /* InheritanceOff */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AEBA6EC2224DF8600A955A3 /* overrides_include_order_2.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = InheritanceOff;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1AFAC1072223BA6200EBA6E6 /* Build configuration list for PBXProject "xcconfig_actions" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1AFAC1082223BA6200EBA6E6 /* InheritanceOff */,
+				1AD3FF782224DD3F00012556 /* InheritanceOn */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = InheritanceOff;
+		};
+		1AFAC10B2223BAA900EBA6E6 /* Build configuration list for PBXLegacyTarget "basic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1AFAC10C2223BAA900EBA6E6 /* InheritanceOff */,
+				1AD3FF7A2224DD3F00012556 /* InheritanceOn */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = InheritanceOff;
+		};
+		1AFAC1222224B9A300EBA6E6 /* Build configuration list for PBXLegacyTarget "inheritance" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1AFAC1232224B9A300EBA6E6 /* InheritanceOff */,
+				1AD3FF7D2224DD3F00012556 /* InheritanceOn */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = InheritanceOff;
+		};
+		1AFAC1252224D04800EBA6E6 /* Build configuration list for PBXLegacyTarget "advanced" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1AFAC1262224D04800EBA6E6 /* InheritanceOff */,
+				1AD3FF792224DD3F00012556 /* InheritanceOn */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = InheritanceOff;
+		};
+		1AFAC1292224D50D00EBA6E6 /* Build configuration list for PBXLegacyTarget "include_overrides_after_reference" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1AFAC12A2224D50D00EBA6E6 /* InheritanceOff */,
+				1AD3FF7B2224DD3F00012556 /* InheritanceOn */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = InheritanceOff;
+		};
+		1AFAC12C2224D52100EBA6E6 /* Build configuration list for PBXLegacyTarget "include_overrides_before_reference" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1AFAC12D2224D52100EBA6E6 /* InheritanceOff */,
+				1AD3FF7C2224DD3F00012556 /* InheritanceOn */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = InheritanceOff;
+		};
+		1AFAC12F2224D53900EBA6E6 /* Build configuration list for PBXLegacyTarget "overrides_include_order_1" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1AFAC1302224D53900EBA6E6 /* InheritanceOff */,
+				1AD3FF7E2224DD3F00012556 /* InheritanceOn */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = InheritanceOff;
+		};
+		1AFAC1322224D55700EBA6E6 /* Build configuration list for PBXLegacyTarget "overrides_include_order_2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1AFAC1332224D55700EBA6E6 /* InheritanceOff */,
+				1AD3FF7F2224DD3F00012556 /* InheritanceOn */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = InheritanceOff;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1AFAC1042223BA6200EBA6E6 /* Project object */;
+}

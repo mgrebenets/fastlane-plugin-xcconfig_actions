@@ -1,0 +1,29 @@
+// MARK: - Description
+
+// Reusable Apple LLVM build settings.
+
+// MARK: - Apple LLVM x.x - Code Generation
+
+GCC_DYNAMIC_NO_PIC = NO
+GCC_NO_COMMON_BLOCKS = YES
+
+// MARK: - Apple LLVM x.x - Language
+
+GCC_C_LANGUAGE_STANDARD = gnu11
+
+// MARK: - Apple LLVM x.x - Language - C++
+
+CLANG_CXX_LANGUAGE_STANDARD = gnu++14
+CLANG_CXX_LIBRARY = libc++
+
+// MARK: - Apple LLVM x.x - Language - Modules
+
+CLANG_ENABLE_MODULES = YES
+
+// MARK: - Apple LLVM x.x - Objective C
+
+CLANG_ENABLE_OBJC_ARC = YES // [-fobjc-arc]
+
+// MARK: - Apple LLVM x.x - Preprocessing
+
+ENABLE_STRICT_OBJC_MSGSEND = YES

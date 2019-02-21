@@ -1,0 +1,21 @@
+// Advanced examples.
+
+// Double slash escaping.
+SLASH = /
+URL_T1 = http:/$()/t1.com
+URL_T2 = https:/$(SLASH)t2.com
+
+// Nested variables.
+ENV1 = T1
+URL1 = $(URL_$(ENV1)) // => $(URL_T1) => http://t1.com
+
+ENV2 = T2
+URL2 = $(URL_$(ENV2)) // => $(URL_T2) => http://t2.com
+
+// Multiple nested vars.
+V1 = 1
+V2 = 2
+V3 = 3
+V123 = Value
+VALUE = $(V$(V1)$(V2)$(V3)) // => $(V123) => Value
+VALUE2 = $(V$(V$(V1))$(V$(V2))$(V$(V3))) // => $(V123) => Value

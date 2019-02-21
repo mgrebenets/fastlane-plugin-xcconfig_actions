@@ -1,0 +1,21 @@
+lane :read do
+  # Read basic xcconfig.
+  json = read_xcconfig(
+    path: "spec/fixtures/configs/basic.xcconfig"
+  )
+
+  # Output is a JSON string.
+  config = JSON.parse(json)
+  UI.message("basic.xcconfig value for key 'A': #{config['A']}")
+  UI.message("basic.xcconfig value for key 'B3': #{config['B3']}")
+
+  # Read xcconfig using parent xcconfig to simulate xcode inheritance.
+  json = read_xcconfig(
+    path: "spec/fixtures/configs/inheritance.xcconfig",
+    parent: "spec/fixtures/configs/parent.xcconfig"
+  )
+
+  config = JSON.parse(json)
+  UI.message("inheritance.xcconfig value for key 'A1': #{config['A1']}")
+  UI.message("inheritance.xcconfig value for key 'B3': #{config['B3']}")
+end

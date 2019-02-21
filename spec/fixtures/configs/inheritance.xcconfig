@@ -1,0 +1,15 @@
+A1 = Initial_A1
+A1 = $(inherited)Added_A1$(inherited)
+B1 = Before$(A1)After
+
+inherited = EVIL
+
+// Inherited used as a helper marker to add leading spaces.
+A2 = Initial_A2
+A2 = $(inherited) Added_A2 $(inherited)
+B2 = Before$(A2)After
+
+// Leading spaces without $(inherited) are trimmed.
+A3 = Initial_A3
+A3 =    Added_A3
+B3 = Before$(A3)After

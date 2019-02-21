@@ -1,0 +1,14 @@
+// Comment.
+
+A = 0
+
+C = X=1 $(A) // Resolve.
+
+A = 1 // Overwrite and trailing comment.
+
+B1= String Value 1
+B2=String Value 2
+B3 =String Value 3
+    B4 =String Value 4
+
+EMPTY =

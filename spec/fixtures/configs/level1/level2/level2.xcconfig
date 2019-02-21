@@ -1,0 +1,15 @@
+// MARK: - Description
+
+// Reusable Apple LLVM build settings for Debug builds.
+
+#include "level3/level3.xcconfig"
+
+// MARK: - Apple LLVM x.x - Code Generation
+
+GCC_OPTIMIZATION_LEVEL = 0
+
+// MARK: - Apple LLVM x.x - Preprocessing
+
+ENABLE_NS_ASSERTIONS = YES
+
+GCC_PREPROCESSOR_DEFINITIONS = DEBUG=1 $(COMMON_GCC_PREPROCESSOR_DEFINITIONS)

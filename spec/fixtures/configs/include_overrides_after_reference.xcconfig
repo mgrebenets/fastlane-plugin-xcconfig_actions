@@ -1,0 +1,5 @@
+A = Initial
+
+B = $(A)
+
+#include "overrides_1.xcconfig"
