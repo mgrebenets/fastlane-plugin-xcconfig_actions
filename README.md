@@ -36,7 +36,7 @@ Things **not supported** at the moment:
 Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plugin. Try it by cloning the repo, running `fastlane install_plugins` and
 
 ```shell
-bundle exec fastlane test
+bundle exec fastlane read
 ```
 
 ## Run tests for this plugin
