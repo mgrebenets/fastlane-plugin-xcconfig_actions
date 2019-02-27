@@ -1,7 +1,7 @@
 # xcconfig_actions plugin
 
 [![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-xcconfig_actions)
-[![version](https://badge.fury.io/gh/mgrebenets%2Ffastlane-plugin-wait_xcrun.svg)](https://badge.fury.io/gh/mgrebenets%2Ffastlane-plugin-xcconfig_actions)
+[![version](https://badge.fury.io/gh/mgrebenets%2Ffastlane-plugin-xcconfig_actions.svg)](https://badge.fury.io/gh/mgrebenets%2Ffastlane-plugin-xcconfig_actions)
 [![CircleCI](https://circleci.com/gh/mgrebenets/fastlane-plugin-xcconfig_actions.svg?style=svg)](https://circleci.com/gh/mgrebenets/fastlane-plugin-xcconfig_actions)
 
 ## Getting Started
