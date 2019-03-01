@@ -3,9 +3,9 @@ source('https://rubygems.org')
 gemspec
 
 group :development do
+  gem "debase"
   gem "pry-coolline"
   gem "ruby-debug-ide"
-  gem "debase"
 end
 
 plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')
