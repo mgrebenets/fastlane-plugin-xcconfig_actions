@@ -1,6 +1,5 @@
 require 'fastlane/action'
 require 'json'
-require 'xcodeproj'
 require_relative '../helper/xcconfig_actions_helper'
 
 module Fastlane
