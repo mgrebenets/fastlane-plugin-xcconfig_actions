@@ -11,6 +11,32 @@ module Fastlane
       def self.show_message
         UI.message("Hello from the xcconfig_actions plugin helper!")
       end
+
+      # Read xcconfig and return hash with 'config' and 'includes' entries.
+      # 'config' containing the hash-map of resolved variables,
+      # 'includes' containing an array of include paths.
+      # The config values are not resolved.
+      def self.read_xcconfig(path)
+        # Get rid of comments and blank lines.
+        contents = File.read(path).gsub(%r{\s*//.*$}, "").gsub(/^$\n/, "")
+        # Collect all include statements.
+        includes_regex = /^\s*#include\s*"(.*)"$/
+        includes = contents.scan(includes_regex).flatten
+        # Get rid of include statements (makes it easier).
+        contents = contents.gsub(includes_regex, "")
+        # Collect all variable assignments.
+        config = contents.scan(/^\s*([^=]*)=(.*)$/).reduce({}) do |acc, e|
+          k = e[0].strip
+          v = e[1].strip
+          acc.merge({ k => v })
+        end
+
+        # Return.
+        {
+          config: config,
+          includes: includes
+        }
+      end
     end
   end
 end

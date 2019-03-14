@@ -50,19 +50,9 @@ module Fastlane
         # e.g. it resolves $(inherited) incorrectly, allowing it to work within the scope of one file
         # without any parent config.
 
-        # Get rid of comments and blank lines.
-        contents = File.read(filename).gsub(%r{\s*//.*$}, "").gsub(/^$\n/, "")
-        # Collect all include statements.
-        includes_regex = /^\s*#include\s*"(.*)"$/
-        includes = contents.scan(includes_regex).flatten
-        # Get rid of include statements (makes it easier).
-        contents = contents.gsub(includes_regex, "")
-        # Collect all variable assignments.
-        config = contents.scan(/^\s*([^=]*)=(.*)$/).reduce({}) do |acc, e|
-          k = e[0].strip
-          v = e[1].strip
-          acc.merge({ k => v })
-        end
+        xcconfig = Helper::XcconfigActionsHelper.read_xcconfig(filename)
+        config = xcconfig[:config]
+        includes = xcconfig[:includes]
 
         # Xcodeproj does not resolve overrides from included files, so do it manually.
         resolved_includes_config = includes.reduce({}) do |resolved_config, include_path|
@@ -153,7 +143,7 @@ module Fastlane
       def self.available_options
         [
           FastlaneCore::ConfigItem.new(key: :path,
-                                  env_name: "XCCONFIG_ACTIONS_PATH",
+                                  env_name: "XCCONFIG_ACTIONS_READ_PATH",
                                description: "Path to xcconfig to read",
                                   optional: false,
                                       type: String,
@@ -161,7 +151,7 @@ module Fastlane
                                               UI.user_error!("Couldn't find xcconfig at path: '#{value}'") unless File.exist?(value)
                                             end),
           FastlaneCore::ConfigItem.new(key: :parent,
-                                  env_name: "XCCONFIG_ACTIONS_PARENT",
+                                  env_name: "XCCONFIG_ACTIONS_READ_PARENT",
                                description: "Parent xcconfig file to inherit build settings from.\nThis is the xcconfig you'd set on the project level in Xcode",
                                   optional: true,
                                       type: String,
@@ -169,23 +159,23 @@ module Fastlane
                                               UI.user_error!("Couldn't find parent xcconfig at path: '#{value}'") if value && !File.exist?(value)
                                             end),
           FastlaneCore::ConfigItem.new(key: :no_resolve,
-                                  env_name: "XCCONFIG_ACTIONS_NO_RESOLVE",
+                                  env_name: "XCCONFIG_ACTIONS_READ_NO_RESOLVE",
                                description: "Do not resolve variables in xcconfigs and read 'as is'",
                              default_value: false,
                                   optional: true,
                                       type: Boolean),
           FastlaneCore::ConfigItem.new(key: :srcroot,
-                                  env_name: "XCCONFIG_ACTIONS_SRCROOT",
+                                  env_name: "XCCONFIG_ACTIONS_READ_SRCROOT",
                                description: "Value for SRCROOT build setting, default is current working directory",
                                   optional: true,
                                       type: String),
           FastlaneCore::ConfigItem.new(key: :target_name,
-                                  env_name: "XCCONFIG_ACTIONS_TARGET_NAME",
+                                  env_name: "XCCONFIG_ACTIONS_READ_TARGET_NAME",
                                description: "Value for TARGET_NAME build setting",
                                   optional: true,
                                       type: String),
           FastlaneCore::ConfigItem.new(key: :output_path,
-                                  env_name: "XCCONFIG_ACTIONS_OUTPUT_PATH",
+                                  env_name: "XCCONFIG_ACTIONS_READ_OUTPUT_PATH",
                                description: "Output path",
                                   optional: true,
                                       type: String)

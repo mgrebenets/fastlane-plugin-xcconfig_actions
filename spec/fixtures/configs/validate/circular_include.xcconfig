@@ -1,0 +1,2 @@
+// Include self to simulate circular includes.
+#include "circular_include.xcconfig"

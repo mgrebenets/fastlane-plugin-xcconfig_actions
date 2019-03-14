@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.email         = 'maksym.grebenets@cba.com.au'
 
   spec.summary       = 'Adds actions to fastlane to work with xcconfig files'
-  # spec.homepage      = "https://github.com/<GITHUB_USERNAME>/fastlane-plugin-xcconfig_actions"
+  spec.homepage      = "https://github.com/mgrebenets/fastlane-plugin-xcconfig_actions"
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*"] + %w(README.md LICENSE)

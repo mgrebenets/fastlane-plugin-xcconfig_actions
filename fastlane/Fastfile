@@ -1,3 +1,4 @@
+desc "Example of reading xcconfig file"
 lane :read do
   # Read basic xcconfig.
   json = read_xcconfig(
@@ -18,4 +19,9 @@ lane :read do
   config = JSON.parse(json)
   UI.message("inheritance.xcconfig value for key 'A1': #{config['A1']}")
   UI.message("inheritance.xcconfig value for key 'B3': #{config['B3']}")
+end
+
+desc "Example of validating xcconfig file"
+lane :validate do
+
 end
