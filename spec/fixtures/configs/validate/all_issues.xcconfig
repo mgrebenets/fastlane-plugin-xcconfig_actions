@@ -1,0 +1,10 @@
+// All include issues with xcconfig.
+
+#include "stub.xcconfig" // Same level include.
+#include "nosuchfile.xcconfig" // No such file.
+#include "../read/basic.xcconfig" // Level up include.
+#include "level1/level2/level2.xcconfig" // 2 or more levels down.
+#include "stub.xconfig" // Duplicate include.
+#include "all_issues.xcconfig" // Circular include.
+
+#include "level1/level1.xcconfig" // Valid include.

@@ -74,6 +74,19 @@ Things **not supported** at the moment:
 
 - Use of `<DEVELOPER_DIR>` in include paths
 
+#### Rules Explanation
+
+Xcconfigs are too easy to get out of hand.
+Ability to use arbitrary include paths complicates usage of xcconfigs in quite a few ways:
+
+- Hard to track where the variables are declared and the overwritten
+- Xcode does not always report an error when a file is missing
+
+These rules introduce convention to organizing xcconfigs.
+The end goal is to make config files more manageable in the end.
+
+This helps greatly when configs are used in Xcode combined with project-level and target-level inheritance.
+
 ## Example
 
 Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plugin. Try it by cloning the repo, running `fastlane install_plugins` and
