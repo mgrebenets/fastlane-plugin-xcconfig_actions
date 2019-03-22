@@ -33,12 +33,57 @@ Things **not supported** at the moment:
 - Use of `<DEVELOPER_DIR>` in include paths
 - Use of curly braces in variable references, e.g. `${VAR}`
 
+### validate_xcconfig
+
+Validate xcconfig using set of very opinionated rules:
+
+- All included files must exist
+- Include flow is unidirectional, i.e. top-down only:
+
+```c
+#include "../level_up.xcconfig" // File is in parent directory.
+```
+
+- Files do not include other files on the same level:
+
+```c
+#include "same_level.xcconfig" // Included file is on the same level.
+```
+
+- Files do not include other files more than 1 level down
+
+```c
+#include "level1/level2/level2.xcconfig" // 2 levels down: level1/level2.
+```
+
+- Duplicated includes are not allowed
+
+```c
+#include "other.xcconfig"
+#include "other.xcconfig" // Duplicated include.
+```
+
+- Circular includes are not allowed
+
+```c
+// example.xcconfig file
+#include "example.xcconfig" // Include self creates circular include.
+```
+
+Things **not supported** at the moment:
+
+- Use of `<DEVELOPER_DIR>` in include paths
+
 ## Example
 
 Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plugin. Try it by cloning the repo, running `fastlane install_plugins` and
 
 ```shell
+# Read xcconfig example.
 bundle exec fastlane read
+
+# Validate xcconfig example.
+bundle exec fastlane validate
 ```
 
 ## Run tests for this plugin

@@ -23,5 +23,12 @@ end
 
 desc "Example of validating xcconfig file"
 lane :validate do
+  issues = validate_xcconfig(
+    path: "spec/fixtures/configs/validate/all_issues.xcconfig",
+    root_path: "spec/fixtures/configs/validate"
+  )
 
+  issues.each do |issue|
+    UI.important(issue)
+  end
 end

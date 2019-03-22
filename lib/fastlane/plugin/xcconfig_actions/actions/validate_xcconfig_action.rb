@@ -86,7 +86,8 @@ module Fastlane
           "- All included files exist",
           "- Include flow is unidirectional, i.e. top-down only",
           "- Files do not include other files on the same level",
-          "- Files do not include other files more than 1 level down"
+          "- Files do not include other files more than 1 level down",
+          "- Files do not contain duplicate includes"
         ].join("\n")
       end
 
