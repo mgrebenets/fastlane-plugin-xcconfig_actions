@@ -83,7 +83,7 @@ Ability to use arbitrary include paths complicates usage of xcconfigs in quite a
 - Xcode does not always report an error when a file is missing
 
 These rules introduce convention to organizing xcconfigs.
-The end goal is to make config files more manageable in the end.
+The end goal is to make config files more manageable.
 
 This helps greatly when configs are used in Xcode combined with project-level and target-level inheritance.
 
