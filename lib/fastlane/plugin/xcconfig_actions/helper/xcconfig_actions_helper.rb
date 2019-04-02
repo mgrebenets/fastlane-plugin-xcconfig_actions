@@ -5,6 +5,11 @@ module Fastlane
 
   module Helper
     class XcconfigActionsHelper
+      # Check if shell command exists.
+      def self.command_exist?(cmd)
+        `which #{cmd} 2>/dev/null`.chomp != ""
+      end
+
       # class methods that you define here become available in your action
       # as `Helper::XcconfigActionsHelper.your_method`
       #

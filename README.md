@@ -24,6 +24,7 @@ The `read_xcconfig` action reads contents of xcconfig file the same way Xcode wo
 - Support for nested variable references like `$(VAR1_$(VAR2))`
 - Support for `#include "other.xcconfig"` statements
 - Support for project/target level inheritance mechanism
+- Support for `XCODE_VERSION_MAJOR` build setting
 
 See [this xcconfig guide](https://pewpewthespells.com/blog/xcconfig_guide.html) for detailed explanation.
 
