@@ -24,8 +24,8 @@ module Fastlane
           if Helper::XcconfigActionsHelper.command_exist?("xcodebuild")
             # Set value of XCODE_VERSION_MAJOR not available when reading xcconfigs directly.
             xcode_version = `xcodebuild -version | head -n1 | cut -d' ' -f2 | xargs`.strip
-            xcode_version_majon_padded = xcode_version.split(".").first.rjust(2, "0") + "00"
-            parent_config["XCODE_VERSION_MAJOR"] = xcode_version_majon_padded
+            xcode_version_major_padded = xcode_version.split(".").first.rjust(2, "0") + "00"
+            parent_config["XCODE_VERSION_MAJOR"] = xcode_version_major_padded
           end
 
           resolved_parent_config = resolve_config(parent_config)
