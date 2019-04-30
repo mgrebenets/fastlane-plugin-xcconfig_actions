@@ -153,6 +153,10 @@ module Fastlane
         ""
       end
 
+      def self.category
+        :building
+      end
+
       def self.available_options
         [
           FastlaneCore::ConfigItem.new(key: :path,

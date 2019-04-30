@@ -91,6 +91,10 @@ module Fastlane
         ].join("\n")
       end
 
+      def self.category
+        :linting
+      end
+
       def self.available_options
         [
           FastlaneCore::ConfigItem.new(key: :path,
