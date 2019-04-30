@@ -141,7 +141,7 @@ describe Fastlane::Actions::ReadXcconfigAction do
 
       it 'adds XCODE_VERSION_MAJOR to xcconfig' do
         basic_read_test("basic.xcconfig") do |config|
-          expect(config["XCODE_VERSION_MAJOR"]).not_to be_empty
+          expect(config["XCODE_VERSION_MAJOR"]).not_to(be_empty)
         end
       end
     end

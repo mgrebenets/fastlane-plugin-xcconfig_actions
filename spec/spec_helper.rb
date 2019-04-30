@@ -1,4 +1,4 @@
-$LOAD_PATH.unshift(File.expand_path('../../lib', __FILE__))
+$LOAD_PATH.unshift(File.expand_path('../lib', __dir__))
 
 require 'simplecov'
 
@@ -33,7 +33,9 @@ def read_lane_test(path, options: {})
     read_xcconfig(#{args})
   end").runner.execute(:test)
 
-  yield(JSON.parse(result))
+  config = JSON.parse(result)
+  expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::XCCONFIG_ACTIONS_BUILD_SETTINGS]).to eq(config)
+  yield(config)
 end
 
 # Run test for reading config at path with parent config specified (inheritance tests).

@@ -34,6 +34,8 @@ Things **not supported** at the moment:
 - Use of `<DEVELOPER_DIR>` in include paths
 - Use of curly braces in variable references, e.g. `${VAR}`
 
+The build settings are also saved as JSON dictionary under `SharedValues::XCCONFIG_ACTIONS_BUILD_SETTINGS` key in current `lane_context`.
+
 ### validate_xcconfig
 
 Validate xcconfig using set of very opinionated rules:

@@ -4,6 +4,10 @@ require_relative '../helper/xcconfig_actions_helper'
 
 module Fastlane
   module Actions
+    module SharedValues
+      XCCONFIG_ACTIONS_BUILD_SETTINGS = :XCCONFIG_ACTIONS_BUILD_SETTINGS
+    end
+
     class ReadXcconfigAction < Action
       def self.run(params)
         path = params[:path]
@@ -33,6 +37,8 @@ module Fastlane
 
           json = resolved_parent_config.merge(resolved_config).to_json
         end
+
+        Actions.lane_context[SharedValues::XCCONFIG_ACTIONS_BUILD_SETTINGS] = JSON.parse(json)
 
         if params[:output_path]
           File.open(params[:output_path], "w") { |f| f.puts(json) }
