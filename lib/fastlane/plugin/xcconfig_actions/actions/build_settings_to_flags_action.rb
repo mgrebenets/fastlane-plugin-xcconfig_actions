@@ -37,7 +37,7 @@ module Fastlane
         flags += read_list(build_settings, "GCC_PREPROCESSOR_DEFINITIONS").map { |v| "-D#{v}" }
         flags << read(build_settings, "OTHER_CFLAGS")
         flags << read(build_settings, "WARNING_CFLAGS")
-        flags << "-O" + read(build_setting, "GCC_OPTIMIZATION_LEVEL")
+        flags << "-O" + read(build_settings, "GCC_OPTIMIZATION_LEVEL")
         flags << bitcode_flags(build_settings, mapping)
 
         # Map all flags with known prefixes.
@@ -67,17 +67,17 @@ module Fastlane
 
       def self.read_linker_flags(build_settings, mapping)
         flags = []
-        flags << read(build_setting, "OTHER_LDFLAGS")
+        flags << read(build_settings, "OTHER_LDFLAGS")
         flags << bitcode_flags(build_settings, mapping)
         flags.join(" ")
       end
 
       def self.read(build_settings, key, default_value: "")
-        build_setting[key] || default_value
+        build_settings[key] || default_value
       end
 
       def self.read_list(build_settings, key)
-        (build_settings[key] || []).split
+        (build_settings[key] || "").split
       end
 
       def self.bitcode_flags(build_settings, mapping)
@@ -93,7 +93,7 @@ module Fastlane
       #
       # @return [String] Flags.
       def self.map_build_setting(build_settings, key, mapping, flag_name = nil)
-        build_setting_value = read(build_setting, key)
+        build_setting_value = read(build_settings, key)
         mapping_info = mapping[key] || flag_name
         return "" unless mapping_info && build_setting_value
 

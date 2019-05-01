@@ -52,6 +52,8 @@ Majority of build settings with certain prefixes map directly to the LLVM compil
 - `CLANG_WARN_<FLAG_NAME> = YES` maps to `-W<flag-name>`
 - `CLANG_WARN_<FLAG_NAME> = YES_ERROR` maps to `-Werror=<flag-name>`
 
+- `CLANG_ENABLE_MODULES` mapts to `-f[no-]modules`.
+
 The list of such prefixes is:
 
 - `CLANG_WARN_`
@@ -80,7 +82,8 @@ CLANG_WARN_UNREACHABLE_CODE:
 References:
 
 - [Xcode Build Settings](https://help.apple.com/xcode/mac/10.2/#/itcaec37c2a6)
-- [LLVM Diagnostics](https://clang.llvm.org/docs/DiagnosticsReference.html)
+- [LLVM Clang Command Line Options](https://clang.llvm.org/docs/ClangCommandLineReference.html)
+- [LLVM Clang Diagnostics](https://clang.llvm.org/docs/DiagnosticsReference.html)
 - [GCC Warning Options](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html)
 
 ### validate_xcconfig

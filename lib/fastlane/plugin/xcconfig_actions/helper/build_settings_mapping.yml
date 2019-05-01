@@ -31,6 +31,10 @@ SWIFT_TREAT_WARNINGS_AS_ERRORS:
 SWIFT_SUPPRESS_WARNINGS:
   "YES": -suppress-warnings
 
+# Apple Clang - Language - Modules
+CLANG_ENABLE_MODULE_DEBUGGING:
+  "YES": -gmodules
+
 # Warning Policies
 GCC_TREAT_WARNINGS_AS_ERRORS:
   "YES": -Werror
