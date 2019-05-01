@@ -42,6 +42,11 @@ module Fastlane
           includes: includes
         }
       end
+
+      # Load build settings mapping.
+      def self.load_build_settings_mapping
+        YAML.load_file(File.join(File.dirname(__FILE__), "build_settings_mapping.yml"))
+      end
     end
   end
 end

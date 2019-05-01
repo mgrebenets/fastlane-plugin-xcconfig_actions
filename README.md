@@ -36,6 +36,53 @@ Things **not supported** at the moment:
 
 The build settings are also saved as JSON dictionary under `SharedValues::XCCONFIG_ACTIONS_BUILD_SETTINGS` key in current `lane_context`.
 
+### build_settings_to_flags
+
+Map build settings to Clang Cxx and Swift compiler and linker flags.
+
+This action is useful when you plan to reuse xcconfigs with other tools, such as [Buck](https://buckbuild.com/), and you want to translate xcconfigs into the flags `clang` and `swiftc` compilers and `ld`linker understand.
+
+Build flags can be printed to standard output or saved to file. The flags are also available via lane context as `lane_context[SharedValues::XCCONFIG_ACTIONS_BUILD_FLAGS]`.
+
+#### How Mapping Works
+
+Majority of build settings with certain prefixes map directly to the LLVM compiler option, for example:
+
+- `CLANG_WARN_<FLAG_NAME> = NO` maps to `-Wno-<flag-name>`
+- `CLANG_WARN_<FLAG_NAME> = YES` maps to `-W<flag-name>`
+- `CLANG_WARN_<FLAG_NAME> = YES_ERROR` maps to `-Werror=<flag-name>`
+
+The list of such prefixes is:
+
+- `CLANG_WARN_`
+- `GCC_WARN_`
+- `CLANG_ENABLE_`
+
+The double trailing underscore in the prefix is used for some build settings, e.g. `CLANG_WARN__ARC_BRIDGE_CAST_NONARC`.
+
+If a build setting has non-standard mapping, then the mapping is specified in `build_settings_mapping.yml` file.
+
+For example `GCC_WARN_STRICT_SELECTOR_MATCH` build setting maps to `-Wselector` flag. The mapping is specified like this:
+
+```yaml
+GCC_WARN_STRICT_SELECTOR_MATCH: -Wselector
+```
+
+Some build settings can't be mapped to single flag, but rather each value set for this build setting maps to a different set of flags. In this case build mapping specifies all the flags for each value. If value maps to no flag, it can be omitted.
+
+```yaml
+CLANG_WARN_UNREACHABLE_CODE:
+  "YES_AGGRESSIVE": -Wunreachable-code-argressive
+  "YES": -Wunreachable-code
+  # "NO" matches to no flags, so it is omitted.
+```
+
+References:
+
+- [Xcode Build Settings](https://help.apple.com/xcode/mac/10.2/#/itcaec37c2a6)
+- [LLVM Diagnostics](https://clang.llvm.org/docs/DiagnosticsReference.html)
+- [GCC Warning Options](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html)
+
 ### validate_xcconfig
 
 Validate xcconfig using set of very opinionated rules:
@@ -97,6 +144,9 @@ Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plu
 ```shell
 # Read xcconfig example.
 bundle exec fastlane read
+
+# Map build settings to build flags.
+bundle exec fastlane build_flags
 
 # Validate xcconfig example.
 bundle exec fastlane validate

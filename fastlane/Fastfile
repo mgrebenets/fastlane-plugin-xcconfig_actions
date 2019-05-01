@@ -21,6 +21,13 @@ lane :read do
   UI.message("inheritance.xcconfig value for key 'B3': #{config['B3']}")
 end
 
+desc "Example of mapping build settings to build flags"
+lane :build_settings_to_flags do
+  read_xcconfig(path: "spec/fixtures/configs/mapping.xcconfig")
+  build_flags = build_settings_to_flags
+  puts(build_flags)
+end
+
 desc "Example of validating xcconfig file"
 lane :validate do
   issues = validate_xcconfig(
