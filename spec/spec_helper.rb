@@ -91,3 +91,13 @@ end
 def validate_test(path, &block)
   validate_lane_test(path, &block)
 end
+
+def compare_build_flags(actual, expected)
+  compiler_flags = actual["compiler_flags"].split.sort
+  swift_compiler_flags = actual["swift_compiler_flags"].split.sort
+  linker_flags = actual["linker_flags"].split.sort
+
+  expect(compiler_flags).to eq(expected["compiler_flags"])
+  expect(swift_compiler_flags).to eq(expected["swift_compiler_flags"])
+  expect(linker_flags).to eq(expected["linker_flags"])
+end

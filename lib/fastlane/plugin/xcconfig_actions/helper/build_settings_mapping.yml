@@ -109,7 +109,10 @@ CLANG_ENABLE_CODE_COVERAGE:
 ###
 
 ENABLE_NS_ASSERTIONS:
-  "NO": -DNS_BLOCK_ASSERTIONS=1
+  "NO":
+    cxx: -DNS_BLOCK_ASSERTIONS=1
+  "YES":
+    linker: -Xlinker -no_deduplicate
 
 ###
 # Apple Clang - Warning Policies
@@ -134,7 +137,7 @@ CLANG_WARN_UNGUARDED_AVAILABILITY:
   "YES_AGGRESSIVE": -Wunguarded-availability
   "NO": -Wno-unguarded-availability
 CLANG_WARN_UNREACHABLE_CODE:
-  "YES_AGGRESSIVE": -Wunreachable-code-argressive
+  "YES_AGGRESSIVE": -Wunreachable-code-aggressive
   "YES": -Wunreachable-code
 
 ###

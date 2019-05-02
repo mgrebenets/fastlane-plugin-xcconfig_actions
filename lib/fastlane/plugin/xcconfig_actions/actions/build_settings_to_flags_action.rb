@@ -10,7 +10,9 @@ module Fastlane
     class BuildSettingsToFlagsAction < Action
       def self.run(params)
         mapping = Helper::XcconfigActionsHelper.load_build_settings_mapping
-        build_settings = params[:build_settings]
+        build_settings = params[:build_settings] || Actions.lane_context[SharedValues::XCCONFIG_ACTIONS_BUILD_SETTINGS]
+        UI.user_error!("Missing build settings input") unless build_settings
+
         flags = {
           "compiler_flags" => read_compiler_flags(build_settings, mapping),
           "swift_compiler_flags" => read_swift_compiler_flags(build_settings, mapping),
@@ -32,6 +34,7 @@ module Fastlane
       ###
 
       COMMON_BUILD_SETTINGS = [
+        "ENABLE_NS_ASSERTIONS",
         "ENABLE_BITCODE",
         "ENABLE_TESTABILITY",
         "CLANG_ENABLE_CODE_COVERAGE",
@@ -62,7 +65,7 @@ module Fastlane
         flags << read(build_settings, "OTHER_CFLAGS")
         flags += cxx_warning_flags(build_settings, mapping)
 
-        flags.join(" ").strip
+        flags.reject(&:empty?).join(" ").strip
       end
 
       def self.gcc_optimization_level(build_settings)
@@ -105,13 +108,14 @@ module Fastlane
         flags << read(build_settings, "SWIFT_OPTIMIZATION_LEVEL")
         flags << read(build_settings, "OTHER_SWIFT_FLAGS")
 
-        flags.join(" ").strip
+        flags.reject(&:empty?).join(" ").strip
       end
 
       def self.swift_flags(build_settings, mapping)
         build_settings.keys.map do |s|
+          next unless s.start_with?("SWIFT_")
           map_build_setting(build_settings, s, mapping, tool: SWIFT_COMPILER)
-        end
+        end.compact
       end
 
       ###
@@ -125,7 +129,7 @@ module Fastlane
         flags += common_flags(build_settings, mapping, tool: LINKER)
         flags << read(build_settings, "OTHER_LDFLAGS")
 
-        flags.join(" ").strip
+        flags.reject(&:empty?).join(" ").strip
       end
 
       ###
@@ -133,7 +137,7 @@ module Fastlane
       ###
 
       def self.read(build_settings, key, default_value: "")
-        build_settings[key] || default_value
+        (build_settings[key] || default_value).strip
       end
 
       def self.read_list(build_settings, key)
@@ -162,11 +166,11 @@ module Fastlane
           # Here again, under YES/NO/... value we can have either a string value or another hash with tool-specific values.
           mapping_value = mapping_info[build_setting_value] || ""
           if mapping_value.kind_of?(String)
-            mapping_value
+            mapping_value.strip
           else
             FastlaneCore::UI.user_error!("Unsupported type of mapping for #{key}[#{build_setting_value}]") unless mapping_value.kind_of?(Hash)
             # Pick the mapping value for specified tool.
-            mapping_value[tool] || ""
+            (mapping_value[tool] || "").strip
           end
         end
       end
@@ -218,7 +222,6 @@ module Fastlane
                                description: "Build settings to convert to build flags",
                                   optional: true,
                                       type: Hash,
-                             default_value: SharedValues::XCCONFIG_ACTIONS_BUILD_SETTINGS,
                               verify_block: proc do |value|
                                               UI.user_error!("Missing build settings") if value.nil?
                                             end),
