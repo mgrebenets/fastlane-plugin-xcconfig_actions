@@ -47,55 +47,12 @@ The flags are also available via lane context as `lane_context[SharedValues::XCC
 
 #### How Mapping Works
 
-Majority of build settings for clang and cxx warnings with certain prefixes map directly to the cxx compiler option, for example:
-
-- `CLANG_WARN_<FLAG_NAME> = NO` maps to `-Wno-<flag-name>`
-- `CLANG_WARN_<FLAG_NAME> = YES` maps to `-W<flag-name>`
-- `CLANG_WARN_<FLAG_NAME> = YES_ERROR` maps to `-Werror=<flag-name>`
-
-The list of such prefixes is:
-
-- `CLANG_WARN_`
-- `GCC_WARN_`
-
-The double trailing underscore in the prefix is used for some build settings, e.g. `CLANG_WARN__ARC_BRIDGE_CAST_NONARC`.
-
-If a build setting has non-standard mapping, then the mapping is specified in `build_settings_mapping.yml` file.
-
-For example `GCC_WARN_STRICT_SELECTOR_MATCH` build setting maps to `-Wselector` flag. The mapping is specified like this:
-
-```yaml
-GCC_WARN_STRICT_SELECTOR_MATCH: -Wselector
-```
-
-Some build settings can't be mapped to single flag, but rather each value set for this build setting maps to a different set of flags.
-In this case build mapping specifies all the flags for each value.
-If value maps to no flag, it can be omitted.
-
-```yaml
-CLANG_WARN_UNREACHABLE_CODE:
-  "YES_AGGRESSIVE": -Wunreachable-code-argressive
-  "YES": -Wunreachable-code
-  # "NO" matches to no flags, so it is omitted.
-```
-
-Finally, some build settings map to different flags depending on the tool. In this case a dictionary of flag values per tool is specified, for example:
-
-```yaml
-ENABLE_TESTABILITY:
-  "YES":
-    swiftc: -enable-testing
-    swift: -enable-testing
-    ld: -Xlinker -export_dynamic -Xlinker -no_deduplicate
-  "NO":
-    cxx: -fvisibility=hidden
-```
+<!-- TODO: Add xcspecs info -->
 
 The keys used for tools are:
 
 - `cxx` for Clang CXX/Objective-C compiler
-- `swiftc` for Swift compiler
-- `swift` for Swift compiler frontend
+- `swift` for Swift compiler
 - `linker` for Clang linker
 
 References:
@@ -104,6 +61,8 @@ References:
 - [LLVM Clang Command Line Options](https://clang.llvm.org/docs/ClangCommandLineReference.html)
 - [LLVM Clang Diagnostics](https://clang.llvm.org/docs/DiagnosticsReference.html)
 - [GCC Warning Options](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html)
+- https://gist.github.com/fabiopelosin/4560417
+- https://pewpewthespells.com/blog/xcode_build_system.html
 
 ### validate_xcconfig
 

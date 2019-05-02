@@ -22,7 +22,7 @@ lane :read do
 end
 
 desc "Example of mapping build settings to build flags"
-lane :build_settings_to_flags do
+lane :build_flags do
   read_xcconfig(path: "spec/fixtures/configs/build_flags/basic.xcconfig")
   build_flags = build_settings_to_flags
   puts(build_flags)
@@ -38,4 +38,30 @@ lane :validate do
   issues.each do |issue|
     UI.important(issue)
   end
+end
+
+###
+# @!group Build Settings
+###
+
+lane :generate_build_settings do
+  project = "../spec/fixtures/xcode/build_settings/build_settings.xcodeproj"
+  scheme = "ios"
+  # cli_build_settings = cli_build_settings(project, scheme)
+  # puts cli_build_settings
+  xcode_build_settings(project, scheme)
+end
+
+def cli_build_settings(project, scheme)
+  cmd = [
+    "xcodebuild -showBuildSettings -project #{project} -scheme #{scheme}",
+    "sed -e 's/^[ \t]*//g'",
+    "sed -e 's/ =.*$//g'",
+    "tail -n +2"
+  ].join(" | ")
+  `#{cmd}`.chomp
+end
+
+def xcode_build_settings(project, scheme)
+  system("open #{project}")
 end

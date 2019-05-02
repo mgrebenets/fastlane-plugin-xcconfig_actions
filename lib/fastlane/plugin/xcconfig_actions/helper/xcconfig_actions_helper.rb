@@ -43,9 +43,14 @@ module Fastlane
         }
       end
 
-      # Load build settings mapping.
-      def self.load_build_settings_mapping
-        YAML.load_file(File.join(File.dirname(__FILE__), "build_settings_mapping.yml"))
+      def self.find_xcspec(name, xcode:)
+        search_path = File.exist?(xcode) ? xcode : File.join(File.dirname(__FILE__), "xcspecs", xcode)
+        UI.user_error!("Can't find app path of xcspecs folder for xcode: #{xcode}") unless File.exist?(search_path)
+
+        query = File.join(search_path, "**", name + ".xcspec")
+        xcspec = Dir[query].first
+        UI.user_error!("Can't find xcspec with name: #{name}") unless File.exist?(xcspec)
+        xcspec
       end
     end
   end

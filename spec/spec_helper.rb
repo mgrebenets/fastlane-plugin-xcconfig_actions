@@ -20,8 +20,12 @@ RSPEC_ROOT = File.dirname(__FILE__)
 # @!group Read Test Helpers
 ###
 
+def fixture_path(path)
+  File.join(RSPEC_ROOT, "fixtures", path)
+end
+
 def config_path(path)
-  File.join(RSPEC_ROOT, "fixtures/configs", path)
+  fixture_path(File.join("configs", path))
 end
 
 def read_config_path(path)
@@ -92,12 +96,18 @@ def validate_test(path, &block)
   validate_lane_test(path, &block)
 end
 
-def compare_build_flags(actual, expected)
-  compiler_flags = actual["compiler_flags"].split.sort
-  swift_compiler_flags = actual["swift_compiler_flags"].split.sort
-  linker_flags = actual["linker_flags"].split.sort
+def build_settings_to_flags_test(build_settings: nil, xcode: nil, output_path: nil, &block)
+  build_settings_arg = build_settings ? "build_settings: #{build_settings}," : ""
+  xcode_arg = xcode ? "xcode: '#{xcode}'," : ""
+  output_path_arg = output_path ? "output_path: '#{output_path}'," : ""
 
-  expect(compiler_flags).to eq(expected["compiler_flags"])
-  expect(swift_compiler_flags).to eq(expected["swift_compiler_flags"])
-  expect(linker_flags).to eq(expected["linker_flags"])
+  result = Fastlane::FastFile.new.parse("lane :test do
+    build_settings_to_flags(
+      #{build_settings_arg}
+      #{xcode_arg}
+      #{output_path_arg}
+    )
+  end").runner.execute(:test)
+
+  yield(result) if block
 end

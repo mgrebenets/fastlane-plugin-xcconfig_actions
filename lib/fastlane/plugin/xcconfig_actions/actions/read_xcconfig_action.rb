@@ -100,6 +100,7 @@ module Fastlane
       def self.resolve_value(value, key:, resolved: {}, parent: {})
         matches = value.scan(/(\$\([^$\)]*\))/)
 
+        mutable_value = value.dup # Prevent unwanted side-effect of input modification.
         matches.each do |group|
           group.each do |match|
             var_name = match.delete("$()")
@@ -109,13 +110,13 @@ module Fastlane
                         else
                           resolved[var_name] || parent[var_name]
                         end
-            value.gsub!(match, var_value || "")
-            resolved[key] = value
+            mutable_value.gsub!(match, var_value || "")
+            resolved[key] = mutable_value
           end
         end
 
         # If there are still variables, keep resolving then.
-        value.include?("$(") ? resolve_value(value, key: key, resolved: resolved, parent: parent) : value
+        mutable_value.include?("$(") ? resolve_value(mutable_value, key: key, resolved: resolved, parent: parent) : mutable_value
       end
 
       # Resolve xcconfig values using parent config.
