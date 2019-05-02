@@ -38,11 +38,12 @@ The build settings are also saved as JSON dictionary under `SharedValues::XCCONF
 
 ### build_settings_to_flags
 
-Map build settings to Clang Cxx and Swift compiler and linker flags.
+Map build settings to Clang Cxx/Objective-C and Swift compiler and linker flags.
 
-This action is useful when you plan to reuse xcconfigs with other tools, such as [Buck](https://buckbuild.com/), and you want to translate xcconfigs into the flags `clang` and `swiftc` compilers and `ld`linker understand.
+This action is useful when you plan to reuse xcconfigs with other tools, such as [Buck](https://buckbuild.com/), and you want to translate xcconfigs into the flags for Cxx/Objective-C and Swift compiler and linker to understand.
 
-Build flags can be printed to standard output or saved to file. The flags are also available via lane context as `lane_context[SharedValues::XCCONFIG_ACTIONS_BUILD_FLAGS]`.
+Build flags can be printed to standard output or saved to file.
+The flags are also available via lane context as `lane_context[SharedValues::XCCONFIG_ACTIONS_BUILD_FLAGS]`.
 
 #### How Mapping Works
 
@@ -52,7 +53,9 @@ Majority of build settings with certain prefixes map directly to the LLVM compil
 - `CLANG_WARN_<FLAG_NAME> = YES` maps to `-W<flag-name>`
 - `CLANG_WARN_<FLAG_NAME> = YES_ERROR` maps to `-Werror=<flag-name>`
 
-- `CLANG_ENABLE_MODULES` mapts to `-f[no-]modules`.
+Another example:
+
+- `CLANG_ENABLE_MODULES` maps to `-f[no-]modules`.
 
 The list of such prefixes is:
 
@@ -70,7 +73,9 @@ For example `GCC_WARN_STRICT_SELECTOR_MATCH` build setting maps to `-Wselector` 
 GCC_WARN_STRICT_SELECTOR_MATCH: -Wselector
 ```
 
-Some build settings can't be mapped to single flag, but rather each value set for this build setting maps to a different set of flags. In this case build mapping specifies all the flags for each value. If value maps to no flag, it can be omitted.
+Some build settings can't be mapped to single flag, but rather each value set for this build setting maps to a different set of flags.
+In this case build mapping specifies all the flags for each value.
+If value maps to no flag, it can be omitted.
 
 ```yaml
 CLANG_WARN_UNREACHABLE_CODE:

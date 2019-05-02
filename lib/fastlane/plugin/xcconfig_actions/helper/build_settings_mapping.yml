@@ -13,47 +13,140 @@
 # If an option maps to no flags, then this option can be omitted.
 #
 # Note that YES and NO are Yaml keywords, so when used as keys they are quoted.
-# Other keys under build setting entries are quoted for consistency.
+# YES_AGGRESSIVE is quoted for consistency.
+#
+# By default all specified build settings are for CXX compiler which are mapped into so called "compiler flags".
+# The exception are Swift build settings, which start with SWIFT_ prefix.
+#
+# Some build settings, however, map to different flags for CXX/Objective-C (cxx), Swift compiler (switfc), Swift compiler frontend (swift) and linker (ld).
+# For these build settings a separate value is provided for each tool, for example:
+# GCC_GENERATE_DEBUGGING_SYMBOLS:
+#  "YES":
+#    swiftc: -g
+#    swift: -g -enable-anonymous-context-mangled-names
+#    cxx: -g -gmodules
 
-# Generic flags.
-ENABLE_BITCODE: -fembed-bitcode
-ENABLE_MODULES: -fmodules
-ENABLE_NS_ASSERTIONS:
-  "NO": -DNS_BLOCK_ASSERTIONS=1
-DEBUG_INFORMATION_FORMAT:
-  "dwarf": -g
-SWIFT_COMPILATION_MODE:
-  "wholemodule": -whole-module-optimization
+###
+# Build Options
+###
+
+ENABLE_BITCODE:
+  "YES": -fembed-bitcode-marker
 ENABLE_TESTABILITY:
-  "YES": -enable-testing
+  "YES":
+    swiftc: -enable-testing
+    swift: -enable-testing
+    ld: -Xlinker -export_dynamic -Xlinker -no_deduplicate
+  "NO":
+    cxx: -fvisibility=hidden
+
+###
+# Swift Compiler - Warnings Policies
+###
+
 SWIFT_TREAT_WARNINGS_AS_ERRORS:
   "YES": -warnings-as-errors
 SWIFT_SUPPRESS_WARNINGS:
   "YES": -suppress-warnings
 
-# Apple Clang - Language - Modules
-CLANG_ENABLE_MODULE_DEBUGGING:
-  "YES": -gmodules
+###
+# Swift Compiler - Code Generation
+###
 
-# Warning Policies
+SWIFT_COMPILATION_MODE:
+  "wholemodule": -whole-module-optimization
+SWIFT_DISABLE_SAFETY_CHECKS:
+  "YES": -remove-runtime-asserts
+
+###
+# Apple Clang - Language - Modules
+###
+
+# CLANG_ENABLE_MODULES:
+# This build setting is too complex and should be managed by the extenal build tool instead.
+# For clang:
+# -fmodules
+# -gmodules
+# -fmodules-cache-path=/path/to/ModuleCache.noindex
+# -fmodules-prune-interval=86400
+# -fmodules-prune-after=345600
+# -fbuild-session-file=/path/to/ModuleCache.noindex/Session.modulevalidation
+# -fmodules-validate-once-per-build-session
+# -Wnon-modular-include-in-framework-module
+# -Werror=non-modular-include-in-framework-module
+# -index-store-path /path/to/Index/DataStore
+# For clang linker:
+# -index-store-path /path/to/Index/DataStore
+
+# CLANG_ENABLE_MODULE_DEBUGGING:
+# This build setting is part of Modules feature and should be managed by external build tool instead.
+# For clang, when enabled maps to `-gmodules`.
+
+###
+# Apple Clang - Code Generation
+###
+
+# GCC_OPTIMIZATION_LEVEL maps to "-O<value>".
+
+# Not to confuse with DEBUG_INFORMATION_FORMAT, which controls if dSYM is created or not.
+GCC_GENERATE_DEBUGGING_SYMBOLS:
+  "YES":
+    swiftc: -g
+    swift: -g -enable-anonymous-context-mangled-names
+    cxx: -g -gmodules # At least when compiling Objective-C code.
+    # linker:
+    #   `-Xlinker -object_path_lto -Xlinker path/to/file_lto.o`
+    #   `-Xlinker -add_ast_path -Xlinker /path/to/file.swiftmodule`
+    # Can't support, has to be taken care of by the tool that runs the build.
+CLANG_ENABLE_CODE_COVERAGE:
+  "YES":
+    swift: -profile-generate -profile-coverage-mapping
+    cxx: -fprofile-instr-generate -fcoverage-mapping
+    linker: -fprofile-instr-generate
+
+###
+# Apple Clang - Preprocessing
+###
+
+ENABLE_NS_ASSERTIONS:
+  "NO": -DNS_BLOCK_ASSERTIONS=1
+
+###
+# Apple Clang - Warning Policies
+###
+
 GCC_TREAT_WARNINGS_AS_ERRORS:
   "YES": -Werror
 GCC_WARN_INHIBIT_ALL_WARNINGS:
   "YES": -w
 
-# Warnings - All Languages
+###
+# Apple Clang - Warnings - All languages (CXX)
+###
+
+# Even though these options are defined under "All languages",
+# chaning the value of these build settings currently has no impact on Swift compiler flags.
+# May change in the future.
 CLANG_WARN_DOCUMENTATION_COMMENTS: -Wdocumentation
-CLANG_WARN_FLOAT_CONVERSION: -Wconversion
 CLANG_WARN_IMPLICIT_SIGN_CONVERSION: -Wsign-conversion
 CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION: -Wconversion
 CLANG_WARN_UNGUARDED_AVAILABILITY:
   "YES_AGGRESSIVE": -Wunguarded-availability
   "NO": -Wno-unguarded-availability
+CLANG_WARN_UNREACHABLE_CODE:
+  "YES_AGGRESSIVE": -Wunreachable-code-argressive
+  "YES": -Wunreachable-code
+
+###
+# Apple Clang - Warnings - All languages (GCC)
+###
+
+# These are still GCC so do fall into CXX category.
+GCC_WARN_64_TO_32_BIT_CONVERSION: -Wshorten-64-to-32
 GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS:
   "YES": -Werror=implicit-function-declaration
 GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS:
   "YES": -Werror=incompatible-pointer-types
-GCC_WARN_64_TO_32_BIT_CONVERSION: -Wshorten-64-to-32
 GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS: -Wmissing-field-initializers
 GCC_WARN_ABOUT_MISSING_NEWLINE: -Wnewline-eof
 GCC_WARN_ABOUT_MISSING_PROTOTYPES: -Wmissing-prototypes
@@ -68,25 +161,31 @@ GCC_WARN_UNINITIALIZED_AUTOS:
   "YES_AGGRESSIVE": -Wuninitialized -Wconditional-uninitialized
   "YES": -Wuninitialized
   "NO": -Wno-uninitialized
-CLANG_WARN_UNREACHABLE_CODE:
-  "YES_AGGRESSIVE": -Wunreachable-code-argressive
-  "YES": -Wunreachable-code
 
-# Warnings - C++
+###
+# Apple Clang - Warnings - C++
+###
+
 CLANG_WARN_CXX0X_EXTENSIONS: -Wc++0x-extensions
 CLANG_WARN_SUSPICIOUS_MOVE: -Wmove
 GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO: -Winvalid-offsetof
 GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS: -Woverloaded-virtual
 GCC_WARN_NON_VIRTUAL_DESTRUCTOR: -Wnon-virtual-dtor
 
-# Warnings - Objective C
+###
+# Apple Clang - Warnings - Objective C
+###
+
 CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS: -Wdeprecated-implementations
 CLANG_WARN_DIRECT_OBJC_ISA_USAGE: -Wdeprecated-objc-isa-usage
 CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES: -Wimplicit-atomic-properties
 GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL: -Wprotocol
 GCC_WARN_STRICT_SELECTOR_MATCH: -Wselector
 
-# Warnings - Objective C and ARC
+###
+# Apple Clang - Warnings - Objective C and ARC
+###
+
 CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE: -Wexplicit-ownership-type
 CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF: -Wimplicit-retain-self
 CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK:
