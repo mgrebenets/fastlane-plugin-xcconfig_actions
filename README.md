@@ -34,7 +34,7 @@ Things **not supported** at the moment:
 - Use of `<DEVELOPER_DIR>` in include paths
 - Use of curly braces in variable references, e.g. `${VAR}`
 
-The build settings are also saved as JSON dictionary under `SharedValues::XCCONFIG_ACTIONS_BUILD_SETTINGS` key in current `lane_context`.
+The build settings are also saved as a dictionary under `SharedValues::XCCONFIG_ACTIONS_BUILD_SETTINGS` key in current `lane_context`.
 
 ### build_settings_to_flags
 
@@ -47,21 +47,16 @@ The flags are also available via lane context as `lane_context[SharedValues::XCC
 
 #### How Mapping Works
 
-Majority of build settings with certain prefixes map directly to the LLVM compiler option, for example:
+Majority of build settings for clang and cxx warnings with certain prefixes map directly to the cxx compiler option, for example:
 
 - `CLANG_WARN_<FLAG_NAME> = NO` maps to `-Wno-<flag-name>`
 - `CLANG_WARN_<FLAG_NAME> = YES` maps to `-W<flag-name>`
 - `CLANG_WARN_<FLAG_NAME> = YES_ERROR` maps to `-Werror=<flag-name>`
 
-Another example:
-
-- `CLANG_ENABLE_MODULES` maps to `-f[no-]modules`.
-
 The list of such prefixes is:
 
 - `CLANG_WARN_`
 - `GCC_WARN_`
-- `CLANG_ENABLE_`
 
 The double trailing underscore in the prefix is used for some build settings, e.g. `CLANG_WARN__ARC_BRIDGE_CAST_NONARC`.
 
@@ -83,6 +78,25 @@ CLANG_WARN_UNREACHABLE_CODE:
   "YES": -Wunreachable-code
   # "NO" matches to no flags, so it is omitted.
 ```
+
+Finally, some build settings map to different flags depending on the tool. In this case a dictionary of flag values per tool is specified, for example:
+
+```yaml
+ENABLE_TESTABILITY:
+  "YES":
+    swiftc: -enable-testing
+    swift: -enable-testing
+    ld: -Xlinker -export_dynamic -Xlinker -no_deduplicate
+  "NO":
+    cxx: -fvisibility=hidden
+```
+
+The keys used for tools are:
+
+- `cxx` for Clang CXX/Objective-C compiler
+- `swiftc` for Swift compiler
+- `swift` for Swift compiler frontend
+- `linker` for Clang linker
 
 References:
 

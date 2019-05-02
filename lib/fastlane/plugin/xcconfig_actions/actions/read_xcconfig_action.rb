@@ -17,9 +17,7 @@ module Fastlane
 
         config = read_config(path)
 
-        if params[:no_resolve]
-          json = config.to_json
-        else
+        unless params[:no_resolve]
           parent_config = read_config(parent)
 
           parent_config["SRCROOT"] = srcroot
@@ -35,15 +33,15 @@ module Fastlane
           resolved_parent_config = resolve_config(parent_config)
           resolved_config = resolve_config(config, parent: resolved_parent_config)
 
-          json = resolved_parent_config.merge(resolved_config).to_json
+          config = resolved_parent_config.merge(resolved_config)
         end
 
-        Actions.lane_context[SharedValues::XCCONFIG_ACTIONS_BUILD_SETTINGS] = JSON.parse(json)
+        Actions.lane_context[SharedValues::XCCONFIG_ACTIONS_BUILD_SETTINGS] = config
 
         if params[:output_path]
-          File.open(params[:output_path], "w") { |f| f.puts(json) }
+          File.open(params[:output_path], "w") { |f| f.puts(config.to_json) }
         else
-          return json
+          return config
         end
       end
 

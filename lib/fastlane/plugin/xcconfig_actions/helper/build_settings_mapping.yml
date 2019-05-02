@@ -36,7 +36,7 @@ ENABLE_TESTABILITY:
   "YES":
     swiftc: -enable-testing
     swift: -enable-testing
-    ld: -Xlinker -export_dynamic -Xlinker -no_deduplicate
+    linker: -Xlinker -export_dynamic -Xlinker -no_deduplicate
   "NO":
     cxx: -fvisibility=hidden
 

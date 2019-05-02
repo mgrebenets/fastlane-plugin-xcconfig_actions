@@ -20,8 +20,12 @@ RSPEC_ROOT = File.dirname(__FILE__)
 # @!group Read Test Helpers
 ###
 
+def config_path(path)
+  File.join(RSPEC_ROOT, "fixtures/configs", path)
+end
+
 def read_config_path(path)
-  File.join(RSPEC_ROOT, "fixtures/configs/read", path)
+  config_path(File.join("read", path))
 end
 
 # Generic read xcconfig lane test helper.
@@ -29,11 +33,10 @@ def read_lane_test(path, options: {})
   path = read_config_path(path)
   # TODO: Add support for bool values.
   args = { "path" => path }.merge(options).map { |k, v| "#{k}: '#{v}'" }.join(", ")
-  result = Fastlane::FastFile.new.parse("lane :test do
+  config = Fastlane::FastFile.new.parse("lane :test do
     read_xcconfig(#{args})
   end").runner.execute(:test)
 
-  config = JSON.parse(result)
   expect(Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::XCCONFIG_ACTIONS_BUILD_SETTINGS]).to eq(config)
   yield(config)
 end

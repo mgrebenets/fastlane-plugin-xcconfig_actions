@@ -23,7 +23,7 @@ end
 
 desc "Example of mapping build settings to build flags"
 lane :build_settings_to_flags do
-  read_xcconfig(path: "spec/fixtures/configs/mapping.xcconfig")
+  read_xcconfig(path: "spec/fixtures/configs/build_flags/basic.xcconfig")
   build_flags = build_settings_to_flags
   puts(build_flags)
 end

@@ -41,15 +41,14 @@ describe Fastlane::Actions::ReadXcconfigAction do
     end
 
     it 'supports no_resolve option' do
-      result = Fastlane::FastFile.new.parse("lane :test do
+      config = Fastlane::FastFile.new.parse("lane :test do
         read_xcconfig(
           path: '#{basic}',
           no_resolve: true
         )
       end").runner.execute(:test)
 
-      json = JSON.parse(result)
-      expect(json["C"]).to eq("X=1 $(A)")
+      expect(config["C"]).to eq("X=1 $(A)")
     end
 
     it 'resolves variable overrides after include' do

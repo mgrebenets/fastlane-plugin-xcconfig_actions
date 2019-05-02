@@ -10,6 +10,7 @@ module Fastlane
     class BuildSettingsToFlagsAction < Action
       def self.run(params)
         mapping = Helper::XcconfigActionsHelper.load_build_settings_mapping
+        build_settings = params[:build_settings]
         flags = {
           "compiler_flags" => read_compiler_flags(build_settings, mapping),
           "swift_compiler_flags" => read_swift_compiler_flags(build_settings, mapping),
@@ -56,12 +57,17 @@ module Fastlane
         flags += objc_flags(build_settings, mapping)
 
         flags += read_list(build_settings, "GCC_PREPROCESSOR_DEFINITIONS").map { |v| "-D#{v}" }
-        flags << "-O" + read(build_settings, "GCC_OPTIMIZATION_LEVEL")
+        flags << gcc_optimization_level(build_settings)
         flags << read(build_settings, "WARNING_CFLAGS")
         flags << read(build_settings, "OTHER_CFLAGS")
         flags += cxx_warning_flags(build_settings, mapping)
 
-        flags.join(" ")
+        flags.join(" ").strip
+      end
+
+      def self.gcc_optimization_level(build_settings)
+        level = read(build_settings, "GCC_OPTIMIZATION_LEVEL")
+        level.empty? ? "" : "-O" + level
       end
 
       def self.objc_flags(build_settings, mapping)
@@ -93,16 +99,16 @@ module Fastlane
         flags = []
 
         flags += common_flags(build_settings, mapping, tool: SWIFT_COMPILER)
-        flags += swift_flags(build_setting, mapping)
+        flags += swift_flags(build_settings, mapping)
 
         flags += read_list(build_settings, "SWIFT_ACTIVE_COMPILATION_CONDITIONS").map { |v| "-D #{v}" }
         flags << read(build_settings, "SWIFT_OPTIMIZATION_LEVEL")
         flags << read(build_settings, "OTHER_SWIFT_FLAGS")
 
-        flags.join(" ")
+        flags.join(" ").strip
       end
 
-      def swift_flags(build_settings, mapping)
+      def self.swift_flags(build_settings, mapping)
         build_settings.keys.map do |s|
           map_build_setting(build_settings, s, mapping, tool: SWIFT_COMPILER)
         end
@@ -119,7 +125,7 @@ module Fastlane
         flags += common_flags(build_settings, mapping, tool: LINKER)
         flags << read(build_settings, "OTHER_LDFLAGS")
 
-        flags.join(" ")
+        flags.join(" ").strip
       end
 
       ###
@@ -146,7 +152,7 @@ module Fastlane
       def self.map_build_setting(build_settings, key, mapping, tool:, flag_name: nil)
         build_setting_value = read(build_settings, key)
         mapping_info = mapping[key] || flag_name
-        return "" unless mapping_info && !mapping_info.empty? && build_setting_value && !build_setting.empty?
+        return "" unless mapping_info && !mapping_info.empty? && build_setting_value && !build_setting_value.empty?
 
         if mapping_info.kind_of?(String)
           # CXX compiler is the default tool.
@@ -155,7 +161,7 @@ module Fastlane
           FastlaneCore::UI.user_error!("Mapped value must be either a String or a Hash") unless mapping_info.kind_of?(Hash)
           # Here again, under YES/NO/... value we can have either a string value or another hash with tool-specific values.
           mapping_value = mapping_info[build_setting_value] || ""
-          if mapping_value.kind_of(String)
+          if mapping_value.kind_of?(String)
             mapping_value
           else
             FastlaneCore::UI.user_error!("Unsupported type of mapping for #{key}[#{build_setting_value}]") unless mapping_value.kind_of?(Hash)
