@@ -44,7 +44,7 @@ module Fastlane
       end
 
       def self.find_xcspec(name, xcode:)
-        search_path = File.exist?(xcode) ? xcode : File.join(File.dirname(__FILE__), "xcspecs", xcode)
+        search_path = File.exist?(xcode) ? File.join(xcode, "Contents/Plugins") : File.join(File.dirname(__FILE__), "xcspecs", xcode)
         UI.user_error!("Can't find app path of xcspecs folder for xcode: #{xcode}") unless File.exist?(search_path)
 
         query = File.join(search_path, "**", name + ".xcspec")
