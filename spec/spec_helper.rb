@@ -35,7 +35,6 @@ end
 # Generic read xcconfig lane test helper.
 def read_lane_test(path, options: {})
   path = read_config_path(path)
-  # TODO: Add support for bool values.
   args = { "path" => path }.merge(options).map { |k, v| "#{k}: '#{v}'" }.join(", ")
   config = Fastlane::FastFile.new.parse("lane :test do
     read_xcconfig(#{args})

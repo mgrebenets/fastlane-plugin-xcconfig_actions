@@ -45,15 +45,13 @@ This action is useful when you plan to reuse xcconfigs with other tools, such as
 Build flags can be printed to standard output or saved to file.
 The flags are also available via lane context as `lane_context[SharedValues::XCCONFIG_ACTIONS_BUILD_FLAGS]`.
 
-#### How Mapping Works
-
-<!-- TODO: Add xcspecs info -->
-
-The keys used for tools are:
+The result is a dictionary with following keys:
 
 - `compiler_flags` for Clang CXX/Objective-C compiler.
 - `swift_compiler_flags` for Swift compiler.
 - `linker_flags` for Clang linker.
+
+<!-- TODO: Add info on how it works. -->
 
 References:
 

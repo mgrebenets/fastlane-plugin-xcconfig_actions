@@ -19,5 +19,5 @@ WebDriverWait(driver, 10).until(
         'Build settings reference'
     )
 )
-# TODO: Parse it!
+
 print driver.page_source.encode('utf-8').strip()

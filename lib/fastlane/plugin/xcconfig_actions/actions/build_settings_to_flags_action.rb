@@ -105,10 +105,7 @@ module Fastlane
                                description: "Xcode version of path to Xcode.app",
                                   optional: true,
                              default_value: "10.2",
-                                      type: String,
-                              verify_block: proc do |value|
-                                              # TODO: Make sure this path exists or the directory for this version exist.
-                                            end),
+                                      type: String),
           FastlaneCore::ConfigItem.new(key: :output_path,
                                   env_name: "XCCONFIG_ACTIONS_BUILD_FLAGS_OUTPUT_PATH",
                                description: "Output path to save build settings JSON",
