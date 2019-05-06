@@ -44,24 +44,31 @@ end
 # @!group Build Settings
 ###
 
-lane :generate_build_settings do
-  project = "../spec/fixtures/xcode/build_settings/build_settings.xcodeproj"
-  scheme = "ios"
-  # cli_build_settings = cli_build_settings(project, scheme)
-  # puts cli_build_settings
-  xcode_build_settings(project, scheme)
+def repo_path
+  `git rev-parse --show-toplevel`.strip
 end
 
-def cli_build_settings(project, scheme)
-  cmd = [
-    "xcodebuild -showBuildSettings -project #{project} -scheme #{scheme}",
-    "sed -e 's/^[ \t]*//g'",
-    "sed -e 's/ =.*$//g'",
-    "tail -n +2"
-  ].join(" | ")
-  `#{cmd}`.chomp
-end
+desc "Copy xcspec files from Xcode.app path and convert them to XMl"
+lane :copy_xcspecs_from_xcode do |options|
+  path = options[:path] || "/Applications/Xcode.app"
+  UI.message("Copying specs from #{path}")
+  UI.user_error!("No such path: #{path}") unless File.exist?(path)
+  plugins_path = File.join(path, "Contents", "Plugins")
 
-def xcode_build_settings(project, scheme)
-  system("open #{project}")
+  specs = [
+    Dir[File.join(plugins_path, "**/Clang LLVM*.xcspec")].first,
+    Dir[File.join(plugins_path, "**/Swift.xcspec")].first,
+    Dir[File.join(plugins_path, "**/Ld.xcspec")].first,
+    Dir[File.join(plugins_path, "**/CoreBuildSystem.xcspec")].first
+  ]
+
+  xcodebuild = File.join(path, "Contents/Developer/usr/bin/xcodebuild")
+  version = `#{xcodebuild} -version | head -n1 | cut -d' ' -f2 | xargs`.chomp
+  specs_dir = File.join("lib/fastlane/plugin/xcconfig_actions/helper/xcspecs/#{version}")
+  FileUtils.mkdir_p(specs_dir)
+
+  specs.each do |s|
+    output_path = File.join(specs_dir, File.basename(s))
+    system("plutil -convert xml1 -o #{output_path.shellescape} #{s.shellescape}")
+  end
 end
