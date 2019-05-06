@@ -38,9 +38,9 @@ The build settings are also saved as a dictionary under `SharedValues::XCCONFIG_
 
 ### build_settings_to_flags
 
-Map build settings to Clang Cxx/Objective-C and Swift compiler and linker flags.
+Map build settings to Clang Cxx/Objective-C compiler, Swift compiler and Linker flags.
 
-This action is useful when you plan to reuse xcconfigs with other tools, such as [Buck](https://buckbuild.com/), and you want to translate xcconfigs into the flags for Cxx/Objective-C and Swift compiler and linker to understand.
+This action is useful when you plan to reuse xcconfigs with other tools, such as [Buck](https://buckbuild.com/), and you want to translate xcconfigs into the compiler/linker flags.
 
 Build flags can be printed to standard output or saved to file.
 The flags are also available via lane context as `lane_context[SharedValues::XCCONFIG_ACTIONS_BUILD_FLAGS]`.
@@ -51,9 +51,9 @@ The flags are also available via lane context as `lane_context[SharedValues::XCC
 
 The keys used for tools are:
 
-- `cxx` for Clang CXX/Objective-C compiler
-- `swift` for Swift compiler
-- `linker` for Clang linker
+- `compiler_flags` for Clang CXX/Objective-C compiler.
+- `swift_compiler_flags` for Swift compiler.
+- `linker_flags` for Clang linker.
 
 References:
 

@@ -22,10 +22,10 @@ module Fastlane
         def join(other)
           return self if other.nil?
 
-            joined_flags = [flags, other.flags].reject(&:empty?).join(" ")
-            joined_linker_flags = [linker_flags, other.linker_flags].reject(&:empty?).join(" ")
+          joined_flags = [flags, other.flags].reject(&:empty?).join(" ")
+          joined_linker_flags = [linker_flags, other.linker_flags].reject(&:empty?).join(" ")
 
-            Mapping.new(joined_flags, joined_linker_flags)
+          Mapping.new(joined_flags, joined_linker_flags)
         end
       end
 
@@ -49,9 +49,19 @@ module Fastlane
       end
 
       def self.load_plist(path)
-        xml_plist = Tempfile.new("xcspec.plist").path
-        result = system("plutil -convert xml1 -o #{xml_plist.shellescape} #{path.shellescape}")
-        UI.user_error!("Couldn't convert #{path} xcspec to XML plist") unless result
+        file_type = `file -b --mime-type #{path.shellescape}`.chomp
+        if file_type == "text/xml" || file_type == "application/xml"
+          xml_plist = path
+        else
+          if FastlaneCore::Helper.mac?
+            xml_plist = Tempfile.new("xcspec.plist").path
+            result = system("plutil -convert xml1 -o #{xml_plist.shellescape} #{path.shellescape}")
+            UI.user_error!("Couldn't convert #{path} xcspec to XML plist") unless result
+          else
+            # There is plist-utils library, but it can only convert binary to XML, can't handle ASCII.
+            UI.user_error!("Can't convert ASCII plists to XML on Linux or Windows platform")
+          end
+        end
 
         Nokogiri::PList(File.open(xml_plist))
       end
