@@ -64,11 +64,15 @@ lane :copy_xcspecs_from_xcode do |options|
 
   xcodebuild = File.join(path, "Contents/Developer/usr/bin/xcodebuild")
   version = `#{xcodebuild} -version | head -n1 | cut -d' ' -f2 | xargs`.chomp
-  specs_dir = File.join("lib/fastlane/plugin/xcconfig_actions/helper/xcspecs/#{version}")
+  specs_dir = File.join(repo_path, "lib/fastlane/plugin/xcconfig_actions/helper/xcspecs/#{version}")
+  UI.message("Using Xcode version #{version}")
+  UI.message("Copying to #{specs_dir}")
   FileUtils.mkdir_p(specs_dir)
 
   specs.each do |s|
+    UI.message("Processing #{File.basename(s)}")
     output_path = File.join(specs_dir, File.basename(s))
-    system("plutil -convert xml1 -o #{output_path.shellescape} #{s.shellescape}")
+    result = system("plutil -convert xml1 -o #{output_path.shellescape} #{s.shellescape}")
+    UI.user_error!("Failed to convert xcspec to XML") unless result
   end
 end
