@@ -62,6 +62,13 @@ References:
 - https://gist.github.com/fabiopelosin/4560417
 - https://pewpewthespells.com/blog/xcode_build_system.html
 
+#### Known Issues
+
+Flags like `-sdk iphoneos` and `-isysroot iphoneos` may not be suitable for all uses, so may have to remove them from all flags.
+
+The flag like `-std=gnu++14` is added to `compiler_flags` but it's not applicable for Objective-C code.
+Most tools have differentiation between C flags (C and Objective-C) and Cxx flags (C++/Objective-C++).
+
 ### validate_xcconfig
 
 Validate xcconfig using set of very opinionated rules:
