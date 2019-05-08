@@ -40,11 +40,11 @@ describe Fastlane::Actions::ReadXcconfigAction do
       end
     end
 
-    it 'supports no_resolve option' do
+    it 'supports :resolve option' do
       config = Fastlane::FastFile.new.parse("lane :test do
         read_xcconfig(
           path: '#{basic}',
-          no_resolve: true
+          resolve: false
         )
       end").runner.execute(:test)
 

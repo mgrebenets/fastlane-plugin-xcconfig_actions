@@ -274,7 +274,7 @@ describe Fastlane::Actions::BuildSettingsToFlagsAction do
     end
 
     context 'basic build settings' do
-      let(:basic_build_settings) { Fastlane::Actions::ReadXcconfigAction.run(path: config_path("build_flags/basic.xcconfig")) }
+      let(:basic_build_settings) { Fastlane::Actions::ReadXcconfigAction.run(path: config_path("build_flags/basic.xcconfig"), resolve: true) }
       let(:expected_build_flags) { JSON.parse(File.read(fixture_path("configs/build_flags/expected.json"))) }
 
       it 'maps basic build settings' do

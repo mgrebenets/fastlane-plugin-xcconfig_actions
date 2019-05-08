@@ -17,24 +17,7 @@ module Fastlane
 
         config = read_config(path)
 
-        unless params[:no_resolve]
-          parent_config = read_config(parent)
-
-          parent_config["SRCROOT"] = srcroot
-          parent_config["TARGET_NAME"] = target_name if target_name
-
-          if Helper::XcconfigActionsHelper.command_exist?("xcodebuild")
-            # Set value of XCODE_VERSION_MAJOR not available when reading xcconfigs directly.
-            xcode_version = `xcodebuild -version | head -n1 | cut -d' ' -f2 | xargs`.strip
-            xcode_version_major_padded = xcode_version.split(".").first.rjust(2, "0") + "00"
-            parent_config["XCODE_VERSION_MAJOR"] = xcode_version_major_padded
-          end
-
-          resolved_parent_config = resolve_config(parent_config)
-          resolved_config = resolve_config(config, parent: resolved_parent_config)
-
-          config = resolved_parent_config.merge(resolved_config)
-        end
+        config = resolve(config, parent, srcroot, target_name) if params[:resolve]
 
         Actions.lane_context[SharedValues::XCCONFIG_ACTIONS_BUILD_SETTINGS] = config
 
@@ -48,6 +31,26 @@ module Fastlane
       ###
       # @!group Implementation
       ###
+
+      # Resolve config using parent information.
+      def self.resolve(config, parent, srcroot, target_name)
+        parent_config = read_config(parent)
+
+        parent_config["SRCROOT"] = srcroot
+        parent_config["TARGET_NAME"] = target_name if target_name
+
+        if Helper::XcconfigActionsHelper.command_exist?("xcodebuild")
+          # Set value of XCODE_VERSION_MAJOR not available when reading xcconfigs directly.
+          xcode_version = `xcodebuild -version | head -n1 | cut -d' ' -f2 | xargs`.strip
+          xcode_version_major_padded = xcode_version.split(".").first.rjust(2, "0") + "00"
+          parent_config["XCODE_VERSION_MAJOR"] = xcode_version_major_padded
+        end
+
+        resolved_parent_config = resolve_config(parent_config)
+        resolved_config = resolve_config(config, parent: resolved_parent_config)
+
+        resolved_parent_config.merge(resolved_config)
+      end
 
       # Read xcconfig value as a hash.
       #
@@ -174,11 +177,10 @@ module Fastlane
                               verify_block: proc do |value|
                                               UI.user_error!("Couldn't find parent xcconfig at path: '#{value}'") if value && !File.exist?(value)
                                             end),
-          FastlaneCore::ConfigItem.new(key: :no_resolve,
-                                  env_name: "XCCONFIG_ACTIONS_READ_NO_RESOLVE",
-                               description: "Do not resolve variables in xcconfigs and read 'as is'",
-                             default_value: false,
-                                  optional: true,
+          FastlaneCore::ConfigItem.new(key: :resolve,
+                                  env_name: "XCCONFIG_ACTIONS_READ_RESOLVE",
+                               description: "Resolve variables in xcconfigs",
+                             default_value: true,
                                       type: Boolean),
           FastlaneCore::ConfigItem.new(key: :srcroot,
                                   env_name: "XCCONFIG_ACTIONS_READ_SRCROOT",
