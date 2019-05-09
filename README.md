@@ -66,9 +66,13 @@ References:
 #### Known Issues
 
 Flags like `-sdk iphoneos` and `-isysroot iphoneos` may not be suitable for all uses, so may have to remove them from all flags.
+These settings only get generated if you add `SDKROOT = iphoneos` to your xcconfigs.
 
 The flag like `-std=gnu++14` is added to `compiler_flags` but it's not applicable for Objective-C code.
 Most tools have differentiation between C flags (C and Objective-C) and Cxx flags (C++/Objective-C++).
+
+Flags like `CLANG_ENABLE_CODE_COVERAGE` and `ENABLE_TESTABILITY` will have no effect unless `CLANG_COVERAGE_MAPPING = $(CLANG_ENABLE_CODE_COVERAGE)` and `SWIFT_ENABLE_TESTABILITY = $(ENABLE_TESTABILITY)` are explicitly added to xcconfigs.
+This has to be fixed in the future.
 
 ### validate_xcconfig
 
