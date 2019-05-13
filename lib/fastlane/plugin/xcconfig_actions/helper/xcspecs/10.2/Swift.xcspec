@@ -190,7 +190,7 @@
 				<key>DisplayName</key>
 				<string>Objective-C Bridging Header</string>
 				<key>Name</key>
-				<string>z </string>
+				<string>SWIFT_OBJC_BRIDGING_HEADER</string>
 				<key>Type</key>
 				<string>String</string>
 			</dict>

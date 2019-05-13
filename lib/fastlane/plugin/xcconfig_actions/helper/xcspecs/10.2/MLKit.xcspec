@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>Class</key>
+		<string>XCCompilerSpecificationMLKit</string>
+		<key>CommandLine</key>
+		<string>coremlc compile $(InputFile) $(ProductResourcesDir)/ [options]</string>
+		<key>CommandOutputParser</key>
+		<array>
+			<array>
+				<string>^[^:]*: Warning: (?=[^:]*: (/.*)$)()([^:]*):</string>
+				<string>emit-warning</string>
+			</array>
+			<array>
+				<string>()()Warning: (.+)</string>
+				<string>emit-warning</string>
+			</array>
+			<array>
+				<string>^[^:]*: Error: (?=[^:]*: (/.*)$)()([^:]*):</string>
+				<string>emit-error</string>
+			</array>
+			<array>
+				<string>^([^:]*)(): Error: (.*)$</string>
+				<string>emit-error</string>
+			</array>
+			<array>
+				<string>^detail: ()()(.*)$</string>
+				<string>emit-notice</string>
+			</array>
+		</array>
+		<key>DeeplyStatInputDirectories</key>
+		<string>Yes</string>
+		<key>Description</key>
+		<string>coremlc: compiler of CoreML model .mlmodel into .mlmodelc</string>
+		<key>ExecDescription</key>
+		<string>Compile CoreML model $(InputFile) </string>
+		<key>GeneratedInfoPlistContentFilePath</key>
+		<string>$(COREML_COMPILER_INFOPLIST_CONTENT_FILE)</string>
+		<key>Identifier</key>
+		<string>com.apple.compilers.coreml</string>
+		<key>InputFileTypes</key>
+		<array>
+			<string>file.mlmodel</string>
+		</array>
+		<key>IsArchitectureNeutral</key>
+		<string>Yes</string>
+		<key>MessageCategoryInfoOptions</key>
+		<array>
+			<string>--print-diagnostic-categories</string>
+			<string>destination</string>
+			<string>source</string>
+		</array>
+		<key>Name</key>
+		<string>CoreML Model Compiler</string>
+		<key>Options</key>
+		<array>
+			<dict>
+				<key>Category</key>
+				<string>Code Generation</string>
+				<key>DefaultValue</key>
+				<string>NO</string>
+				<key>Description</key>
+				<string>Generate Swift model classes that are marked with @objc and are descendants of NSObject, in order to be accessible and usable in Objective-C.  This setting has no effect if "CoreML Model Class Generation Language" is set to "Objective-C".</string>
+				<key>DisplayName</key>
+				<string>CoreML Generated Model Inherits NSObject</string>
+				<key>Name</key>
+				<string>COREML_CODEGEN_SWIFT_GLOBAL_MODULE</string>
+				<key>Type</key>
+				<string>Boolean</string>
+			</dict>
+			<dict>
+				<key>Category</key>
+				<string>Code Generation</string>
+				<key>DefaultValue</key>
+				<string>Automatic</string>
+				<key>Description</key>
+				<string>The Source-code language to use for generated CoreML model class.  By default "Automatic" will analyze your project to determine the correct language.  Adjust this setting to explicitly select "Swift" or "Objective-C", or select "None" to disable model class generation.</string>
+				<key>DisplayName</key>
+				<string>CoreML Model Class Generation Language</string>
+				<key>Name</key>
+				<string>COREML_CODEGEN_LANGUAGE</string>
+				<key>Type</key>
+				<string>enum</string>
+				<key>Values</key>
+				<array>
+					<string>Swift</string>
+					<string>Objective-C</string>
+					<string>Automatic</string>
+					<string>None</string>
+				</array>
+			</dict>
+			<dict>
+				<key>DefaultValue</key>
+				<string>$(SWIFT_VERSION)</string>
+				<key>Name</key>
+				<string>COREML_CODEGEN_SWIFT_VERSION</string>
+				<key>Type</key>
+				<string>String</string>
+			</dict>
+			<dict>
+				<key>CommandLinePrefixFlag</key>
+				<string></string>
+				<key>DefaultValue</key>
+				<string></string>
+				<key>Name</key>
+				<string>build_file_compiler_flags</string>
+				<key>Type</key>
+				<string>StringList</string>
+			</dict>
+			<dict>
+				<key>CommandLineFlag</key>
+				<string>--output-partial-info-plist</string>
+				<key>DefaultValue</key>
+				<string>$(TARGET_TEMP_DIR)/$(InputFileBase)-CoreMLPartialInfo.plist</string>
+				<key>Name</key>
+				<string>COREML_COMPILER_INFOPLIST_CONTENT_FILE</string>
+				<key>Type</key>
+				<string>Path</string>
+			</dict>
+		</array>
+		<key>Outputs</key>
+		<array>
+			<string>$(ProductResourcesDir)/$(InputFileBase).mlmodelc</string>
+		</array>
+		<key>ProgressDescription</key>
+		<string>Compiling $(CommandProgressByType) CoreML models</string>
+		<key>RuleName</key>
+		<string>CoreMLModelCompile $(ProductResourcesDir)/ $(InputFile)</string>
+		<key>SynthesizeBuildRule</key>
+		<string>Yes</string>
+		<key>Type</key>
+		<string>Compiler</string>
+	</dict>
+</array>
+</plist>

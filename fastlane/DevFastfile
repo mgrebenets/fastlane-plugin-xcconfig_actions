@@ -1,0 +1,228 @@
+# Development lanes.
+
+fastlane_require("terminal-table")
+
+def repo_path
+  `git rev-parse --show-toplevel`.strip
+end
+
+SPEC_NAMES = [
+  "Clang LLVM*",
+  "CopyPNGFile",
+  "Core Data",
+  "CoreBuildSystem",
+  "Cpp",
+  "DTrace",
+  "Intents",
+  "Ld",
+  "Lex",
+  "Metal Compiler",
+  "Metal Linker",
+  "MLKit",
+  "Nasm",
+  "Native Build System",
+  "NativeBuildSystem",
+  "OpenCL",
+  "OSACompile",
+  "Rez",
+  "Swift",
+  "Yacc"
+]
+
+desc "Copy xcspec files from Xcode.app path and convert them to XML"
+lane :copy_xcspecs_from_xcode do |options|
+  path = options[:path] || "/Applications/Xcode.app"
+  UI.message("Copying specs from #{path}")
+  UI.user_error!("No such path: #{path}") unless File.exist?(path)
+  search_path = File.join(path, "Contents", "{Plugins,Developer/Platforms/MacOSX.platform/Developer/Library/Xcode/Specifications}")
+
+  specs = SPEC_NAMES.map { |n| Dir[File.join(search_path, "**/#{n}.xcspec")].first }
+
+  version = xcode_version(path)
+  specs_dir = xcspecs_path(version)
+  UI.message("Using Xcode version #{version}")
+  UI.message("Copying to #{specs_dir}")
+  FileUtils.mkdir_p(specs_dir)
+
+  specs.each do |s|
+    UI.message("Processing #{File.basename(s)}")
+    output_path = File.join(specs_dir, File.basename(s))
+    result = system("plutil -convert xml1 -o #{output_path.shellescape} #{s.shellescape}")
+    UI.user_error!("Failed to convert xcspec to XML") unless result
+  end
+end
+
+lane :generate_help_pages do |options|
+  xcode_path = options[:xcode_path] || "/Applications/Xcode.app"
+  UI.user_error!("Xcode path doesn't exist: #{xcode_path}") unless File.exist?(xcode_path)
+
+  # All versions of Xcode have help files, e.g. /Applications/Xcode.app/Contents/Resources/Xcode.help/Contents/Resources/en.lproj
+  help_dir = File.join(xcode_path, "Contents/Resources/Xcode.help/Contents/Resources/en.lproj")
+  html_page = Dir[File.join(help_dir, "itc*.html")].first
+  tmp_file = Tempfile.new(["README", ".md"]).path
+
+  # Convert to GitHub Markdown (gfm).
+  sh("pandoc -t gfm-fenced_code_attributes #{html_page.shellescape} -o #{tmp_file.shellescape} --wrap=none --atx-header")
+
+  # Some ugly post-processing.
+  markdown = File.read(tmp_file)
+                 .gsub("\\", "")
+                 .gsub("`2``2`", "[2][2]")
+                 .gsub("``````", "```\n\n```")
+                 .gsub(/``(\s+)?/, "\n\\1")
+                 .gsub(/`(.*\n.*)?`/, "```cpp\n\\1\n```")
+                 .gsub(/`(\{|struct)/, "```cpp\n\\1")
+                 .gsub(/(\};*)`/, "\\1\n```")
+                 .gsub(/\(\w*\.html(#\w*)\)/, "(\\1)")
+                 .gsub(/^.*AppIconDefault.*$/, "")
+                 .gsub(%r{<div class="LinkUniversal".*</div>}m, "")
+
+  XcHelper = Fastlane::Actions::BuildSettingsToFlagsAction
+  specs = SPEC_NAMES.map { |n| XcHelper.load_spec(n, xcode: xcode_path) }
+
+  paragraphs = markdown.split("<div")
+
+  user_settings = paragraphs.reduce({}) do |memo, p|
+    name = setting_name(p)
+    next memo unless name
+    memo.merge({ name => { ref: setting_ref(p) } })
+  end
+
+  updated_paragraphs = paragraphs.map do |p|
+    name = setting_name(p)
+    next p unless name
+
+    UI.message("Processing #{name.green}")
+    info = setting_info(name, specs, user_settings)
+    UI.important("No mapping available for #{name}") unless info
+
+    p + "\n#{info}\n\n"
+  end
+  markdown = updated_paragraphs.join("<div")
+
+  # Add hidden build settings.
+  markdown += "\n# Hidden Build Settings\n"
+
+  specs.each do |spec|
+    spec.options.each do |option|
+      name = option["Name"]
+      next if user_settings.key?(name) # Not hidden.
+
+      UI.message("Processing hidden build setting #{name.cyan}")
+      info = setting_info(name, specs, user_settings)
+      UI.important("No mapping available for #{name}") unless info
+
+      markdown += [
+        "\n<div id=\"#{name}\" class=\"Subhead\">\n",
+        "## 🔐 #{name}\n",
+        info.to_s,
+        "\n</div>\n"
+      ].join("\n")
+    end
+  end
+
+  specs_dir = xcspecs_path(xcode_version(xcode_path))
+  File.open(File.join(specs_dir, "README.md"), "w") { |f| f.puts(markdown) }
+end
+
+def setting_name(paragraph)
+  title = paragraph.lines.find { |l| l.start_with?("##") }
+  return nil unless title
+
+  title = title.gsub("## ", "").strip
+  m = title.match(/\((\w*)?\)$/)
+  m.nil? ? title : m.captures.first
+end
+
+def setting_ref(paragraph)
+  div_line = paragraph.lines.find { |l| l.match?(/id=.*class=.*/) }
+  return nil unless div_line
+
+  m = div_line.match(/id="(.*)?" /)
+  m.nil? ? nil : m.captures.first
+end
+
+def setting_info(name, specs, user_settings)
+  info = find_setting(name, specs)
+  return nil unless info
+
+  rows = to_rows(info, user_settings)
+  table = Terminal::Table.new(rows: rows)
+  table.headings = [" ", " "]
+  table.style = { border_i: "|", border_top: false, border_bottom: false }
+
+  refs = find_references(name, specs).map { |r| "[#{r}](##{find_anchor(r, user_settings)})" }.join("\n")
+  table << ["References", refs]
+
+  table
+end
+
+def find_references(name, specs)
+  specs.collect do |s|
+    s.options.select { |o| o["Name"] != name && o.to_s.include?(name) }.collect { |o| o["Name"] }
+  end.flatten.sort.uniq
+end
+
+def find_anchor(reference, user_settings)
+  user_settings[reference] ? user_settings[reference][:ref] : reference
+end
+
+def to_rows(info, user_settings, nested: false)
+  info.reduce([]) do |memo, (k, v)|
+    if v.kind_of?(String)
+      memo << [format_title(k, nested), format_value(v, user_settings)]
+    elsif v.kind_of?(Array)
+      memo << [format_title(k, nested), format_value(v.join("\n"), user_settings)]
+    else
+      (memo << [format_title(k, nested), ""]) + to_rows(v, user_settings, nested: true)
+    end
+  end
+end
+
+def format_title(value, nested)
+  return '`""`' if value.empty?
+  return "`<<otherwise>>`" if value.eql?("<<otherwise>>")
+  nested ? "`#{value}`" : value
+end
+
+def format_value(value, user_settings)
+  updated_value = value
+                  .gsub(/^stringlist$/, "StringList")
+                  .gsub(/^string$/, "String")
+                  .gsub(/^boolean$/, "Boolean")
+                  .gsub(/^bool$/, "Boolean")
+                  .gsub(/^pathlist$/, "PathList")
+                  .gsub(/^path$/, "Path")
+                  .gsub("$", "\\$")
+                  .gsub("|", "\\|") # Escape '|' so it doesn't break markdown table layout.
+
+  add_links(updated_value, user_settings)
+end
+
+def add_links(value, user_settings)
+  matches = value.scan(/\$\((\w*)\)/)
+  return value unless matches
+
+  matches.flatten.each do |c|
+    value.gsub!(/\$\(#{c}\)/, "$([#{c}](##{find_anchor(c, user_settings)}))")
+  end
+
+  value
+end
+
+def find_setting(name, specs)
+  specs.each do |spec|
+    result = spec.find_option(name)
+    return result if result
+  end
+  nil
+end
+
+def xcspecs_path(xcode_version)
+  File.join(repo_path, "lib/fastlane/plugin/xcconfig_actions/helper/xcspecs/#{xcode_version}")
+end
+
+def xcode_version(xcode_path)
+  xcodebuild = File.join(xcode_path, "Contents/Developer/usr/bin/xcodebuild")
+  version = `#{xcodebuild} -version | head -n1 | cut -d' ' -f2 | xargs`.chomp
+end

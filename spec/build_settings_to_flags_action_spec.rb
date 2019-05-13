@@ -316,7 +316,7 @@ describe Fastlane::Actions::BuildSettingsToFlagsAction do
       it 'raises error when invalid xcode version or path specified' do
         expect do
           build_settings_to_flags_test(build_settings: {}, xcode: "invalid_value")
-        end.to raise_error(/Can't find app path of xcspecs folder for xcode:/)
+        end.to raise_error(/Can't find xcspec with name:/)
       end
     end
 

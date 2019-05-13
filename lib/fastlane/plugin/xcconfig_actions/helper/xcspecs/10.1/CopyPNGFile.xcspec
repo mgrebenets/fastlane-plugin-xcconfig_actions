@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>CommandLine</key>
+		<string>copypng [options] $(IPHONE_OPTIMIZE_OPTIONS) [input] [output]</string>
+		<key>CommandOutputParser</key>
+		<array>
+			<array>
+				<string>()()(^.*caught libpng error.*)</string>
+				<string>emit-error</string>
+			</array>
+			<array>
+				<string>()()(^Could not find file:.*)</string>
+				<string>emit-error</string>
+			</array>
+			<array>
+				<string>()()(^[^:]+: [^:]+: No such file or directory)</string>
+				<string>emit-error</string>
+			</array>
+			<array>
+				<string>()()(^[^:]+: [^:]+: Permission denied)</string>
+				<string>emit-error</string>
+			</array>
+			<array>
+				<string>()()(^[^:]+: [^:]+: Is a directory)</string>
+				<string>emit-error</string>
+			</array>
+		</array>
+		<key>Description</key>
+		<string>Copies a .png file resource, optionally compressing it.</string>
+		<key>EnvironmentVariables</key>
+		<dict>
+			<key>DEVELOPER_DIR</key>
+			<string>$(DEVELOPER_DIR)</string>
+			<key>SDKROOT</key>
+			<string>$(SDKROOT)</string>
+			<key>TOOLCHAINS</key>
+			<string>$(TOOLCHAINS)</string>
+		</dict>
+		<key>ExecDescription</key>
+		<string>Copy $(InputFile)</string>
+		<key>Identifier</key>
+		<string>com.apple.build-tasks.copy-png-file</string>
+		<key>InputFileTypes</key>
+		<array>
+			<string>image.png</string>
+		</array>
+		<key>Name</key>
+		<string>Compress PNG Files</string>
+		<key>Options</key>
+		<array>
+			<dict>
+				<key>Category</key>
+				<string>Packaging</string>
+				<key>CommandLineArgs</key>
+				<dict>
+					<key>NO</key>
+					<array/>
+					<key>YES</key>
+					<array>
+						<string>-compress</string>
+					</array>
+				</dict>
+				<key>DefaultValue</key>
+				<string>YES</string>
+				<key>Description</key>
+				<string>If enabled, PNG resource files are compressed as they are copied.</string>
+				<key>DisplayName</key>
+				<string>Compress PNG Files</string>
+				<key>Name</key>
+				<string>COMPRESS_PNG_FILES</string>
+				<key>Type</key>
+				<string>Boolean</string>
+			</dict>
+			<dict>
+				<key>Category</key>
+				<string>Packaging</string>
+				<key>CommandLineArgs</key>
+				<dict>
+					<key>NO</key>
+					<array/>
+					<key>YES</key>
+					<array>
+						<string>-strip-PNG-text</string>
+					</array>
+				</dict>
+				<key>DefaultValue</key>
+				<string>YES</string>
+				<key>Description</key>
+				<string>Metadata in the form of text chunks in PNG files will be removed to reduce their footprint on disk.</string>
+				<key>DisplayName</key>
+				<string>Remove Text Metadata From PNG Files</string>
+				<key>Name</key>
+				<string>STRIP_PNG_TEXT</string>
+				<key>Type</key>
+				<string>Boolean</string>
+			</dict>
+		</array>
+		<key>OutputPath</key>
+		<string>$(ProductResourcesDir)/$(InputFileName)</string>
+		<key>ProgressDescription</key>
+		<string>Copying $(CommandProgressByType) files</string>
+		<key>RuleName</key>
+		<string>CopyPNGFile $(ProductResourcesDir)/$(InputFileName) $(InputFileRelativePath)</string>
+		<key>SynthesizeBuildRule</key>
+		<string>Yes</string>
+		<key>Type</key>
+		<string>Compiler</string>
+	</dict>
+</array>
+</plist>

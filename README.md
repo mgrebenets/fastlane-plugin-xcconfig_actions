@@ -52,7 +52,6 @@ The result is a dictionary with following keys:
 - `linker_flags` for Clang linker.
 
 <!-- TODO: Add info on how it works. -->
-<!-- All versions of Xcode have help files here: /Applications/Xcode.app/Contents//Resources/Xcode.help/Contents/Resources/en.lproj -->
 
 References:
 

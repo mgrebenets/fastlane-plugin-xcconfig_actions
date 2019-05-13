@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CommandLine</key>
+	<string>cc -E -P -x c -Wno-trigraphs  [input] -F$(BUILT_PRODUCTS_DIR) [options] -o [output]</string>
+	<key>CommandOutputParser</key>
+	<string>XCGccCommandOutputParser</string>
+	<key>Description</key>
+	<string>Standalone C Preprocessor</string>
+	<key>ExecDescription</key>
+	<string>Preprocess $(InputFile)</string>
+	<key>Identifier</key>
+	<string>com.apple.compilers.cpp</string>
+	<key>IsAbstract</key>
+	<string>YES</string>
+	<key>Name</key>
+	<string>Cpp</string>
+	<key>Options</key>
+	<array>
+		<dict>
+			<key>CommandLineFlag</key>
+			<string>-isysroot</string>
+			<key>Name</key>
+			<string>SDKROOT</string>
+			<key>Type</key>
+			<string>Path</string>
+		</dict>
+		<dict>
+			<key>CommandLinePrefixFlag</key>
+			<string>-D</string>
+			<key>Name</key>
+			<string>CPP_PREPROCESSOR_DEFINITIONS</string>
+			<key>Type</key>
+			<string>stringlist</string>
+		</dict>
+		<dict>
+			<key>CommandLineFlag</key>
+			<string>-include</string>
+			<key>InputInclusions</key>
+			<string>$(CPP_PREFIX_HEADER)</string>
+			<key>Name</key>
+			<string>CPP_PREFIX_HEADER</string>
+			<key>Type</key>
+			<string>string</string>
+		</dict>
+		<dict>
+			<key>CommandLinePrefixFlag</key>
+			<string></string>
+			<key>Name</key>
+			<string>CPP_OTHER_PREPROCESSOR_FLAGS</string>
+			<key>Type</key>
+			<string>stringlist</string>
+		</dict>
+	</array>
+	<key>ProgressDescription</key>
+	<string>Preprocessing $(CommandProgressByType) files</string>
+	<key>RuleName</key>
+	<string>Preprocess $(OutputPath) $(InputPath)</string>
+	<key>Type</key>
+	<string>Tool</string>
+</dict>
+</plist>

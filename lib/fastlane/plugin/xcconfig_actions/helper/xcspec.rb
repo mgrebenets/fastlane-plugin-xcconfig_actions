@@ -33,19 +33,18 @@ module Fastlane
       # @!group Initialization
       ###
 
-      attr_reader :tool
+      attr_reader :path, :options
 
-      def initialize(path, id: nil, standard_spec: nil, core_spec: nil)
+      def initialize(path, core_build_system_spec: nil)
         UI.user_error!("No such file: #{path}") unless path && File.exist?(path)
 
-        @plist = Xcspec.load_plist(path)
-        @tool = find_tool(id)
+        @path = path
 
-        all_tools = [@tool]
-        all_tools << standard_spec.tool if standard_spec
-        all_tools << core_spec.tool if core_spec
+        plist = Xcspec.load_plist(path)
+        tools = plist.kind_of?(Array) ? plist : [plist]
 
-        @all_options = all_tools.flat_map { |t| t["Options"] }
+        @options = tools.flat_map { |t| t["Options"] || t["Properties"] }.compact
+        @options += core_build_system_spec.options if core_build_system_spec
       end
 
       def self.load_plist(path)
@@ -66,9 +65,12 @@ module Fastlane
         Nokogiri::PList(File.open(xml_plist))
       end
 
-      def find_tool(id)
-        return @plist unless @plist.kind_of?(Array)
-        id ? @plist.find { |t| t["Identifier"] == id } : @plist.first
+      ###
+      # @!group Helpers
+      ###
+
+      def find_option(name)
+        @options.find { |o| o["Name"] == name }
       end
 
       ###
@@ -78,7 +80,7 @@ module Fastlane
       def map_build_settings(build_settings)
         # Build settings provided for mapping will not include all possible build settings.
         # Add default values for missing build settings.
-        missing_build_settings = @all_options.reduce({}) do |memo, opt|
+        missing_build_settings = @options.reduce({}) do |memo, opt|
           name = opt["Name"]
           build_settings.key?(name) ? memo : memo.merge({ name => opt["DefaultValue"] })
         end
@@ -92,7 +94,7 @@ module Fastlane
       end
 
       def map_build_setting_value(name, value, build_settings)
-        option = @tool["Options"].find { |o| o["Name"] == name }
+        option = find_option(name)
         return nil unless option
 
         map_option(option, value, build_settings)

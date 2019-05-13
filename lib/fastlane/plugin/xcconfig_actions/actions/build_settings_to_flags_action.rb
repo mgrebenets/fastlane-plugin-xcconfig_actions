@@ -17,9 +17,10 @@ module Fastlane
         UI.user_error!("Missing build settings input") unless build_settings
         xcode = params[:xcode]
 
-        clang_spec = load_tool_spec("Clang*", xcode: xcode)
-        swift_spec = load_tool_spec("Swift*", xcode: xcode)
-        linker_spec = load_tool_spec("Ld*", xcode: xcode)
+        # TODO: Add support for com.apple.compilers.llvm.clang.1_0.analyzer tool.
+        clang_spec = load_complete_spec("Clang*", xcode: xcode)
+        swift_spec = load_complete_spec("Swift*", xcode: xcode)
+        linker_spec = load_complete_spec("Ld*", xcode: xcode)
 
         clang_mapping = clang_spec.map_build_settings(build_settings)
         swift_mapping = swift_spec.map_build_settings(build_settings)
@@ -49,16 +50,16 @@ module Fastlane
       # @!group Xcspecs
       ###
 
-      def self.load_tool_spec(tool, xcode:)
-        core_spec_path = ActionHelper.find_xcspec("CoreBuildSystem*", xcode: xcode)
-        standard_spec = Xcspec.new(core_spec_path, id: "com.apple.buildsettings.standard")
-        core_spec = Xcspec.new(core_spec_path, id: "com.apple.build-system.core")
-
+      def self.load_complete_spec(name, xcode:)
         Xcspec.new(
-          ActionHelper.find_xcspec(tool, xcode: xcode),
-          standard_spec: standard_spec,
-          core_spec: core_spec
+          ActionHelper.find_xcspec(name, xcode: xcode),
+          core_build_system_spec: load_spec("CoreBuildSystem*", xcode: xcode)
         )
+      end
+
+      def self.load_spec(name, xcode:)
+        spec_path = ActionHelper.find_xcspec(name, xcode: xcode)
+        Xcspec.new(spec_path)
       end
 
       ###
