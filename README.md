@@ -32,7 +32,6 @@ Things **not supported** at the moment:
 
 - Conditional variable assignment, such as `FOO[sdk=macosx*] = 1`
 - Use of `<DEVELOPER_DIR>` in include paths
-- Use of curly braces in variable references, e.g. `${VAR}`
 
 The build settings are also saved as a dictionary under `SharedValues::XCCONFIG_ACTIONS_BUILD_SETTINGS` key in current `lane_context`.
 
@@ -54,6 +53,9 @@ The result is a dictionary with following keys:
 <!-- TODO: Add info on how it works. -->
 
 References:
+
+- [Xcode 10.1 Build Settings](lib/fastlane/plugin/xcconfig_actions/helper/xcspecs/10.1/README.md)
+- [Xcode 10.2 Build Settings](lib/fastlane/plugin/xcconfig_actions/helper/xcspecs/10.2/README.md)
 
 - [Xcode Build Settings](https://help.apple.com/xcode/mac/10.2/#/itcaec37c2a6)
 - [LLVM Clang Command Line Options](https://clang.llvm.org/docs/ClangCommandLineReference.html)
