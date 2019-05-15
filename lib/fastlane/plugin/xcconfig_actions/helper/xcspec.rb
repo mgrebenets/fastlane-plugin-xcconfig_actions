@@ -78,6 +78,18 @@ module Fastlane
       ###
 
       def map_build_settings(build_settings)
+        # Some settings like ENABLE_TESTABILITY are used as default value for other build settings,
+        # e.g. SWIFT_ENABLE_TESTABILITY.
+        # So need to treat dependant (implicit) build settings as if they were defined in xcconfig
+        # in order to get them properly resolved.
+        implicit_build_settings = @options.reduce({}) do |memo, opt|
+          name = opt["Name"]
+          next memo if build_settings.key?(name)
+          reference = build_settings.find { |k, _| opt["DefaultValue"].eql?("$(#{k})") }
+          reference ? memo.merge({ name => reference.last }) : memo
+        end
+        build_settings = build_settings.merge(implicit_build_settings)
+
         # Build settings provided for mapping will not include all possible build settings.
         # Add default values for missing build settings.
         missing_build_settings = @options.reduce({}) do |memo, opt|
@@ -252,9 +264,15 @@ module Fastlane
         # Quote everything except YES and NO.
         resolved_condition = (" " + resolved_condition + " ").gsub(/\s((\w|\d|-|\+|\.)+?)\s/, " '\\1' ").gsub(/'(YES|NO)'/, '\\1')
 
-        # rubocop:disable Security/Eval
-        eval(resolved_condition)
-        # rubocop:enable Security/Eval
+        begin
+          # rubocop:disable Security/Eval
+          eval(resolved_condition)
+          # rubocop:enable Security/Eval
+        rescue SyntaxError
+          # Values like USE_LLVM_TARGET_TRIPLES_FOR_CLANG are not defined anywhere.
+          # Those will be resolved into nothing and result into condition that can't be evaluated.
+          false
+        end
       end
     end
   end

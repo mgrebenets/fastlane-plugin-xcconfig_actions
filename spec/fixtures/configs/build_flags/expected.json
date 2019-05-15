@@ -1,5 +1,5 @@
 {
-    "compiler_flags": "-Wdocumentation -Werror=conversion -Wno-sign-conversion -Wunguarded-availability -Wunreachable-code-aggressive -Wno-uninitialized -DNS_BLOCK_ASSERTIONS=1 -O1 -w",
-    "swift_compiler_flags": "-g -Onone -whole-module-optimization -remove-runtime-asserts",
+    "compiler_flags": "-Wdocumentation -Werror=conversion -Wno-sign-conversion -Wunguarded-availability -Wunreachable-code-aggressive -Wno-uninitialized -DNS_BLOCK_ASSERTIONS=1 -O1 -w -Werror=constant-conversion -Werror=int-conversion -Werror=bool-conversion -Werror=enum-conversion -Werror=float-conversion -Werror=non-literal-null-conversion -Werror=objc-literal-conversion",
+    "swift_compiler_flags": "-g -Onone -whole-module-optimization -remove-runtime-asserts -enable-testing",
     "linker_flags": ""
 }
