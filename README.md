@@ -64,16 +64,23 @@ References:
 - https://gist.github.com/fabiopelosin/4560417
 - https://pewpewthespells.com/blog/xcode_build_system.html
 
+#### Caveats
+
+Flags like `-sdk iphoneos` and `-isysroot iphoneos` may not be suitable for all uses.
+These settings only get generated if you add `SDKROOT = iphoneos` to your xcconfigs, so don't define `SDKROOT` in xcconfigs and leave it to build tool.
+
+##### Code Coverage
+
+Flags like `CLANG_ENABLE_CODE_COVERAGE` will not have effect if set to `YES`.
+This flag needs to be accompanied to changes in Xcode scheme UI to enable code coverage.
+When ran from command just settings `CLANG_ENABLE_CODE_COVERAGE=YES` has no effect either, instead the `-enableCodeCoverage YES` option has to be used.
+
+In case of `CLANG_ENABLE_CODE_COVERAGE` add `CLANG_COVERAGE_MAPPING = YES` to xcconfigs to get proper flags mapping.
+
 #### Known Issues
 
-Flags like `-sdk iphoneos` and `-isysroot iphoneos` may not be suitable for all uses, so may have to remove them from all flags.
-These settings only get generated if you add `SDKROOT = iphoneos` to your xcconfigs.
-
-The flag like `-std=gnu++14` is added to `compiler_flags` but it's not applicable for Objective-C code.
+- [ ] The flags like `-std=gnu++14` are added to `compiler_flags` but are not applicable for C/Objective-C code.
 Most tools have differentiation between C flags (C and Objective-C) and Cxx flags (C++/Objective-C++).
-
-Flags like `CLANG_ENABLE_CODE_COVERAGE` and `ENABLE_TESTABILITY` will have no effect unless `CLANG_COVERAGE_MAPPING = $(CLANG_ENABLE_CODE_COVERAGE)` and `SWIFT_ENABLE_TESTABILITY = $(ENABLE_TESTABILITY)` are explicitly added to xcconfigs.
-This has to be fixed in the future.
 
 ### validate_xcconfig
 
