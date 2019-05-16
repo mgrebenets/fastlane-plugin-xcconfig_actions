@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency('nokogiri-plist')
 
   spec.add_development_dependency('bundler')
+  spec.add_development_dependency('coveralls')
   spec.add_development_dependency('fastlane', '>= 2.116.1')
   spec.add_development_dependency('pry')
   spec.add_development_dependency('rake')

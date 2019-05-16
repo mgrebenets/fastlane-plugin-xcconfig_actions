@@ -32,6 +32,7 @@ jobs:
 
       # run tests!
       - run:
+          context: api-tokens
           name: run tests
           command: bundle exec rake
 
@@ -41,3 +42,5 @@ jobs:
       - store_artifacts:
           path: ~/repo/test-results
           destination: test-results
+      - store_artifacts:
+          path: coverage
