@@ -68,14 +68,15 @@ References:
 
 #### Caveats
 
-Flags like `-sdk iphoneos` and `-isysroot iphoneos` may not be suitable for all uses.
+Flags like `-sdk iphoneos` and `-isysroot iphoneos` may not be suitable for all use cases.
 These settings only get generated if you add `SDKROOT = iphoneos` to your xcconfigs, so don't define `SDKROOT` in xcconfigs and leave it to build tool.
 
 ##### Code Coverage
 
 Flags like `CLANG_ENABLE_CODE_COVERAGE` will not have effect if set to `YES`.
-This flag needs to be accompanied to changes in Xcode scheme UI to enable code coverage.
-When ran from command just settings `CLANG_ENABLE_CODE_COVERAGE=YES` has no effect either, instead the `-enableCodeCoverage YES` option has to be used.
+This flag needs to be accompanied by changes in Xcode scheme UI to enable code coverage.
+
+When used from command just setting `CLANG_ENABLE_CODE_COVERAGE=YES` has no effect either, instead the `-enableCodeCoverage YES` option has to be used.
 
 In case of `CLANG_ENABLE_CODE_COVERAGE` add `CLANG_COVERAGE_MAPPING = YES` to xcconfigs to get proper flags mapping.
 
@@ -83,6 +84,7 @@ In case of `CLANG_ENABLE_CODE_COVERAGE` add `CLANG_COVERAGE_MAPPING = YES` to xc
 
 - [ ] The flags like `-std=gnu++14` are added to `compiler_flags` but are not applicable for C/Objective-C code.
 Most tools have differentiation between C flags (C and Objective-C) and Cxx flags (C++/Objective-C++).
+The solution would be to return 2 sets of flags for C and Cxx families, instead of just one `compiler_flags` option.
 
 ### validate_xcconfig
 
@@ -92,33 +94,33 @@ Validate xcconfig using set of very opinionated rules:
 - Include flow is unidirectional, i.e. top-down only:
 
 ```c
-#include "../level_up.xcconfig" // File is in parent directory.
+#include "../level_up.xcconfig" // ERROR: File is in parent directory.
 ```
 
 - Files do not include other files on the same level:
 
 ```c
-#include "same_level.xcconfig" // Included file is on the same level.
+#include "same_level.xcconfig" // ERROR: Included file is on the same level.
 ```
 
 - Files do not include other files more than 1 level down
 
 ```c
-#include "level1/level2/level2.xcconfig" // 2 levels down: level1/level2.
+#include "level1/level2/level2.xcconfig" // ERROR: 2 levels down: level1/level2.
 ```
 
 - Duplicated includes are not allowed
 
 ```c
 #include "other.xcconfig"
-#include "other.xcconfig" // Duplicated include.
+#include "other.xcconfig" // ERROR: Duplicated include.
 ```
 
 - Circular includes are not allowed
 
 ```c
 // example.xcconfig file
-#include "example.xcconfig" // Include self creates circular include.
+#include "example.xcconfig" // ERROR: Include self creates circular include.
 ```
 
 Things **not supported** at the moment:
@@ -130,8 +132,8 @@ Things **not supported** at the moment:
 Xcconfigs are too easy to get out of hand.
 Ability to use arbitrary include paths complicates usage of xcconfigs in quite a few ways:
 
-- Hard to track where the variables are declared and the overwritten
-- Xcode does not always report an error when a file is missing
+- Hard to track where the variables are declared and then overwritten
+- Xcode does not always report an error when a file is missing, but silently fails to resolve variables instead
 
 These rules introduce convention to organizing xcconfigs.
 The end goal is to make config files more manageable.
