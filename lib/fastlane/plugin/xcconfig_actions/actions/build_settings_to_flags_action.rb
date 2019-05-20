@@ -4,14 +4,21 @@ require_relative '../helper/xcspec'
 
 module Fastlane
   module Actions
+    # Alias for helper class.
     ActionHelper = Fastlane::Helper::XcconfigActionsHelper
+    # Alias for Xcspec class.
     Xcspec = Fastlane::Helper::Xcspec
 
     module SharedValues
+      # Key for accessing build flags shared value in lane context.
       XCCONFIG_ACTIONS_BUILD_FLAGS = :XCCONFIG_ACTIONS_BUILD_FLAGS
     end
 
+    # Action to map build settings to build flags.
     class BuildSettingsToFlagsAction < Action
+      # Run action.
+      # @param [Hash] params Action parameters.
+      # @return [Hash] Build flags.
       def self.run(params)
         build_settings = params[:build_settings] || Actions.lane_context[SharedValues::XCCONFIG_ACTIONS_BUILD_SETTINGS]
         UI.user_error!("Missing build settings input") unless build_settings
@@ -50,6 +57,10 @@ module Fastlane
       # @!group Xcspecs
       ###
 
+      # Load complete spec.
+      # @param [String] name Name of the xcspec.
+      # @param [String] xcode Path to or version of Xcode.
+      # @return [Xcspec] Xcspec that includes Core Build System options.
       def self.load_complete_spec(name, xcode:)
         Xcspec.new(
           ActionHelper.find_xcspec(name, xcode: xcode),
@@ -57,6 +68,10 @@ module Fastlane
         )
       end
 
+      # Load xcspec.
+      # @param [String] name Spec name.
+      # @param [String] xcode Path to or version of Xcode.
+      # @return [Xcspec] Loaded xcspecs.
       def self.load_spec(name, xcode:)
         spec_path = ActionHelper.find_xcspec(name, xcode: xcode)
         Xcspec.new(spec_path)
@@ -66,18 +81,22 @@ module Fastlane
       # @!group Info and Options
       ###
 
+      # Plugin action description.
       def self.description
         "Map xcconfig build settings to compiler and linker build flags"
       end
 
+      # Plugin action authors.
       def self.authors
         ["Maksym Grebenets"]
       end
 
+      # Plugin action return value.
       def self.return_value
         "Build flags dictionary"
       end
 
+      # Plugin action details.
       def self.details
         [
           "Build flags keys:",
@@ -87,10 +106,12 @@ module Fastlane
         ].join("\n")
       end
 
+      # Plugin action category.
       def self.category
         :building
       end
 
+      # Plugin action available options.
       def self.available_options
         [
           FastlaneCore::ConfigItem.new(key: :build_settings,
@@ -115,6 +136,9 @@ module Fastlane
         ]
       end
 
+      # Check if platform is supported by the action.
+      # @param [Symbol] platform Platform to check.
+      # @return [Boolean] A Boolean indicating whether the platform is supported by the action.
       def self.is_supported?(platform)
         [:ios, :mac].include?(platform)
       end

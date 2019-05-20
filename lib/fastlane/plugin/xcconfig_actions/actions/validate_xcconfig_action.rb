@@ -3,7 +3,11 @@ require_relative '../helper/xcconfig_actions_helper'
 
 module Fastlane
   module Actions
+    # Action for validating Xcconfig files.
     class ValidateXcconfigAction < Action
+      # Run action.
+      # @param [Hash] params Action parameters.
+      # @return [Array<String>] List of validation issues.
       def self.run(params)
         path = params[:path]
         root_path = params[:root_path]
@@ -17,9 +21,10 @@ module Fastlane
       ###
 
       # Validate xcconfig file.
-      # @param [String] xcconfig path to xcconfig.
-      # @param [String] root_path root path for all xcconfigs validated in this method.
-      # @param [Array<String>] list of files included so far, used to detect circular includes.
+      # @param [String] xcconfig Path to xcconfig.
+      # @param [String] root_path Root path for all xcconfigs validated in this method.
+      # @param [Array<String>] included_paths List of files included so far, used to detect circular includes.
+      # @param [Int] level Nesting level of xcconfig.
       # @return [Array<String>] list of issues.
       def self.validate_xcconfig(xcconfig, root_path:, included_paths: [], level: 0)
         require "pathname"
@@ -68,18 +73,22 @@ module Fastlane
       # @!group Info and Options
       ###
 
+      # Plugin action description.
       def self.description
         "Validate xcconfig file"
       end
 
+      # Plugin action authors.
       def self.authors
         ["Maksym Grebenets"]
       end
 
+      # Plugin action return value.
       def self.return_value
         "List of validation issues"
       end
 
+      # Plugin action details.
       def self.details
         [
           "Validation rules:",
@@ -91,10 +100,12 @@ module Fastlane
         ].join("\n")
       end
 
+      # Plugin action category.
       def self.category
         :linting
       end
 
+      # Plugin action available options.
       def self.available_options
         [
           FastlaneCore::ConfigItem.new(key: :path,
@@ -116,6 +127,9 @@ module Fastlane
         ]
       end
 
+      # Check if platform is supported by the action.
+      # @param [Symbol] platform Platform to check.
+      # @return [Boolean] A Boolean indicating whether the platform is supported by the action.
       def self.is_supported?(platform)
         [:ios, :mac].include?(platform)
       end

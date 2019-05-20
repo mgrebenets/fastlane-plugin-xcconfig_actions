@@ -3,12 +3,19 @@ require 'json'
 require_relative '../helper/xcconfig_actions_helper'
 
 module Fastlane
+  # Extension for Fastlane::Actions.
   module Actions
+    # Values shared by action.
     module SharedValues
+      # Key for accessing xcconfig shared value in lane context.
       XCCONFIG_ACTIONS_BUILD_SETTINGS = :XCCONFIG_ACTIONS_BUILD_SETTINGS
     end
 
+    # Action to read and resolve values in Xcconfig files.
     class ReadXcconfigAction < Action
+      # Run action.
+      # @param [Hash] params Action parameters.
+      # @return [Hash] Xcconfig dictionary.
       def self.run(params)
         path = params[:path]
         parent = params[:parent]
@@ -33,6 +40,11 @@ module Fastlane
       ###
 
       # Resolve config using parent information.
+      # @param [Hash] config Config to resolve.
+      # @param [Hash] parent Parent config.
+      # @param [String] srcroot Path to use for $(SRCROOT).
+      # @param [String] target_name Name to use for $(TARGET_NAME)
+      # @return [Hash] Resolved config.
       def self.resolve(config, parent, srcroot, target_name)
         parent_config = read_config(parent)
 
@@ -139,26 +151,32 @@ module Fastlane
       # @!group Info and Options
       ###
 
+      # Plugin action description.
       def self.description
         "Read and resolve contents of xcconfig file and return as JSON"
       end
 
+      # Plugin action authors.
       def self.authors
         ["Maksym Grebenets"]
       end
 
+      # Plugin action return value.
       def self.return_value
         "Parse and resolved build settings from xcconfig represented as JSON"
       end
 
+      # Plugin action details.
       def self.details
         ""
       end
 
+      # Plugin action category.
       def self.category
         :building
       end
 
+      # Plugin action available options.
       def self.available_options
         [
           FastlaneCore::ConfigItem.new(key: :path,
@@ -200,6 +218,9 @@ module Fastlane
         ]
       end
 
+      # Check if platform is supported by the action.
+      # @param [Symbol] platform Platform to check.
+      # @return [Boolean] A Boolean indicating whether the platform is supported by the action.
       def self.is_supported?(platform)
         [:ios, :mac].include?(platform)
       end

@@ -2,23 +2,38 @@ require "plist"
 require "nokogiri-plist"
 
 module Fastlane
+  # Alias for displaying UI messages.
   UI = UI unless Fastlane.const_defined?("UI")
 
+  # Extension for Fastlane::Helper module.
   module Helper
     # Xcspec helper class.
     class Xcspec
       ###
       # @!group Mapping
       ###
-      class Mapping
-        attr_reader :flags, :linker_flags
 
+      # Class for managing build flags mapping.
+      class Mapping
+        # @!attribute [r] flags
+        #   @return [String] Compiler flags.
+        attr_reader :flags
+
+        # @!attribute [r] linker_flags
+        #   @return [String] Linker flags
+        attr_reader :linker_flags
+
+        # Initialize new mapping.
+        # @param [String] flags Compiler flags.
+        # @param [String] linker_flags Linker flags.
         def initialize(flags = "", linker_flags = "")
           @flags = flags
           @linker_flags = linker_flags
         end
 
         # Join with other mapping and return new mapping.
+        # @param [Mapping] other Other mapping to join with.
+        # @return [Mapping] New joined mapping.
         def join(other)
           return self if other.nil?
 
@@ -33,8 +48,17 @@ module Fastlane
       # @!group Initialization
       ###
 
-      attr_reader :path, :options
+      # @!attribute [r] path
+      #   @return [String] Path to xcspec file.
+      attr_reader :path
 
+      # @!attribute [r] options
+      #   @return [Hash] Xcspec options dictionary.
+      attr_reader :options
+
+      # Create new instance.
+      # @param [String] path Path to xcspec file.
+      # @param [Xcspec] core_build_system_spec Core build system spec.
       def initialize(path, core_build_system_spec: nil)
         UI.user_error!("No such file: #{path}") unless path && File.exist?(path)
 
@@ -47,6 +71,9 @@ module Fastlane
         @options += core_build_system_spec.options if core_build_system_spec
       end
 
+      # Load plist as a dictionary.
+      # @param [String] path Path to plist file.
+      # @return [Hash] Plist dictionary.
       def self.load_plist(path)
         file_type = `file -b --mime-type #{path.shellescape}`.chomp
         if file_type == "text/xml" || file_type == "application/xml"
@@ -69,6 +96,9 @@ module Fastlane
       # @!group Helpers
       ###
 
+      # Find option by name.
+      # @param [String] name Option name.
+      # @return [Hash] Option or `nil`.
       def find_option(name)
         @options.find { |o| o["Name"] == name }
       end
@@ -77,6 +107,9 @@ module Fastlane
       # @!group Mapping
       ###
 
+      # Map build settings to build flags.
+      # @param [Hash] build_settings Build settings.
+      # @return [Hash] Build flags.
       def map_build_settings(build_settings)
         # Some settings like ENABLE_TESTABILITY are used as default value for other build settings,
         # e.g. SWIFT_ENABLE_TESTABILITY.
@@ -105,6 +138,11 @@ module Fastlane
         mappings.reduce(Mapping.new) { |memo, m| memo.join(m) }
       end
 
+      # Map single build setting value.
+      # @param [String] name Build setting name.
+      # @param [String] value Build setting value.
+      # @param [Hash] build_settings Dictionary of build settings to resolve the values against.
+      # @return [Array<Mapping>] List of mappings for this build setting value.
       def map_build_setting_value(name, value, build_settings)
         option = find_option(name)
         return nil unless option
@@ -112,6 +150,11 @@ module Fastlane
         map_option(option, value, build_settings)
       end
 
+      # Map the spec option to build settings using the value.
+      # @param [Hash] option Xcspec option describing build setting.
+      # @param [String] value Build setting value.
+      # @param [Hash] build_settings Dictionary of all build settings.
+      # @return [Array<Mapping>] List of mappings.
       def map_option(option, value, build_settings)
         # Evaluate and check the 'Condition'.
         return nil unless check_condition(option, build_settings)
@@ -122,6 +165,11 @@ module Fastlane
         scalar_values.flat_map { |v| map_option_scalar_value(option, v, build_settings) }.compact
       end
 
+      # Map the spec option scalar value to build flags.
+      # @param [Hash] option Xcspec option for build setting.
+      # @param [String] value Scalar value of the build setting.
+      # @param [Hash] build_settings Dictionary of all resolved build settings.
+      # @return [Mapping] Mapping for the specified scalar value.
       def map_option_scalar_value(option, value, build_settings)
         # At this point we deal with scalar value.
 
@@ -196,6 +244,12 @@ module Fastlane
         Mapping.new(flags, linker_flags)
       end
 
+      # Map command line arguments to build flags.
+      # @param [Hash] option Xcspec option for build setting.
+      # @param [Array<String>] args List of arguments to map.
+      # @param [String] value Value of the build setting.
+      # @param [Hash] build_settings All build settings to use for mapping.
+      # @return [String] Resolved value.
       def map_args(option, args, value, build_settings)
         return "" unless args
 
@@ -216,14 +270,24 @@ module Fastlane
         end
       end
 
+      ###
+      # @!group Evaluating Conditions
+      ###
+
       # Constants for condition evaluation.
+
+      # Value to use for `NO`.
       NO = false
+      # Value to use for `YES`.
       YES = true
 
       # Evaluate and check the condition.
       # Conditions come in form like this:
       # "$(COMPILER_INDEX_STORE_ENABLE) == YES  ||  ( $(COMPILER_INDEX_STORE_ENABLE) == Default  &&  $(GCC_OPTIMIZATION_LEVEL) == 0 )"
       # Return true if there's no condition to evaluate.
+      # @param [Hash] option Xcspec option for build setting.
+      # @param [Hash] build_settings All resolved build settings.
+      # @return [Boolean] A Boolean indicating whether condition passes or not.
       def check_condition(option, build_settings)
         condition = option["Condition"]
         return true unless condition
@@ -247,7 +311,7 @@ module Fastlane
         # which are replaced with `true` and `false`.
         # However, xcspecs are very inconsistent when it comes to strings.
         # Some values are used unquoted in the conditions, such as:
-        # Defatult, mh_object, bitcode.
+        # Default, mh_object, bitcode.
         # There's also use of '' and \"\" for empty string, the latter may cause issues.
         # Then "same-as-input" that may have to be resolved - do not handle for now.
         # Finally, $(variant) == profile - just leave it for now.

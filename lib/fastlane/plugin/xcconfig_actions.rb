@@ -1,6 +1,8 @@
 require 'fastlane/plugin/xcconfig_actions/version'
 
+# Extension for Fastlane module.
 module Fastlane
+  # Main module for xcconfig actions plugin.
   module XcconfigActions
     # Return all .rb files inside the "actions" and "helper" directory
     def self.all_classes
