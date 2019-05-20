@@ -15,17 +15,15 @@ module Fastlane
 
       # Class for managing build flags mapping.
       class Mapping
-        # @!attribute [r] flags
-        #   @return [String] Compiler flags.
+        # Main tool flags.
         attr_reader :flags
 
-        # @!attribute [r] linker_flags
-        #   @return [String] Linker flags
+        # Additional linker flags
         attr_reader :linker_flags
 
         # Initialize new mapping.
-        # @param [String] flags Compiler flags.
-        # @param [String] linker_flags Linker flags.
+        # @param [String] flags Main tool flags.
+        # @param [String] linker_flags Additional linker flags.
         def initialize(flags = "", linker_flags = "")
           @flags = flags
           @linker_flags = linker_flags
@@ -48,12 +46,10 @@ module Fastlane
       # @!group Initialization
       ###
 
-      # @!attribute [r] path
-      #   @return [String] Path to xcspec file.
+      # Path to xcspec file.
       attr_reader :path
 
-      # @!attribute [r] options
-      #   @return [Hash] Xcspec options dictionary.
+      # @return [Array<Hash>] Xcspec options.
       attr_reader :options
 
       # Create new instance.
