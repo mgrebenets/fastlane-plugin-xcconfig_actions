@@ -1,10 +1,12 @@
 # xcconfig_actions plugin
 
+[![license](https://img.shields.io/github/license/mgrebenets/fastlane-plugin-xcconfig_actions.svg)](https://github.com/mgrebenets/fastlane-plugin-xcconfig_actions)
 [![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-xcconfig_actions)
 [![version](https://img.shields.io/github/tag/mgrebenets/fastlane-plugin-xcconfig_actions.svg?color=green&label=version)](https://github.com/mgrebenets/fastlane-plugin-xcconfig_actions)
 [![CircleCI](https://circleci.com/gh/mgrebenets/fastlane-plugin-xcconfig_actions.svg?style=svg)](https://circleci.com/gh/mgrebenets/fastlane-plugin-xcconfig_actions)
 [![Travis CI](https://img.shields.io/travis/mgrebenets/fastlane-plugin-xcconfig_actions.svg?label=%20&logo=travis)](https://travis-ci.org/mgrebenets/fastlane-plugin-xcconfig_actions)
 [![Coverage Status](https://coveralls.io/repos/github/mgrebenets/fastlane-plugin-xcconfig_actions/badge.svg)](https://coveralls.io/github/mgrebenets/fastlane-plugin-xcconfig_actions)
+[![Inline docs](http://inch-ci.org/github/mgrebenets/fastlane-plugin-xcconfig_actions.svg)](http://inch-ci.org/github/mgrebenets/fastlane-plugin-xcconfig_actions)
 
 ## Getting Started
 
