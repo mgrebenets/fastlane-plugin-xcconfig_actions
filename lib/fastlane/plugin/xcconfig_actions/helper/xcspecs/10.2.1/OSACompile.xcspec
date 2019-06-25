@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CommandLine</key>
+	<string>/usr/bin/osacompile -l AppleScript -d -o $(ProductResourcesDir)/$(InputFileBase).scpt [options] $(InputFileRelativePath)</string>
+	<key>Description</key>
+	<string>AppleScript Compiler</string>
+	<key>ExecDescription</key>
+	<string>Compile $(InputFile)</string>
+	<key>Identifier</key>
+	<string>com.apple.compilers.osacompile</string>
+	<key>InputFileTypes</key>
+	<array>
+		<string>sourcecode.applescript</string>
+	</array>
+	<key>Name</key>
+	<string>OSACompile</string>
+	<key>Options</key>
+	<array>
+		<dict>
+			<key>Category</key>
+			<string>BuildOptions</string>
+			<key>CommandLineFlag</key>
+			<string>-x</string>
+			<key>DefaultValue</key>
+			<string>NO</string>
+			<key>Name</key>
+			<string>OSACOMPILE_EXECUTE_ONLY</string>
+			<key>Type</key>
+			<string>Boolean</string>
+		</dict>
+		<dict>
+			<key>Category</key>
+			<string>BuildOptions</string>
+			<key>CommandLinePrefixFlag</key>
+			<string></string>
+			<key>DefaultValue</key>
+			<string></string>
+			<key>Name</key>
+			<string>OTHER_OSACOMPILEFLAGS</string>
+			<key>Type</key>
+			<string>StringList</string>
+		</dict>
+	</array>
+	<key>Outputs</key>
+	<array>
+		<string>$(ProductResourcesDir)/$(InputFileBase).scpt</string>
+	</array>
+	<key>ProgressDescription</key>
+	<string>Compiling $(CommandProgressByType) AppleScripts</string>
+	<key>RuleName</key>
+	<string>OSACompile $(InputFileRelativePath)</string>
+	<key>SynthesizeBuildRuleForBuildPhases</key>
+	<array>
+		<string>com.apple.buildphase.sources</string>
+	</array>
+	<key>Type</key>
+	<string>Compiler</string>
+	<key>Vendor</key>
+	<string>Apple</string>
+</dict>
+</plist>

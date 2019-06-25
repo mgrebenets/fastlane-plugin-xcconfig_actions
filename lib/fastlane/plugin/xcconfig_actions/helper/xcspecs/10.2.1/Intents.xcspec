@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>Class</key>
+		<string>XCCompilerSpecificationIntents</string>
+		<key>CommandLine</key>
+		<string>intentbuilderc $(InputFile) $(ProductResourcesDir)/ [special-args]</string>
+		<key>CommandOutputParser</key>
+		<array>
+			<array>
+				<string>^([^:]*):() warning: (.*)$</string>
+				<string>emit-warning</string>
+			</array>
+			<array>
+				<string>^([^:]*):() error: (.*)$</string>
+				<string>emit-error</string>
+			</array>
+		</array>
+		<key>DeeplyStatInputDirectories</key>
+		<string>Yes</string>
+		<key>Description</key>
+		<string>intentbuilderc: processes Intent Definitions .intentdefinition</string>
+		<key>ExecDescription</key>
+		<string>Process Intent Definition $(InputFile) </string>
+		<key>Identifier</key>
+		<string>com.apple.compilers.intents</string>
+		<key>InputFileTypes</key>
+		<array>
+			<string>file.intentdefinition</string>
+		</array>
+		<key>IsArchitectureNeutral</key>
+		<string>Yes</string>
+		<key>MessageCategoryInfoOptions</key>
+		<array>
+			<string>--print-diagnostic-categories</string>
+			<string>destination</string>
+			<string>source</string>
+		</array>
+		<key>Name</key>
+		<string>Intent Definition Compiler</string>
+		<key>Options</key>
+		<array>
+			<dict>
+				<key>Category</key>
+				<string>Code Generation</string>
+				<key>DefaultValue</key>
+				<string>Automatic</string>
+				<key>Description</key>
+				<string>The Source-code language to use for generated Intent class.  By default "Automatic" will analyze your project to determine the correct language.  Adjust this setting to explicitly select "Swift" or "Objective-C".</string>
+				<key>DisplayName</key>
+				<string>Intent Class Generation Language</string>
+				<key>Name</key>
+				<string>INTENTS_CODEGEN_LANGUAGE</string>
+				<key>Type</key>
+				<string>enum</string>
+				<key>Values</key>
+				<array>
+					<string>Swift</string>
+					<string>Objective-C</string>
+					<string>Automatic</string>
+				</array>
+			</dict>
+		</array>
+		<key>Outputs</key>
+		<array>
+			<string>$(ProductResourcesDir)/$(InputFileBase).intentdefinition</string>
+		</array>
+		<key>ProgressDescription</key>
+		<string>Processing $(CommandProgressByType) Intent Definitions</string>
+		<key>RuleName</key>
+		<string>IntentDefinitionCompile $(ProductResourcesDir)/ $(InputFile)</string>
+		<key>SynthesizeBuildRule</key>
+		<string>Yes</string>
+		<key>Type</key>
+		<string>Compiler</string>
+	</dict>
+</array>
+</plist>

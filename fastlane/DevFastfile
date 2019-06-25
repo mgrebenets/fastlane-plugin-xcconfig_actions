@@ -29,32 +29,13 @@ SPEC_NAMES = [
   "Yacc"
 ]
 
-desc "Copy xcspec files from Xcode.app path and convert them to XML"
-lane :copy_xcspecs_from_xcode do |options|
-  path = options[:path] || "/Applications/Xcode.app"
-  UI.message("Copying specs from #{path}")
-  UI.user_error!("No such path: #{path}") unless File.exist?(path)
-  search_path = File.join(path, "Contents", "{Plugins,Developer/Platforms/MacOSX.platform/Developer/Library/Xcode/Specifications}")
-
-  specs = SPEC_NAMES.map { |n| Dir[File.join(search_path, "**/#{n}.xcspec")].first }
-
-  version = xcode_version(path)
-  specs_dir = xcspecs_path(version)
-  UI.message("Using Xcode version #{version}")
-  UI.message("Copying to #{specs_dir}")
-  FileUtils.mkdir_p(specs_dir)
-
-  specs.each do |s|
-    UI.message("Processing #{File.basename(s)}")
-    output_path = File.join(specs_dir, File.basename(s))
-    result = system("plutil -convert xml1 -o #{output_path.shellescape} #{s.shellescape}")
-    UI.user_error!("Failed to convert xcspec to XML") unless result
-  end
-end
-
+desc "Generate Xcode help pages."
 lane :generate_help_pages do |options|
   xcode_path = options[:xcode_path] || "/Applications/Xcode.app"
   UI.user_error!("Xcode path doesn't exist: #{xcode_path}") unless File.exist?(xcode_path)
+
+  # Copy specs and convert to XML.
+  copy_xcspecs_from_xcode(path: xcode_path)
 
   # All versions of Xcode have help files, e.g. /Applications/Xcode.app/Contents/Resources/Xcode.help/Contents/Resources/en.lproj
   help_dir = File.join(xcode_path, "Contents/Resources/Xcode.help/Contents/Resources/en.lproj")
@@ -87,8 +68,6 @@ lane :generate_help_pages do |options|
     next memo unless name
     memo.merge({ name => { ref: setting_ref(p) } })
   end
-
-  # TODO: Add references for AppearsAfter entry.
 
   updated_paragraphs = paragraphs.map do |p|
     name = setting_name(p)
@@ -125,6 +104,28 @@ lane :generate_help_pages do |options|
 
   specs_dir = xcspecs_path(xcode_version(xcode_path))
   File.open(File.join(specs_dir, "README.md"), "w") { |f| f.puts(markdown) }
+end
+
+desc "Copy xcspec files from Xcode.app path and convert them to XML"
+def copy_xcspecs_from_xcode(path: "/Applications/Xcode.app")
+  UI.message("Copying specs from #{path}")
+  UI.user_error!("No such path: #{path}") unless File.exist?(path)
+  search_path = File.join(path, "Contents", "{Plugins,Developer/Platforms/MacOSX.platform/Developer/Library/Xcode/Specifications}")
+
+  specs = SPEC_NAMES.map { |n| Dir[File.join(search_path, "**/#{n}.xcspec")].first }
+
+  version = xcode_version(path)
+  specs_dir = xcspecs_path(version)
+  UI.message("Using Xcode version #{version}")
+  UI.message("Copying to #{specs_dir}")
+  FileUtils.mkdir_p(specs_dir)
+
+  specs.each do |s|
+    UI.message("Processing #{File.basename(s)}")
+    output_path = File.join(specs_dir, File.basename(s))
+    result = system("plutil -convert xml1 -o #{output_path.shellescape} #{s.shellescape}")
+    UI.user_error!("Failed to convert xcspec to XML") unless result
+  end
 end
 
 def setting_name(paragraph)
@@ -172,9 +173,9 @@ end
 def to_rows(info, user_settings, nested: false)
   info.reduce([]) do |memo, (k, v)|
     if v.kind_of?(String)
-      memo << [format_title(k, nested), format_value(v, user_settings)]
+      memo << [format_title(k, nested), format_value(v, k, user_settings)]
     elsif v.kind_of?(Array)
-      memo << [format_title(k, nested), format_value(v.join("\n"), user_settings)]
+      memo << [format_title(k, nested), format_value(v.join("\n"), k, user_settings)]
     else
       (memo << [format_title(k, nested), ""]) + to_rows(v, user_settings, nested: true)
     end
@@ -187,7 +188,7 @@ def format_title(value, nested)
   nested ? "`#{value}`" : value
 end
 
-def format_value(value, user_settings)
+def format_value(value, title, user_settings)
   updated_value = value
                   .gsub(/^stringlist$/, "StringList")
                   .gsub(/^string$/, "String")
@@ -198,10 +199,16 @@ def format_value(value, user_settings)
                   .gsub("$", "\\$")
                   .gsub("|", "\\|") # Escape '|' so it doesn't break markdown table layout.
 
-  add_links(updated_value, user_settings)
+  add_links(updated_value, title, user_settings)
 end
 
-def add_links(value, user_settings)
+def add_links(value, title, user_settings)
+  # If title is 'AppearsAfter', then the value is build setting name
+  # and needs to be linked.
+  if title.eql?("AppearsAfter")
+    return "[#{value}](##{find_anchor(value, user_settings)})"
+  end
+
   matches = value.scan(/\$\((\w*)\)/)
   return value unless matches
 

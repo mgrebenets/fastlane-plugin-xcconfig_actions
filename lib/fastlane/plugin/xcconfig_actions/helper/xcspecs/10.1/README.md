@@ -1192,25 +1192,25 @@ Choose a version of the C++ standard library to use.
 </div>
 
 
-|                      |                             |
-|----------------------|-----------------------------|
-| AdditionalLinkerArgs |                             |
-| `<<otherwise>>`      | -stdlib=\$([value](#value)) |
-| `compiler-default`   |                             |
-| AppearsAfter         | CLANG_CXX_LANGUAGE_STANDARD |
-| Category             | LanguageCXX                 |
-| CommandLineArgs      |                             |
-| `<<otherwise>>`      | -stdlib=\$([value](#value)) |
-| `compiler-default`   |                             |
-| DefaultValue         | compiler-default            |
-| FileTypes            | sourcecode.cpp.cpp          |
-|                      | sourcecode.cpp.objcpp       |
-| Name                 | CLANG_CXX_LIBRARY           |
-| Type                 | Enumeration                 |
-| Values               | libstdc++                   |
-|                      | libc++                      |
-|                      | compiler-default            |
-| References           |                             |
+|                      |                                              |
+|----------------------|----------------------------------------------|
+| AdditionalLinkerArgs |                                              |
+| `<<otherwise>>`      | -stdlib=\$([value](#value))                  |
+| `compiler-default`   |                                              |
+| AppearsAfter         | [CLANG_CXX_LANGUAGE_STANDARD](#dev69c9c24a6) |
+| Category             | LanguageCXX                                  |
+| CommandLineArgs      |                                              |
+| `<<otherwise>>`      | -stdlib=\$([value](#value))                  |
+| `compiler-default`   |                                              |
+| DefaultValue         | compiler-default                             |
+| FileTypes            | sourcecode.cpp.cpp                           |
+|                      | sourcecode.cpp.objcpp                        |
+| Name                 | CLANG_CXX_LIBRARY                            |
+| Type                 | Enumeration                                  |
+| Values               | libstdc++                                    |
+|                      | libc++                                       |
+|                      | compiler-default                             |
+| References           |                                              |
 
 <div id="dev75a59f57c" class="Subhead">
 
@@ -1718,7 +1718,7 @@ The depth the static analyzer uses during the Build action. Use `Deep` to exerci
 
 |                 |                                                                                         |
 |-----------------|-----------------------------------------------------------------------------------------|
-| AppearsAfter    | RUN_CLANG_STATIC_ANALYZER                                                               |
+| AppearsAfter    | [RUN_CLANG_STATIC_ANALYZER](#dev454cbd652)                                              |
 | Category        | SAPolicy                                                                                |
 | CommandLineArgs |                                                                                         |
 | `deep`          |                                                                                         |
@@ -1746,7 +1746,7 @@ The depth the static analyzer uses during the Analyze action. Use `Deep` to exer
 
 |              |                                              |
 |--------------|----------------------------------------------|
-| AppearsAfter | CLANG_STATIC_ANALYZER_MODE                   |
+| AppearsAfter | [CLANG_STATIC_ANALYZER_MODE](#dev6e81753b1)  |
 | Category     | SAPolicy                                     |
 | DefaultValue | deep                                         |
 | Name         | CLANG_STATIC_ANALYZER_MODE_ON_ANALYZE_ACTION |
@@ -4375,7 +4375,7 @@ When enabled, out-of-line copies of inline methods are declared `private extern`
 
 |                 |                                                                                   |
 |-----------------|-----------------------------------------------------------------------------------|
-| AppearsAfter    | GCC_SYMBOLS_PRIVATE_EXTERN                                                        |
+| AppearsAfter    | [GCC_SYMBOLS_PRIVATE_EXTERN](#dev7faa5bb1c)                                       |
 | Category        | CodeGeneration                                                                    |
 | CommandLineArgs |                                                                                   |
 | `NO`            |                                                                                   |
@@ -4657,17 +4657,17 @@ When enabled, all symbols are declared `private extern` unless explicitly marked
 </div>
 
 
-|                 |                                                 |
-|-----------------|-------------------------------------------------|
-| AppearsAfter    | GCC_FEEDBACK_DIRECTED_OPTIMIZATION              |
-| Category        | CodeGeneration                                  |
-| CommandLineArgs |                                                 |
-| `NO`            |                                                 |
-| `YES`           | -fvisibility=hidden                             |
-| DefaultValue    | NO                                              |
-| Name            | GCC_SYMBOLS_PRIVATE_EXTERN                      |
-| Type            | Boolean                                         |
-| References      | [GCC_INLINES_ARE_PRIVATE_EXTERN](#devb678649f4) |
+|                 |                                                                           |
+|-----------------|---------------------------------------------------------------------------|
+| AppearsAfter    | [GCC_FEEDBACK_DIRECTED_OPTIMIZATION](#GCC_FEEDBACK_DIRECTED_OPTIMIZATION) |
+| Category        | CodeGeneration                                                            |
+| CommandLineArgs |                                                                           |
+| `NO`            |                                                                           |
+| `YES`           | -fvisibility=hidden                                                       |
+| DefaultValue    | NO                                                                        |
+| Name            | GCC_SYMBOLS_PRIVATE_EXTERN                                                |
+| Type            | Boolean                                                                   |
+| References      | [GCC_INLINES_ARE_PRIVATE_EXTERN](#devb678649f4)                           |
 
 <div id="dev3418fa358" class="Subhead">
 
@@ -4680,7 +4680,7 @@ Emits extra code to use the routines specified in the C++ ABI for thread-safe in
 
 |                 |                                                                                                                                                                                                                      |
 |-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| AppearsAfter    | GCC_INLINES_ARE_PRIVATE_EXTERN                                                                                                                                                                                       |
+| AppearsAfter    | [GCC_INLINES_ARE_PRIVATE_EXTERN](#devb678649f4)                                                                                                                                                                      |
 | Category        | CodeGeneration                                                                                                                                                                                                       |
 | CommandLineArgs |                                                                                                                                                                                                                      |
 | `NO`            | -fno-threadsafe-statics                                                                                                                                                                                              |
@@ -4705,7 +4705,7 @@ Causes warnings about missing function prototypes to be treated as errors. Only 
 
 |                 |                                                    |
 |-----------------|----------------------------------------------------|
-| AppearsAfter    | GCC_TREAT_WARNINGS_AS_ERRORS                       |
+| AppearsAfter    | [GCC_TREAT_WARNINGS_AS_ERRORS](#deva4a32754d)      |
 | Category        | Warnings                                           |
 | CommandLineArgs |                                                    |
 | `NO`            |                                                    |
@@ -4728,7 +4728,7 @@ Enabling this option causes warnings about incompatible pointer types to be trea
 
 |                 |                                                        |
 |-----------------|--------------------------------------------------------|
-| AppearsAfter    | GCC_TREAT_WARNINGS_AS_ERRORS                           |
+| AppearsAfter    | [GCC_TREAT_WARNINGS_AS_ERRORS](#deva4a32754d)          |
 | Category        | Warnings                                               |
 | CommandLineArgs |                                                        |
 | `NO`            |                                                        |
@@ -4827,23 +4827,23 @@ Warn if a value is implicitly converted from a 64-bit type to a 32-bit type. Thi
 </div>
 
 
-|                 |                                    |
-|-----------------|------------------------------------|
-| AppearsAfter    | GCC_WARN_SIGN_COMPARE              |
-| Category        | Warnings                           |
-| CommandLineArgs |                                    |
-| `NO`            | -Wno-shorten-64-to-32              |
-| `YES`           | -Wshorten-64-to-32                 |
-| `YES_ERROR`     | -Werror=shorten-64-to-32           |
-| CommonOption    | NO                                 |
-| DefaultValue    | NO                                 |
-| DisplayName     | Implicit Conversion to 32 Bit Type |
-| Name            | GCC_WARN_64_TO_32_BIT_CONVERSION   |
-| Type            | Enumeration                        |
-| Values          | YES                                |
-|                 | YES_ERROR                          |
-|                 | NO                                 |
-| References      |                                    |
+|                 |                                        |
+|-----------------|----------------------------------------|
+| AppearsAfter    | [GCC_WARN_SIGN_COMPARE](#devd72ec5001) |
+| Category        | Warnings                               |
+| CommandLineArgs |                                        |
+| `NO`            | -Wno-shorten-64-to-32                  |
+| `YES`           | -Wshorten-64-to-32                     |
+| `YES_ERROR`     | -Werror=shorten-64-to-32               |
+| CommonOption    | NO                                     |
+| DefaultValue    | NO                                     |
+| DisplayName     | Implicit Conversion to 32 Bit Type     |
+| Name            | GCC_WARN_64_TO_32_BIT_CONVERSION       |
+| Type            | Enumeration                            |
+| Values          | YES                                    |
+|                 | YES_ERROR                              |
+|                 | NO                                     |
+| References      |                                        |
 
 <div id="dev459d7247f" class="Subhead">
 
@@ -4948,7 +4948,7 @@ Warn when a source file does not end with a newline.
 
 |                 |                                                      |
 |-----------------|------------------------------------------------------|
-| AppearsAfter    | GCC_WARN_ABOUT_POINTER_SIGNEDNESS                    |
+| AppearsAfter    | [GCC_WARN_ABOUT_POINTER_SIGNEDNESS](#dev90927d824)   |
 | Category        | Warnings                                             |
 | CommandLineArgs |                                                      |
 | `NO`            | -Wno-newline-eof                                     |
@@ -4992,7 +4992,7 @@ Warn when pointers passed via arguments or assigned to a variable differ in sign
 
 |                 |                                                                                   |
 |-----------------|-----------------------------------------------------------------------------------|
-| AppearsAfter    | GCC_WARN_SIGN_COMPARE                                                             |
+| AppearsAfter    | [GCC_WARN_SIGN_COMPARE](#devd72ec5001)                                            |
 | Category        | Warnings                                                                          |
 | CommandLineArgs |                                                                                   |
 | `NO`            | -Wno-pointer-sign                                                                 |
@@ -5516,7 +5516,7 @@ Warn whenever a function parameter is unused aside from its declaration.
 
 |                 |                                           |
 |-----------------|-------------------------------------------|
-| AppearsAfter    | GCC_WARN_UNUSED_LABEL                     |
+| AppearsAfter    | [GCC_WARN_UNUSED_LABEL](#dev5dc46b82a)    |
 | Category        | Warnings                                  |
 | CommandLineArgs |                                           |
 | `NO`            | -Wno-unused-parameter                     |
@@ -5535,17 +5535,17 @@ Warn whenever a statement computes a result that is explicitly not used.
 </div>
 
 
-|                 |                          |
-|-----------------|--------------------------|
-| AppearsAfter    | GCC_WARN_UNUSED_VARIABLE |
-| Category        | Warnings                 |
-| CommandLineArgs |                          |
-| `NO`            | -Wno-unused-value        |
-| `YES`           | -Wunused-value           |
-| DefaultValue    | YES                      |
-| Name            | GCC_WARN_UNUSED_VALUE    |
-| Type            | Boolean                  |
-| References      |                          |
+|                 |                                           |
+|-----------------|-------------------------------------------|
+| AppearsAfter    | [GCC_WARN_UNUSED_VARIABLE](#dev73464afa2) |
+| Category        | Warnings                                  |
+| CommandLineArgs |                                           |
+| `NO`            | -Wno-unused-value                         |
+| `YES`           | -Wunused-value                            |
+| DefaultValue    | YES                                       |
+| Name            | GCC_WARN_UNUSED_VALUE                     |
+| Type            | Boolean                                   |
+| References      |                                           |
 
 <div id="dev73464afa2" class="Subhead">
 
@@ -5556,17 +5556,17 @@ Warn whenever a local variable or nonconstant static variable is unused aside fr
 </div>
 
 
-|                 |                                        |
-|-----------------|----------------------------------------|
-| AppearsAfter    | GCC_WARN_UNUSED_PARAMETER              |
-| Category        | Warnings                               |
-| CommandLineArgs |                                        |
-| `NO`            | -Wno-unused-variable                   |
-| `YES`           | -Wunused-variable                      |
-| DefaultValue    | NO                                     |
-| Name            | GCC_WARN_UNUSED_VARIABLE               |
-| Type            | Boolean                                |
-| References      | [GCC_WARN_UNUSED_VALUE](#dev6f61a24f6) |
+|                 |                                            |
+|-----------------|--------------------------------------------|
+| AppearsAfter    | [GCC_WARN_UNUSED_PARAMETER](#dev362f7320e) |
+| Category        | Warnings                                   |
+| CommandLineArgs |                                            |
+| `NO`            | -Wno-unused-variable                       |
+| `YES`           | -Wunused-variable                          |
+| DefaultValue    | NO                                         |
+| Name            | GCC_WARN_UNUSED_VARIABLE                   |
+| Type            | Boolean                                    |
+| References      | [GCC_WARN_UNUSED_VALUE](#dev6f61a24f6)     |
 
 <div id="dev6dda25963" class="Subhead">
 
