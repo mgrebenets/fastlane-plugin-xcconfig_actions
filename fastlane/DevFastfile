@@ -88,6 +88,8 @@ lane :generate_help_pages do |options|
     memo.merge({ name => { ref: setting_ref(p) } })
   end
 
+  # TODO: Add references for AppearsAfter entry.
+
   updated_paragraphs = paragraphs.map do |p|
     name = setting_name(p)
     next p unless name
