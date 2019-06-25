@@ -62,7 +62,7 @@ The following are unofficial build settings references.
 Unlike official help page, these pages contain extra information, such as build settings cross-reference and compiler and linker flags mapping.
 
 - [Xcode 11.0 Beta 2 Build Settings](lib/fastlane/plugin/xcconfig_actions/helper/xcspecs/11.0/README.md)
-- - [Xcode 10.2.1 Build Settings](lib/fastlane/plugin/xcconfig_actions/helper/xcspecs/10.2.1/README.md)
+- [Xcode 10.2.1 Build Settings](lib/fastlane/plugin/xcconfig_actions/helper/xcspecs/10.2.1/README.md)
 - [Xcode 10.2 Build Settings](lib/fastlane/plugin/xcconfig_actions/helper/xcspecs/10.2/README.md)
 - [Xcode 10.1 Build Settings](lib/fastlane/plugin/xcconfig_actions/helper/xcspecs/10.1/README.md)
 
