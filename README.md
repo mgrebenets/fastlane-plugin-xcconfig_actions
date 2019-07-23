@@ -54,8 +54,6 @@ The result is a dictionary with following keys:
 - `swift_compiler_flags` for Swift compiler.
 - `linker_flags` for Clang linker.
 
-<!-- TODO: Add info on how it works. -->
-
 #### Unofficial Build Settings References
 
 The following are unofficial build settings references.
@@ -66,7 +64,6 @@ Unlike official help page, these pages contain extra information, such as build 
 - [Xcode 10.2 Build Settings](lib/fastlane/plugin/xcconfig_actions/helper/xcspecs/10.2/README.md)
 - [Xcode 10.1 Build Settings](lib/fastlane/plugin/xcconfig_actions/helper/xcspecs/10.1/README.md)
 
-
 #### References
 
 - [Xcode Build Settings](https://help.apple.com/xcode/mac/10.2/#/itcaec37c2a6)
@@ -74,7 +71,7 @@ Unlike official help page, these pages contain extra information, such as build 
 - [LLVM Clang Diagnostics](https://clang.llvm.org/docs/DiagnosticsReference.html)
 - [GCC Warning Options](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html)
 - https://gist.github.com/fabiopelosin/4560417
-- https://pewpewthespells.com/blog/xcode_build_system.html
+- [Xcode Build System](https://pewpewthespells.com/blog/xcode_build_system.html)
 
 #### Caveats
 
@@ -95,6 +92,28 @@ In case of `CLANG_ENABLE_CODE_COVERAGE` add `CLANG_COVERAGE_MAPPING = YES` to xc
 - [ ] The flags like `-std=gnu++14` are added to `compiler_flags` but are not applicable for C/Objective-C code.
 Most tools have differentiation between C flags (C and Objective-C) and Cxx flags (C++/Objective-C++).
 The solution would be to return 2 sets of flags for C and Cxx families, instead of just one `compiler_flags` option.
+- [ ] [Build setting transformations](http://codeworkshop.net/posts/xcode-build-setting-transformations) like `$(PRODUCT_NAME:c99extidentifer)` are [not supported yet](https://github.com/mgrebenets/fastlane-plugin-xcconfig_actions/issues/1).
+- [ ] Xcconfig includes are resolved **before** variable references. For example:
+
+    ```c
+    #include "A.xcconfig"
+    VAR = A
+    #include "B.xcconfig" // Contains "VAR = B" statement.
+
+    // Resolved value of `VAR` is "B".
+    ```
+
+    Will be resolved in the following order:
+
+    ```c
+    #include "A.xcconfig"
+    #include "B.xcconfig"
+    VAR = A
+
+    // Resolved value of `VAR` is "A"!
+    ```
+
+    This will cause issues if value of `VAR` is set in `B.xcconfig`.
 
 ### validate_xcconfig
 
