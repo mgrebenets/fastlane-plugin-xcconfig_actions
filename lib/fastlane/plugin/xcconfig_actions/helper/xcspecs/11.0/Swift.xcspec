@@ -460,23 +460,11 @@
 					<string>@$(value)</string>
 				</dict>
 				<key>DefaultValue</key>
-				<string>$(SWIFT_FILE_LIST_$(variant)_$(arch))</string>
+				<string>$(SWIFT_RESPONSE_FILE_PATH_$(variant)_$(arch))</string>
 				<key>IsInputDependency</key>
 				<string>Yes</string>
 				<key>Name</key>
-				<string>__SWIFT_FILE_LIST_PATH__</string>
-				<key>Type</key>
-				<string>Path</string>
-			</dict>
-			<dict>
-				<key>CommandLineArgs</key>
-				<array/>
-				<key>DefaultValue</key>
-				<string>$(SWIFT_INDEXING_FILE_LIST_$(variant)_$(arch))</string>
-				<key>IsInputDependency</key>
-				<string>Yes</string>
-				<key>Name</key>
-				<string>__SWIFT_FILE_LIST_PATH_INDEXING__</string>
+				<string>SWIFT_RESPONSE_FILE_PATH</string>
 				<key>Type</key>
 				<string>Path</string>
 			</dict>
@@ -493,6 +481,16 @@
 				<string>Active Compilation Conditions</string>
 				<key>Name</key>
 				<string>SWIFT_ACTIVE_COMPILATION_CONDITIONS</string>
+				<key>Type</key>
+				<string>StringList</string>
+			</dict>
+			<dict>
+				<key>CommandLineArgs</key>
+				<array>
+					<string>$(value)</string>
+				</array>
+				<key>Name</key>
+				<string>SWIFT_TOOLCHAIN_FLAGS</string>
 				<key>Type</key>
 				<string>StringList</string>
 			</dict>

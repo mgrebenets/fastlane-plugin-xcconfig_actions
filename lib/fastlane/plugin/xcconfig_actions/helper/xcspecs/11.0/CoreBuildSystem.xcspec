@@ -1351,8 +1351,6 @@
 				<string>Path</string>
 			</dict>
 			<dict>
-				<key>Category</key>
-				<string>Build Locations</string>
 				<key>DefaultValue</key>
 				<string>$(BUILD_DIR)</string>
 				<key>Name</key>
@@ -1361,8 +1359,6 @@
 				<string>Path</string>
 			</dict>
 			<dict>
-				<key>Category</key>
-				<string>Build Locations</string>
 				<key>DefaultValue</key>
 				<string>$(PROJECT_TEMP_DIR)</string>
 				<key>Name</key>
@@ -4164,15 +4160,29 @@
 				<key>Category</key>
 				<string>Localization</string>
 				<key>DefaultValue</key>
-				<string>NSLocalizedString CFLocalizedString</string>
+				<string>NSLocalizedString CFCopyLocalizedString</string>
 				<key>Description</key>
-				<string>The base names for NSLocalizedString-like macros or functions used to produce localized strings in source code. The default base names of NSLocalizedString and CFLocalizedString are always considered, even if this setting is empty.</string>
+				<string>The base names for NSLocalizedString-like macros or functions used to produce localized strings in source code. The default base names of NSLocalizedString and CFCopyLocalizedString are always considered, even if this setting is empty.</string>
 				<key>DisplayName</key>
 				<string>Localized String Macro Names</string>
 				<key>Name</key>
 				<string>LOCALIZED_STRING_MACRO_NAMES</string>
 				<key>Type</key>
 				<string>StringList</string>
+			</dict>
+			<dict>
+				<key>Category</key>
+				<string>Localization</string>
+				<key>DefaultValue</key>
+				<string>YES</string>
+				<key>Description</key>
+				<string>When enabled, literal strings passed to the Text() initializer from Swift UI will be extracted during localization export.</string>
+				<key>DisplayName</key>
+				<string>Localized String Swift UI Support</string>
+				<key>Name</key>
+				<string>LOCALIZED_STRING_SWIFTUI_SUPPORT</string>
+				<key>Type</key>
+				<string>Boolean</string>
 			</dict>
 			<dict>
 				<key>DefaultValue</key>
@@ -4260,7 +4270,7 @@
 				<key>Category</key>
 				<string>BuildOptions</string>
 				<key>DefaultValue</key>
-				<string>YES_ERROR</string>
+				<string>NO</string>
 				<key>Name</key>
 				<string>VALIDATE_WORKSPACE</string>
 				<key>Type</key>
@@ -4271,6 +4281,16 @@
 					<string>NO</string>
 					<string>YES_ERROR</string>
 				</array>
+			</dict>
+			<dict>
+				<key>Category</key>
+				<string>BuildOptions</string>
+				<key>DefaultValue</key>
+				<string></string>
+				<key>Name</key>
+				<string>VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS</string>
+				<key>Type</key>
+				<string>StringList</string>
 			</dict>
 			<dict>
 				<key>Category</key>

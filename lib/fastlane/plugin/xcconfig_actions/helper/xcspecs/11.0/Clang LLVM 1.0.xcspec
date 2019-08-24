@@ -19,7 +19,9 @@
 		<string>Precompile $(InputFile)</string>
 		<key>ExecPath</key>
 		<string>clang</string>
-		<key>FileTypes</key>
+		<key>Identifier</key>
+		<string>com.apple.compilers.llvm.clang.1_0</string>
+		<key>InputFileTypes</key>
 		<array>
 			<string>sourcecode.c.c</string>
 			<string>sourcecode.c.objc</string>
@@ -27,8 +29,6 @@
 			<string>sourcecode.cpp.objcpp</string>
 			<string>sourcecode.asm</string>
 		</array>
-		<key>Identifier</key>
-		<string>com.apple.compilers.llvm.clang.1_0</string>
 		<key>IsAbstract</key>
 		<string>NO</string>
 		<key>MessageCategoryInfoOptions</key>
@@ -82,6 +82,16 @@
 				<string>arch</string>
 				<key>Type</key>
 				<string>String</string>
+			</dict>
+			<dict>
+				<key>CommandLineArgs</key>
+				<array>
+					<string>$(value)</string>
+				</array>
+				<key>Name</key>
+				<string>CLANG_TOOLCHAIN_FLAGS</string>
+				<key>Type</key>
+				<string>StringList</string>
 			</dict>
 			<dict>
 				<key>CommandLinePrefixFlag</key>
@@ -2119,8 +2129,6 @@
 						<string>-Werror=conversion</string>
 					</array>
 				</dict>
-				<key>CommonOption</key>
-				<string>NO</string>
 				<key>DefaultValue</key>
 				<string>NO</string>
 				<key>Name</key>
@@ -3291,8 +3299,6 @@
 						<string>-g</string>
 					</array>
 				</dict>
-				<key>CommonOption</key>
-				<string>NO</string>
 				<key>Condition</key>
 				<string>$(GCC_GENERATE_DEBUGGING_SYMBOLS)</string>
 				<key>DefaultValue</key>
@@ -3319,8 +3325,6 @@
 						<string>-gline-tables-only</string>
 					</array>
 				</dict>
-				<key>CommonOption</key>
-				<string>NO</string>
 				<key>Condition</key>
 				<string>$(GCC_GENERATE_DEBUGGING_SYMBOLS)</string>
 				<key>DefaultValue</key>
@@ -3633,8 +3637,6 @@
 						<string>-Wpointer-sign</string>
 					</array>
 				</dict>
-				<key>CommonOption</key>
-				<string>YES</string>
 				<key>DefaultValue</key>
 				<string>YES</string>
 				<key>Description</key>
@@ -3667,8 +3669,6 @@
 						<string>-Wnewline-eof</string>
 					</array>
 				</dict>
-				<key>CommonOption</key>
-				<string>NO</string>
 				<key>DefaultValue</key>
 				<string>NO</string>
 				<key>Description</key>
@@ -3698,8 +3698,6 @@
 						<string>-Werror=sign-conversion</string>
 					</array>
 				</dict>
-				<key>CommonOption</key>
-				<string>NO</string>
 				<key>DefaultValue</key>
 				<string>NO</string>
 				<key>Name</key>
@@ -3733,8 +3731,6 @@
 						<string>-Werror=shorten-64-to-32</string>
 					</array>
 				</dict>
-				<key>CommonOption</key>
-				<string>NO</string>
 				<key>DefaultValue</key>
 				<string>NO</string>
 				<key>DisplayName</key>
@@ -3764,8 +3760,6 @@
 						<string>-Winfinite-recursion</string>
 					</array>
 				</dict>
-				<key>CommonOption</key>
-				<string>NO</string>
 				<key>DefaultValue</key>
 				<string>NO</string>
 				<key>Name</key>
@@ -3787,8 +3781,6 @@
 						<string>-Wmove</string>
 					</array>
 				</dict>
-				<key>CommonOption</key>
-				<string>NO</string>
 				<key>DefaultValue</key>
 				<string>NO</string>
 				<key>FileTypes</key>
@@ -3819,8 +3811,6 @@
 						<string>-Werror=comma</string>
 					</array>
 				</dict>
-				<key>CommonOption</key>
-				<string>NO</string>
 				<key>DefaultValue</key>
 				<string>NO</string>
 				<key>Name</key>
@@ -3856,8 +3846,6 @@
 						<string>-Werror=block-capture-autoreleasing</string>
 					</array>
 				</dict>
-				<key>CommonOption</key>
-				<string>NO</string>
 				<key>DefaultValue</key>
 				<string>NO</string>
 				<key>Name</key>
@@ -3893,8 +3881,6 @@
 						<string>-Werror=strict-prototypes</string>
 					</array>
 				</dict>
-				<key>CommonOption</key>
-				<string>NO</string>
 				<key>DefaultValue</key>
 				<string>NO</string>
 				<key>Name</key>
@@ -3926,8 +3912,6 @@
 						<string>-Wrange-loop-analysis</string>
 					</array>
 				</dict>
-				<key>CommonOption</key>
-				<string>NO</string>
 				<key>DefaultValue</key>
 				<string>NO</string>
 				<key>FileTypes</key>
@@ -3954,8 +3938,6 @@
 						<string>-Wsemicolon-before-method-body</string>
 					</array>
 				</dict>
-				<key>CommonOption</key>
-				<string>NO</string>
 				<key>DefaultValue</key>
 				<string>NO</string>
 				<key>Name</key>
@@ -4480,8 +4462,6 @@
 		<string>Yes</string>
 		<key>Type</key>
 		<string>Compiler</string>
-		<key>UseCPlusPlusCompilerDriverWhenBundlizing</key>
-		<string>Yes</string>
 		<key>Vendor</key>
 		<string>Apple</string>
 		<key>Version</key>
@@ -4584,15 +4564,15 @@
 		<string>Analyze$(StaticAnalyzerModeNameDescription) $(InputFile)</string>
 		<key>ExecPath</key>
 		<string>$(CLANG_ANALYZER_EXEC)</string>
-		<key>FileTypes</key>
+		<key>Identifier</key>
+		<string>com.apple.compilers.llvm.clang.1_0.analyzer</string>
+		<key>InputFileTypes</key>
 		<array>
 			<string>sourcecode.c.c</string>
 			<string>sourcecode.c.objc</string>
 			<string>sourcecode.cpp.cpp</string>
 			<string>sourcecode.cpp.objcpp</string>
 		</array>
-		<key>Identifier</key>
-		<string>com.apple.compilers.llvm.clang.1_0.analyzer</string>
 		<key>IsAbstract</key>
 		<string>YES</string>
 		<key>Name</key>
@@ -5650,13 +5630,13 @@
 		<string>Apple Clang ObjC Migrator</string>
 		<key>ExecPath</key>
 		<string>$(CLANG)</string>
-		<key>FileTypes</key>
+		<key>Identifier</key>
+		<string>com.apple.compilers.llvm.clang.1_0.migrator</string>
+		<key>InputFileTypes</key>
 		<array>
 			<string>sourcecode.c.objc</string>
 			<string>sourcecode.cpp.objcpp</string>
 		</array>
-		<key>Identifier</key>
-		<string>com.apple.compilers.llvm.clang.1_0.migrator</string>
 		<key>IsAbstract</key>
 		<string>YES</string>
 		<key>Name</key>
@@ -6000,13 +5980,13 @@
 		<string>Apple Clang XCTest Migrator</string>
 		<key>ExecPath</key>
 		<string>$(CLANG)</string>
-		<key>FileTypes</key>
+		<key>Identifier</key>
+		<string>com.apple.compilers.llvm.clang.1_0.migrator.xctest</string>
+		<key>InputFileTypes</key>
 		<array>
 			<string>sourcecode.c.objc</string>
 			<string>sourcecode.cpp.objcpp</string>
 		</array>
-		<key>Identifier</key>
-		<string>com.apple.compilers.llvm.clang.1_0.migrator.xctest</string>
 		<key>IsAbstract</key>
 		<string>YES</string>
 		<key>Name</key>
@@ -6050,15 +6030,15 @@
 		<string>com.apple.compilers.llvm.clang.1_0</string>
 		<key>Description</key>
 		<string>Apple Clang AST Builder 9.0</string>
-		<key>FileTypes</key>
+		<key>Identifier</key>
+		<string>com.apple.compilers.llvm.clang.1_0.astbuilder</string>
+		<key>InputFileTypes</key>
 		<array>
 			<string>sourcecode.c.c</string>
 			<string>sourcecode.c.objc</string>
 			<string>sourcecode.cpp.cpp</string>
 			<string>sourcecode.cpp.objcpp</string>
 		</array>
-		<key>Identifier</key>
-		<string>com.apple.compilers.llvm.clang.1_0.astbuilder</string>
 		<key>IsAbstract</key>
 		<string>YES</string>
 		<key>Name</key>

@@ -98,8 +98,10 @@
 				<string>Boolean</string>
 			</dict>
 		</array>
-		<key>OutputPath</key>
-		<string>$(ProductResourcesDir)/$(InputFileName)</string>
+		<key>Outputs</key>
+		<array>
+			<string>$(ProductResourcesDir)/$(InputFileName)</string>
+		</array>
 		<key>ProgressDescription</key>
 		<string>Copying $(CommandProgressByType) files</string>
 		<key>RuleName</key>

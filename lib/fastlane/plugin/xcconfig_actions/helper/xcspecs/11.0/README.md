@@ -1230,7 +1230,6 @@ Toggles the amount of debug information emitted when debug symbols are enabled. 
 | CommandLineArgs    |                                                     |
 | `default`          |                                                     |
 | `line-tables-only` | -gline-tables-only                                  |
-| CommonOption       | NO                                                  |
 | Condition          | \$([GCC_GENERATE_DEBUGGING_SYMBOLS](#dev667b2f097)) |
 | DefaultValue       | default                                             |
 | Name               | CLANG_DEBUG_INFORMATION_LEVEL                       |
@@ -1857,7 +1856,6 @@ Warn about block captures of implicitly autoreleasing parameters.
 | `NO`                   | -Wno-block-capture-autoreleasing       |
 | `YES`                  | -Wblock-capture-autoreleasing          |
 | `YES_ERROR`            | -Werror=block-capture-autoreleasing    |
-| CommonOption           | NO                                     |
 | DefaultValue           | NO                                     |
 | Name                   | CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING |
 | SupportedVersionRanges | 900.0.0                                |
@@ -1907,7 +1905,6 @@ Warn about suspicious uses of the comma operator.
 | `NO`                   | -Wno-comma       |
 | `YES`                  | -Wcomma          |
 | `YES_ERROR`            | -Werror=comma    |
-| CommonOption           | NO               |
 | DefaultValue           | NO               |
 | Name                   | CLANG_WARN_COMMA |
 | SupportedVersionRanges | 900.0.0          |
@@ -2137,7 +2134,6 @@ Warn about implicit integer conversions that change the signedness of an integer
 | `NO`            | -Wno-sign-conversion                |
 | `YES`           | -Wsign-conversion                   |
 | `YES_ERROR`     | -Werror=sign-conversion             |
-| CommonOption    | NO                                  |
 | DefaultValue    | NO                                  |
 | Name            | CLANG_WARN_IMPLICIT_SIGN_CONVERSION |
 | Type            | Enumeration                         |
@@ -2161,7 +2157,6 @@ Warn if all paths through a function call itself.
 | CommandLineArgs |                               |
 | `NO`            | -Wno-infinite-recursion       |
 | `YES`           | -Winfinite-recursion          |
-| CommonOption    | NO                            |
 | DefaultValue    | NO                            |
 | Name            | CLANG_WARN_INFINITE_RECURSION |
 | Type            | Boolean                       |
@@ -2507,7 +2502,6 @@ Warn about ranged-based for loops.
 | CommandLineArgs |                                |
 | `NO`            | -Wno-range-loop-analysis       |
 | `YES`           | -Wrange-loop-analysis          |
-| CommonOption    | NO                             |
 | DefaultValue    | NO                             |
 | FileTypes       | sourcecode.cpp.cpp             |
 |                 | sourcecode.cpp.objcpp          |
@@ -2530,7 +2524,6 @@ Warn about ignored semicolon between a method implementation's signature and bod
 | CommandLineArgs |                                         |
 | `NO`            | -Wno-semicolon-before-method-body       |
 | `YES`           | -Wsemicolon-before-method-body          |
-| CommonOption    | NO                                      |
 | DefaultValue    | NO                                      |
 | Name            | CLANG_WARN_SEMICOLON_BEFORE_METHOD_BODY |
 | Type            | Boolean                                 |
@@ -2552,7 +2545,6 @@ Warn about non-prototype declarations.
 | `NO`                   | -Wno-strict-prototypes       |
 | `YES`                  | -Wstrict-prototypes          |
 | `YES_ERROR`            | -Werror=strict-prototypes    |
-| CommonOption           | NO                           |
 | DefaultValue           | NO                           |
 | Name                   | CLANG_WARN_STRICT_PROTOTYPES |
 | SupportedVersionRanges | 900.0.0                      |
@@ -2578,7 +2570,6 @@ Warn about various implicit conversions that can lose information or are otherwi
 | `NO`            | -Wno-conversion                                         |
 | `YES`           | -Wconversion                                            |
 | `YES_ERROR`     | -Werror=conversion                                      |
-| CommonOption    | NO                                                      |
 | DefaultValue    | NO                                                      |
 | Name            | CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION               |
 | Type            | Enumeration                                             |
@@ -2608,7 +2599,6 @@ Warn about suspicious uses of `std::move`.
 | CommandLineArgs |                            |
 | `NO`            | -Wno-move                  |
 | `YES`           | -Wmove                     |
-| CommonOption    | NO                         |
 | DefaultValue    | NO                         |
 | FileTypes       | sourcecode.cpp.cpp         |
 |                 | sourcecode.cpp.objcpp      |
@@ -2961,7 +2951,6 @@ The base path where build products will be placed during a build for a given con
 
 |              |                                                   |
 |--------------|---------------------------------------------------|
-| Category     | Build Locations                                   |
 | DefaultValue | \$([BUILD_DIR](#BUILD_DIR))                       |
 | Name         | CONFIGURATION_BUILD_DIR                           |
 | Type         | Path                                              |
@@ -2980,7 +2969,6 @@ The base path where intermediates will be placed during a build for a given conf
 
 |              |                                       |
 |--------------|---------------------------------------|
-| Category     | Build Locations                       |
 | DefaultValue | \$([PROJECT_TEMP_DIR](#dev583a73f21)) |
 | Name         | CONFIGURATION_TEMP_DIR                |
 | Type         | Path                                  |
@@ -4841,7 +4829,6 @@ Warn if a value is implicitly converted from a 64-bit type to a 32-bit type. Thi
 | `NO`            | -Wno-shorten-64-to-32                  |
 | `YES`           | -Wshorten-64-to-32                     |
 | `YES_ERROR`     | -Werror=shorten-64-to-32               |
-| CommonOption    | NO                                     |
 | DefaultValue    | NO                                     |
 | DisplayName     | Implicit Conversion to 32 Bit Type     |
 | Name            | GCC_WARN_64_TO_32_BIT_CONVERSION       |
@@ -4959,7 +4946,6 @@ Warn when a source file does not end with a newline.
 | CommandLineArgs |                                                      |
 | `NO`            | -Wno-newline-eof                                     |
 | `YES`           | -Wnewline-eof                                        |
-| CommonOption    | NO                                                   |
 | DefaultValue    | NO                                                   |
 | Description     | Warn when a source file does not end with a newline. |
 | DisplayName     | Missing Newline At End Of File                       |
@@ -5003,7 +4989,6 @@ Warn when pointers passed via arguments or assigned to a variable differ in sign
 | CommandLineArgs |                                                                                   |
 | `NO`            | -Wno-pointer-sign                                                                 |
 | `YES`           | -Wpointer-sign                                                                    |
-| CommonOption    | YES                                                                               |
 | DefaultValue    | YES                                                                               |
 | Description     | Warn when pointers passed via arguments or assigned to a variable differ in sign. |
 | DisplayName     | Pointer Sign Comparison                                                           |
@@ -6623,15 +6608,15 @@ The base names for NSLocalizedString-like macros or functions used to produce lo
 </div>
 
 
-|              |                                                                                                                                                                                                                                         |
-|--------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Category     | Localization                                                                                                                                                                                                                            |
-| DefaultValue | NSLocalizedString CFLocalizedString                                                                                                                                                                                                     |
-| Description  | The base names for NSLocalizedString-like macros or functions used to produce localized strings in source code. The default base names of NSLocalizedString and CFLocalizedString are always considered, even if this setting is empty. |
-| DisplayName  | Localized String Macro Names                                                                                                                                                                                                            |
-| Name         | LOCALIZED_STRING_MACRO_NAMES                                                                                                                                                                                                            |
-| Type         | StringList                                                                                                                                                                                                                              |
-| References   |                                                                                                                                                                                                                                         |
+|              |                                                                                                                                                                                                                                             |
+|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Category     | Localization                                                                                                                                                                                                                                |
+| DefaultValue | NSLocalizedString CFCopyLocalizedString                                                                                                                                                                                                     |
+| Description  | The base names for NSLocalizedString-like macros or functions used to produce localized strings in source code. The default base names of NSLocalizedString and CFCopyLocalizedString are always considered, even if this setting is empty. |
+| DisplayName  | Localized String Macro Names                                                                                                                                                                                                                |
+| Name         | LOCALIZED_STRING_MACRO_NAMES                                                                                                                                                                                                                |
+| Type         | StringList                                                                                                                                                                                                                                  |
+| References   |                                                                                                                                                                                                                                             |
 
 <div id="dev5eb2828db" class="Subhead">
 
@@ -9782,6 +9767,7 @@ Enabling this option causes `yacc` to insert the `#line` directives in the gener
 |                 | [SEPARATE_SYMBOL_EDIT](#dev5898a821a)                                              |
 |                 | [SUPPORTS_TEXT_BASED_API](#dev8abad641c)                                           |
 |                 | [SWIFT_INCLUDE_PATHS](#dev8f8e9cc00)                                               |
+|                 | [SWIFT_RESPONSE_FILE_PATH](#SWIFT_RESPONSE_FILE_PATH)                              |
 |                 | [SWIFT_TARGET_TRIPLE_VARIANTS](#SWIFT_TARGET_TRIPLE_VARIANTS)                      |
 |                 | [SYSTEM_FRAMEWORK_SEARCH_PATHS](#dev9fa1aee62)                                     |
 |                 | [SYSTEM_HEADER_SEARCH_PATHS](#devd69bd5ce8)                                        |
@@ -9792,8 +9778,19 @@ Enabling this option causes `yacc` to insert the `#line` directives in the gener
 |                 | [USE_HEADERMAP](#dev4e24a48e3)                                                     |
 |                 | [WARNING_LDFLAGS](#dev29996e2b6)                                                   |
 |                 | [__INPUT_FILE_LIST_PATH__](#__INPUT_FILE_LIST_PATH__)                              |
-|                 | [__SWIFT_FILE_LIST_PATH_INDEXING__](#__SWIFT_FILE_LIST_PATH_INDEXING__)            |
-|                 | [__SWIFT_FILE_LIST_PATH__](#__SWIFT_FILE_LIST_PATH__)                              |
+
+</div>
+
+<div id="CLANG_TOOLCHAIN_FLAGS" class="Subhead">
+
+## 🔐 CLANG_TOOLCHAIN_FLAGS
+
+|                 |                       |
+|-----------------|-----------------------|
+| CommandLineArgs | \$([value](#value))   |
+| Name            | CLANG_TOOLCHAIN_FLAGS |
+| Type            | StringList            |
+| References      |                       |
 
 </div>
 
@@ -10491,7 +10488,6 @@ Enabling this option causes `yacc` to insert the `#line` directives in the gener
 | `<<otherwise>>`   |                                                     |
 | `dwarf`           | -g                                                  |
 | `dwarf-with-dsym` | -g                                                  |
-| CommonOption      | NO                                                  |
 | Condition         | \$([GCC_GENERATE_DEBUGGING_SYMBOLS](#dev667b2f097)) |
 | DefaultValue      | \$([DEBUG_INFORMATION_FORMAT](#dev881878d77))       |
 | Name              | GCC_DEBUG_INFORMATION_FORMAT                        |
@@ -11293,6 +11289,7 @@ Enabling this option causes `yacc` to insert the `#line` directives in the gener
 |              | [CLANG_TARGET_TRIPLE_ARCHS](#CLANG_TARGET_TRIPLE_ARCHS)                                         |
 |              | [CLANG_TARGET_TRIPLE_VARIANTS](#CLANG_TARGET_TRIPLE_VARIANTS)                                   |
 |              | [CLANG_THREAD_SANITIZER](#CLANG_THREAD_SANITIZER)                                               |
+|              | [CLANG_TOOLCHAIN_FLAGS](#CLANG_TOOLCHAIN_FLAGS)                                                 |
 |              | [CLANG_TRIVIAL_AUTO_VAR_INIT](#CLANG_TRIVIAL_AUTO_VAR_INIT)                                     |
 |              | [CLANG_UNDEFINED_BEHAVIOR_SANITIZER](#CLANG_UNDEFINED_BEHAVIOR_SANITIZER)                       |
 |              | [CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER](#dev11cdd52f0)                                     |
@@ -11477,6 +11474,7 @@ Enabling this option causes `yacc` to insert the `#line` directives in the gener
 |              | [CLANG_TARGET_TRIPLE_ARCHS](#CLANG_TARGET_TRIPLE_ARCHS)                                         |
 |              | [CLANG_TARGET_TRIPLE_VARIANTS](#CLANG_TARGET_TRIPLE_VARIANTS)                                   |
 |              | [CLANG_THREAD_SANITIZER](#CLANG_THREAD_SANITIZER)                                               |
+|              | [CLANG_TOOLCHAIN_FLAGS](#CLANG_TOOLCHAIN_FLAGS)                                                 |
 |              | [CLANG_TRIVIAL_AUTO_VAR_INIT](#CLANG_TRIVIAL_AUTO_VAR_INIT)                                     |
 |              | [CLANG_UNDEFINED_BEHAVIOR_SANITIZER](#CLANG_UNDEFINED_BEHAVIOR_SANITIZER)                       |
 |              | [CLANG_UNDEFINED_BEHAVIOR_SANITIZER_INTEGER](#dev11cdd52f0)                                     |
@@ -12608,14 +12606,12 @@ Enabling this option causes `yacc` to insert the `#line` directives in the gener
 
 ## 🔐 FILE_LIST
 
-|              |                                                                         |
-|--------------|-------------------------------------------------------------------------|
-| DefaultValue | \$([OBJECT_FILE_DIR](#devddf692c48))/LinkFileList                       |
-| Name         | FILE_LIST                                                               |
-| Type         | Path                                                                    |
-| References   | [__INPUT_FILE_LIST_PATH__](#__INPUT_FILE_LIST_PATH__)                   |
-|              | [__SWIFT_FILE_LIST_PATH_INDEXING__](#__SWIFT_FILE_LIST_PATH_INDEXING__) |
-|              | [__SWIFT_FILE_LIST_PATH__](#__SWIFT_FILE_LIST_PATH__)                   |
+|              |                                                       |
+|--------------|-------------------------------------------------------|
+| DefaultValue | \$([OBJECT_FILE_DIR](#devddf692c48))/LinkFileList     |
+| Name         | FILE_LIST                                             |
+| Type         | Path                                                  |
+| References   | [__INPUT_FILE_LIST_PATH__](#__INPUT_FILE_LIST_PATH__) |
 
 </div>
 
@@ -13432,6 +13428,22 @@ Enabling this option causes `yacc` to insert the `#line` directives in the gener
 
 </div>
 
+<div id="LOCALIZED_STRING_SWIFTUI_SUPPORT" class="Subhead">
+
+## 🔐 LOCALIZED_STRING_SWIFTUI_SUPPORT
+
+|              |                                                                                                                            |
+|--------------|----------------------------------------------------------------------------------------------------------------------------|
+| Category     | Localization                                                                                                               |
+| DefaultValue | YES                                                                                                                        |
+| Description  | When enabled, literal strings passed to the Text() initializer from Swift UI will be extracted during localization export. |
+| DisplayName  | Localized String Swift UI Support                                                                                          |
+| Name         | LOCALIZED_STRING_SWIFTUI_SUPPORT                                                                                           |
+| Type         | Boolean                                                                                                                    |
+| References   |                                                                                                                            |
+
+</div>
+
 <div id="BUILD_ACTIVE_RESOURCES_ONLY" class="Subhead">
 
 ## 🔐 BUILD_ACTIVE_RESOURCES_ONLY
@@ -13462,16 +13474,30 @@ Enabling this option causes `yacc` to insert the `#line` directives in the gener
 
 ## 🔐 VALIDATE_WORKSPACE
 
-|              |                    |
-|--------------|--------------------|
-| Category     | BuildOptions       |
-| DefaultValue | YES_ERROR          |
-| Name         | VALIDATE_WORKSPACE |
-| Type         | Enumeration        |
-| Values       | YES                |
-|              | NO                 |
-|              | YES_ERROR          |
-| References   |                    |
+|              |                                                                                         |
+|--------------|-----------------------------------------------------------------------------------------|
+| Category     | BuildOptions                                                                            |
+| DefaultValue | NO                                                                                      |
+| Name         | VALIDATE_WORKSPACE                                                                      |
+| Type         | Enumeration                                                                             |
+| Values       | YES                                                                                     |
+|              | NO                                                                                      |
+|              | YES_ERROR                                                                               |
+| References   | [VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS](#VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS) |
+
+</div>
+
+<div id="VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS" class="Subhead">
+
+## 🔐 VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS
+
+|              |                                           |
+|--------------|-------------------------------------------|
+| Category     | BuildOptions                              |
+| DefaultValue |                                           |
+| Name         | VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS |
+| Type         | StringList                                |
+| References   |                                           |
 
 </div>
 
@@ -13651,6 +13677,7 @@ Enabling this option causes `yacc` to insert the `#line` directives in the gener
 |                 | [SEPARATE_SYMBOL_EDIT](#dev5898a821a)                                              |
 |                 | [SUPPORTS_TEXT_BASED_API](#dev8abad641c)                                           |
 |                 | [SWIFT_INCLUDE_PATHS](#dev8f8e9cc00)                                               |
+|                 | [SWIFT_RESPONSE_FILE_PATH](#SWIFT_RESPONSE_FILE_PATH)                              |
 |                 | [SWIFT_TARGET_TRIPLE_VARIANTS](#SWIFT_TARGET_TRIPLE_VARIANTS)                      |
 |                 | [SYSTEM_FRAMEWORK_SEARCH_PATHS](#dev9fa1aee62)                                     |
 |                 | [SYSTEM_HEADER_SEARCH_PATHS](#devd69bd5ce8)                                        |
@@ -13661,8 +13688,6 @@ Enabling this option causes `yacc` to insert the `#line` directives in the gener
 |                 | [USE_HEADERMAP](#dev4e24a48e3)                                                     |
 |                 | [WARNING_LDFLAGS](#dev29996e2b6)                                                   |
 |                 | [__INPUT_FILE_LIST_PATH__](#__INPUT_FILE_LIST_PATH__)                              |
-|                 | [__SWIFT_FILE_LIST_PATH_INDEXING__](#__SWIFT_FILE_LIST_PATH_INDEXING__)            |
-|                 | [__SWIFT_FILE_LIST_PATH__](#__SWIFT_FILE_LIST_PATH__)                              |
 
 </div>
 
@@ -15621,35 +15646,33 @@ Enabling this option causes `yacc` to insert the `#line` directives in the gener
 
 </div>
 
-<div id="__SWIFT_FILE_LIST_PATH__" class="Subhead">
+<div id="SWIFT_RESPONSE_FILE_PATH" class="Subhead">
 
-## 🔐 __SWIFT_FILE_LIST_PATH__
-
-|                   |                                                               |
-|-------------------|---------------------------------------------------------------|
-| CommandLineArgs   |                                                               |
-| `""`              |                                                               |
-| `<<otherwise>>`   | @\$([value](#value))                                          |
-| DefaultValue      | \$(SWIFT_FILE_LIST_\$([variant](#variant))_\$([arch](#arch))) |
-| IsInputDependency | Yes                                                           |
-| Name              | __SWIFT_FILE_LIST_PATH__                                      |
-| Type              | Path                                                          |
-| References        |                                                               |
-
-</div>
-
-<div id="__SWIFT_FILE_LIST_PATH_INDEXING__" class="Subhead">
-
-## 🔐 __SWIFT_FILE_LIST_PATH_INDEXING__
+## 🔐 SWIFT_RESPONSE_FILE_PATH
 
 |                   |                                                                        |
 |-------------------|------------------------------------------------------------------------|
 | CommandLineArgs   |                                                                        |
-| DefaultValue      | \$(SWIFT_INDEXING_FILE_LIST_\$([variant](#variant))_\$([arch](#arch))) |
+| `""`              |                                                                        |
+| `<<otherwise>>`   | @\$([value](#value))                                                   |
+| DefaultValue      | \$(SWIFT_RESPONSE_FILE_PATH_\$([variant](#variant))_\$([arch](#arch))) |
 | IsInputDependency | Yes                                                                    |
-| Name              | __SWIFT_FILE_LIST_PATH_INDEXING__                                      |
+| Name              | SWIFT_RESPONSE_FILE_PATH                                               |
 | Type              | Path                                                                   |
 | References        |                                                                        |
+
+</div>
+
+<div id="SWIFT_TOOLCHAIN_FLAGS" class="Subhead">
+
+## 🔐 SWIFT_TOOLCHAIN_FLAGS
+
+|                 |                       |
+|-----------------|-----------------------|
+| CommandLineArgs | \$([value](#value))   |
+| Name            | SWIFT_TOOLCHAIN_FLAGS |
+| Type            | StringList            |
+| References      |                       |
 
 </div>
 
