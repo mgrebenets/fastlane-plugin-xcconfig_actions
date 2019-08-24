@@ -55,7 +55,7 @@ module Fastlane
         search_path = File.exist?(xcode) ? File.join(xcode, "Contents/{Plugins,Developer/Platforms/MacOSX.platform/Developer/Library/Xcode/Specifications}") : File.join(File.dirname(__FILE__), "xcspecs", xcode)
 
         query = File.join(search_path, "**", name + ".xcspec")
-        xcspec = Dir[query].first
+        xcspec = Dir.glob(query, File::FNM_CASEFOLD).first
         UI.user_error!("Can't find xcspec with name: #{name}") unless xcspec && File.exist?(xcspec)
         xcspec
       end
