@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>CommandLine</key>
+		<string>metallib [options] [inputs]</string>
+		<key>CommandOutputParser</key>
+		<array>
+			<array>
+				<string>^([^:]*):([^:]*): error: (.*)$</string>
+				<string>emit-error</string>
+			</array>
+			<array>
+				<string>^([^:]*):([^:]*): warning: (.*)$</string>
+				<string>emit-warning</string>
+			</array>
+			<array>
+				<string>^([^:]*):([^:]*): note: (.*)$</string>
+				<string>emit-notice</string>
+			</array>
+			<array>
+				<string>^([^:]*):() error: (.*)$</string>
+				<string>emit-error</string>
+			</array>
+			<array>
+				<string>^([^:]*):() warning: (.*)$</string>
+				<string>emit-warning</string>
+			</array>
+			<array>
+				<string>^([^:]*):() note: (.*)$</string>
+				<string>emit-notice</string>
+			</array>
+		</array>
+		<key>Description</key>
+		<string>Links Metal AIR files</string>
+		<key>ExecDescription</key>
+		<string>Linking Metal AIR $(OutputPath)</string>
+		<key>Identifier</key>
+		<string>com.apple.compilers.metal-linker</string>
+		<key>IncludeInUnionedToolDefaults</key>
+		<string>NO</string>
+		<key>InputFileGroupings</key>
+		<array>
+			<string>tool</string>
+		</array>
+		<key>InputFileTypes</key>
+		<array>
+			<string>compiled.air</string>
+		</array>
+		<key>IsArchitectureNeutral</key>
+		<string>YES</string>
+		<key>Name</key>
+		<string>Metal Linker</string>
+		<key>Options</key>
+		<array>
+			<dict>
+				<key>Category</key>
+				<string>BuildOptions</string>
+				<key>CommandLinePrefixFlag</key>
+				<string></string>
+				<key>Name</key>
+				<string>MTLLINKER_FLAGS</string>
+				<key>Type</key>
+				<string>stringlist</string>
+			</dict>
+			<dict>
+				<key>CommandLineArgs</key>
+				<array>
+					<string>-o</string>
+					<string>$(value)</string>
+				</array>
+				<key>DefaultValue</key>
+				<string>$(METAL_LIBRARY_OUTPUT_DIR)/$(METAL_LIBRARY_FILE_BASE).metallib</string>
+				<key>Name</key>
+				<string>MTLLINKER_OUTPUT_FILE</string>
+				<key>Type</key>
+				<string>String</string>
+			</dict>
+			<dict>
+				<key>Name</key>
+				<string>SDKROOT</string>
+				<key>SetValueInEnvironmentVariable</key>
+				<string>SDKROOT</string>
+				<key>Type</key>
+				<string>Path</string>
+			</dict>
+		</array>
+		<key>Outputs</key>
+		<array>
+			<string>$(MTLLINKER_OUTPUT_FILE)</string>
+		</array>
+		<key>OutputsAreProducts</key>
+		<string>YES</string>
+		<key>ProgressDescription</key>
+		<string>Linking Metal AIR $(CommandProgressByType)</string>
+		<key>RuleName</key>
+		<string>MetalLink [output]</string>
+		<key>SynthesizeBuildRule</key>
+		<string>YES</string>
+		<key>Type</key>
+		<string>Compiler</string>
+	</dict>
+</array>
+</plist>

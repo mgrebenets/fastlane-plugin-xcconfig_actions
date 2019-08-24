@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BasedOn</key>
+	<string>default:com.apple.build-system.native</string>
+	<key>Identifier</key>
+	<string>com.apple.build-system.native</string>
+	<key>Name</key>
+	<string>Native Build System</string>
+	<key>Properties</key>
+	<array>
+		<dict>
+			<key>Category</key>
+			<string>Deployment</string>
+			<key>DefaultValue</key>
+			<string>NO</string>
+			<key>Description</key>
+			<string>Combines image files at different resolutions into one multi-page TIFF file that is HiDPI compliant for macOS 10.7 and later. Only image files in the same directory and with the same base name and extension are combined. The file names must conform to the naming convention used in HiDPI.</string>
+			<key>Name</key>
+			<string>COMBINE_HIDPI_IMAGES</string>
+			<key>Type</key>
+			<string>bool</string>
+		</dict>
+		<dict>
+			<key>Category</key>
+			<string>Deployment</string>
+			<key>DefaultValue</key>
+			<string></string>
+			<key>Description</key>
+			<string>Path to a file specifying additional requirements for a product archive.</string>
+			<key>Name</key>
+			<string>PRODUCT_DEFINITION_PLIST</string>
+			<key>Type</key>
+			<string>String</string>
+		</dict>
+		<dict>
+			<key>Category</key>
+			<string>Code Signing</string>
+			<key>DefaultValue</key>
+			<string>NO</string>
+			<key>Description</key>
+			<string>Enable hardened runtime restrictions.</string>
+			<key>Name</key>
+			<string>ENABLE_HARDENED_RUNTIME</string>
+			<key>Type</key>
+			<string>bool</string>
+		</dict>
+	</array>
+	<key>Type</key>
+	<string>BuildSystem</string>
+</dict>
+</plist>

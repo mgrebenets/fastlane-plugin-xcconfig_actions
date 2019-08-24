@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CommandLine</key>
+	<string>/usr/sbin/dtrace [options] -s $(InputFileRelativePath) -o $(DerivedFilesDir)/$(InputFileBase).h</string>
+	<key>CommandOutputParser</key>
+	<array>
+		<array>
+			<string>^dtrace: failed to compile script ([^:]+): line ([0-9]+): (.*)$</string>
+			<string>emit-error</string>
+		</array>
+		<array>
+			<string>^dtrace: ()()(.*)$</string>
+			<string>emit-error</string>
+		</array>
+	</array>
+	<key>Description</key>
+	<string>Invoke the 'dtrace' command line utility to compile a DTrace script file.</string>
+	<key>ExecDescription</key>
+	<string>Process DTrace script $(InputFile)</string>
+	<key>Identifier</key>
+	<string>com.apple.compilers.dtrace</string>
+	<key>InputFileTypes</key>
+	<array>
+		<string>sourcecode.dtrace</string>
+	</array>
+	<key>IsArchitectureNeutral</key>
+	<string>YES</string>
+	<key>Name</key>
+	<string>DTrace</string>
+	<key>Options</key>
+	<array>
+		<dict>
+			<key>DefaultValue</key>
+			<string>Header</string>
+			<key>Name</key>
+			<string>DTRACE_OUTPUT_FILE_TYPE</string>
+			<key>Type</key>
+			<string>Enumeration</string>
+			<key>Values</key>
+			<array>
+				<dict>
+					<key>CommandLineFlag</key>
+					<string>-h</string>
+					<key>Value</key>
+					<string>Header</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>Category</key>
+			<string>BuildOptions</string>
+			<key>CommandLinePrefixFlag</key>
+			<string></string>
+			<key>DefaultValue</key>
+			<string></string>
+			<key>Name</key>
+			<string>DTRACE_OTHER_FLAGS</string>
+			<key>Type</key>
+			<string>StringList</string>
+		</dict>
+		<dict>
+			<key>CommandLinePrefixFlag</key>
+			<string></string>
+			<key>DefaultValue</key>
+			<string></string>
+			<key>Name</key>
+			<string>build_file_compiler_flags</string>
+			<key>Type</key>
+			<string>StringList</string>
+		</dict>
+	</array>
+	<key>Outputs</key>
+	<array>
+		<string>$(DerivedFilesDir)/$(InputFileBase).h</string>
+	</array>
+	<key>OutputsAreSourceFiles</key>
+	<string>Yes</string>
+	<key>ProgressDescription</key>
+	<string>Processing $(CommandProgressByType) DTrace scripts</string>
+	<key>RuleName</key>
+	<string>CompileDTraceScript $(InputFileRelativePath)</string>
+	<key>SynthesizeBuildRule</key>
+	<string>Yes</string>
+	<key>Type</key>
+	<string>Compiler</string>
+</dict>
+</plist>
